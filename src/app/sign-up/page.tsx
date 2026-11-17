@@ -22,7 +22,7 @@ export default function SignUpPage() {
   return (
     <main className="min-h-screen bg-[#F4F7FC] flex items-center justify-center px-4 py-8">
 
-      <div className="w-full max-w-[440px]">
+      <div className="w-full max-w-110">
 
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center gap-2 mb-6">
