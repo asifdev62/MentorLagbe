@@ -17,7 +17,7 @@ export default function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-[#F5F8FF]">
       {/* Background Decoration */}
-      <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-blue-100/50 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-137.5 h-137.5 bg-blue-100/50 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-indigo-100/40 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-5 lg:px-8 pt-16 lg:pt-20">
@@ -25,7 +25,7 @@ export default function HeroSection() {
         <div className="grid lg:grid-cols-2 items-center gap-10 lg:gap-6">
 
           {/* LEFT CONTENT */}
-          <div className="relative z-10 max-w-[620px]">
+          <div className="relative z-10 max-w-155">
 
             {/* Trust Badge */}
             <div className="inline-flex items-center gap-2 rounded-full bg-blue-100/80 border border-blue-200/60 px-4 py-2 mb-7">
@@ -45,13 +45,13 @@ export default function HeroSection() {
             </h1>
 
             {/* Description */}
-            <p className="mt-6 text-base sm:text-lg text-slate-600 leading-8 max-w-[530px]">
+            <p className="mt-6 text-base sm:text-lg text-slate-600 leading-8 max-w-132.5">
               Connect with expert tutors, explore personalized tuition
               batches, and take the next step toward your academic goals.
             </p>
 
             {/* Search Card */}
-            <div className="mt-8 max-w-[590px] bg-white p-2 rounded-2xl border border-blue-100 shadow-lg shadow-blue-100/60">
+            <div className="mt-8 max-w-147.5 bg-white p-2 rounded-2xl border border-blue-100 shadow-lg shadow-blue-100/60">
 
               <div className="flex flex-col sm:flex-row sm:items-center gap-2">
 
@@ -68,7 +68,7 @@ export default function HeroSection() {
                 <div className="hidden sm:block w-px h-8 bg-slate-200" />
 
                 <select
-                  className="sm:w-[135px] px-3 py-3 text-sm text-slate-600 bg-transparent outline-none cursor-pointer"
+                  className="sm:w-33.75 px-3 py-3 text-sm text-slate-600 bg-transparent outline-none cursor-pointer"
                   defaultValue=""
                 >
                   <option value="">All Classes</option>
@@ -128,7 +128,7 @@ export default function HeroSection() {
             {/* Image Background */}
             <div className="absolute w-[85%] aspect-square rounded-full bg-blue-200/50 blur-2xl" />
 
-            <div className="relative w-full max-w-[590px]">
+            <div className="relative w-full max-w-147.5">
 
               <Image
                 src="/images/mentorlagbe-student-tutor.png"
