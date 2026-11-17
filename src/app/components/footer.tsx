@@ -149,7 +149,7 @@ export default function Footer() {
         </div>
 
         {/* Contact Section */}
-        <div className="grid sm:grid-cols-3 gap-5 mt-14 p-6 rounded-2xl bg-white/[0.05] border border-white/10">
+        <div className="grid sm:grid-cols-3 gap-5 mt-14 p-6 rounded-2xl bg-white/5 border border-white/10">
 
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center">
