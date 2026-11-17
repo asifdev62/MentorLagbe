@@ -187,7 +187,7 @@ export default function Navbar() {
             /* Logged Out User */
             <>
               <Link
-                href="/sign-in"
+                href="/auth/sign-in"
                 className="rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
               >
                 Sign In
@@ -295,7 +295,7 @@ export default function Navbar() {
 
                 <div className="flex gap-3">
                   <Link
-                    href="/sign-in"
+                    href="/auth/sign-in"
                     onClick={() => setIsOpen(false)}
                     className="flex-1 rounded-xl border border-slate-200 py-3 text-center text-sm font-semibold text-slate-700"
                   >
@@ -303,7 +303,7 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="/sign-up"
+                    href="/auth/sign-up"
                     onClick={() => setIsOpen(false)}
                     className="flex-1 rounded-xl bg-blue-600 py-3 text-center text-sm font-semibold text-white"
                   >

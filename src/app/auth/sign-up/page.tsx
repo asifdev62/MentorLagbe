@@ -14,15 +14,63 @@ import {
   BookOpen,
   Check,
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState("student");
+  const [terms, setTerms] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter()
+
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!terms) {
+      toast.error("Please accept the Terms and Conditions.");
+      return;
+    }
+
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const { data, error } = await authClient.signUp.email({
+        name,
+        email,
+        password,
+      });
+
+      if (error) {
+        toast.error(error.message || "Registration failed!");
+        return;
+      }
+
+      toast.success("Account created successfully!");
+
+      console.log(data);
+
+      router.push("/")
+
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="min-h-screen bg-[#F4F7FC] flex items-center justify-center px-4 py-8">
-
-      <div className="w-full max-w-110">
+      <div className="w-full max-w-[440px]">
 
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center gap-2 mb-6">
@@ -49,10 +97,7 @@ export default function SignUpPage() {
             </p>
           </div>
 
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="space-y-4"
-          >
+          <form onSubmit={handleSignUp} className="space-y-4">
 
             {/* Role Selection */}
             <div>
@@ -73,9 +118,7 @@ export default function SignUpPage() {
                   }`}
                 >
                   <div className={`p-2 rounded-lg ${
-                    role === "student"
-                      ? "bg-blue-100"
-                      : "bg-slate-100"
+                    role === "student" ? "bg-blue-100" : "bg-slate-100"
                   }`}>
                     <UserRound size={19} />
                   </div>
@@ -101,9 +144,7 @@ export default function SignUpPage() {
                   }`}
                 >
                   <div className={`p-2 rounded-lg ${
-                    role === "tutor"
-                      ? "bg-blue-100"
-                      : "bg-slate-100"
+                    role === "tutor" ? "bg-blue-100" : "bg-slate-100"
                   }`}>
                     <BookOpen size={19} />
                   </div>
@@ -123,19 +164,21 @@ export default function SignUpPage() {
 
             {/* Full Name */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+              <label htmlFor="name" className="block text-sm font-semibold text-slate-700 mb-1.5">
                 Full Name
               </label>
 
               <div className="relative">
-                <UserRound
-                  size={18}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-                />
+                <UserRound size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
 
                 <input
+                  id="name"
                   type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   placeholder="Enter your full name"
+                  autoComplete="name"
+                  required
                   className="w-full h-11 pl-10 pr-3 rounded-lg border border-slate-200 bg-slate-50/70 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                 />
               </div>
@@ -143,19 +186,21 @@ export default function SignUpPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-1.5">
                 Email Address
               </label>
 
               <div className="relative">
-                <Mail
-                  size={18}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-                />
+                <Mail size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
 
                 <input
+                  id="email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
+                  autoComplete="email"
+                  required
                   className="w-full h-11 pl-10 pr-3 rounded-lg border border-slate-200 bg-slate-50/70 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                 />
               </div>
@@ -163,19 +208,22 @@ export default function SignUpPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-1.5">
                 Password
               </label>
 
               <div className="relative">
-                <LockKeyhole
-                  size={18}
-                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
-                />
+                <LockKeyhole size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
 
                 <input
+                  id="password"
                   type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Create a password"
+                  autoComplete="new-password"
+                  required
+                  minLength={8}
                   className="w-full h-11 pl-10 pr-11 rounded-lg border border-slate-200 bg-slate-50/70 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                 />
 
@@ -195,13 +243,12 @@ export default function SignUpPage() {
               <input
                 type="checkbox"
                 id="terms"
+                checked={terms}
+                onChange={(e) => setTerms(e.target.checked)}
                 className="w-4 h-4 mt-0.5 rounded accent-blue-600 cursor-pointer"
               />
 
-              <label
-                htmlFor="terms"
-                className="text-xs text-slate-500 leading-5 cursor-pointer"
-              >
+              <label htmlFor="terms" className="text-xs text-slate-500 leading-5 cursor-pointer">
                 I agree to the{" "}
                 <Link href="/terms" className="text-blue-600 font-semibold hover:underline">
                   Terms of Service
@@ -216,10 +263,11 @@ export default function SignUpPage() {
             {/* Submit */}
             <button
               type="submit"
-              className="w-full h-11 flex items-center justify-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold shadow-md shadow-blue-600/20 transition duration-200"
+              disabled={loading}
+              className="w-full h-11 flex items-center justify-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-md shadow-blue-600/20 transition duration-200"
             >
-              Create Account
-              <ArrowRight size={17} />
+              {loading ? "Creating Account..." : "Create Account"}
+              {!loading && <ArrowRight size={17} />}
             </button>
 
           </form>
@@ -227,10 +275,7 @@ export default function SignUpPage() {
           {/* Sign In */}
           <p className="text-center text-sm text-slate-500 mt-6">
             Already have an account?{" "}
-            <Link
-              href="/sign-in"
-              className="font-semibold text-blue-600 hover:text-blue-700"
-            >
+            <Link href="/sign-in" className="font-semibold text-blue-600 hover:text-blue-700">
               Sign in
             </Link>
           </p>
