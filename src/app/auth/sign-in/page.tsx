@@ -15,6 +15,7 @@ import {
 import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,6 +56,38 @@ export default function SignInPage() {
     }
   };
 
+
+  const handleSignInWithGoogle = async () => {
+  try {
+    toast.loading("Connecting to Google...", {
+      id: "google-signIn",
+    });
+
+    const { data, error } = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
+
+    if (error) {
+      toast.error(error.message || "Google sign-In failed.", {
+        id: "google-signIn",
+      });
+      return;
+    }
+
+    if (data) {
+      toast.success("Redirecting to Google...", {
+        id: "google-signIn",
+      });
+    }
+  } catch (error) {
+    toast.error("Something went wrong. Please try again.", {
+      id: "google-signIn",
+    });
+
+    console.error("Google sign-In exception:", error);
+  }
+};
   return (
     <main className="min-h-screen bg-[#F4F7FC] flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-[420px]">
@@ -191,13 +224,33 @@ export default function SignInPage() {
               {loading ? "Signing In..." : "Sign In"}
               {!loading && <ArrowRight size={17} />}
             </button>
+
+
+             {/* Divider */}
+                      <div className="relative flex items-center gap-4 my-6">
+                        <div className="flex-1 border-t border-slate-200" />
+                        <span className="text-[11px] font-medium tracking-wider text-slate-400">
+                          OR CONTINUE WITH
+                        </span>
+                        <div className="flex-1 border-t border-slate-200" />
+                      </div>
+            
+                      {/* Google Button */}
+                      <button
+                      onClick={handleSignInWithGoogle}
+                        type="button"
+                        className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md active:translate-y-0"
+                      >
+                        <FcGoogle className="text-xl transition-transform duration-300 group-hover:scale-110" />
+                        <span>Continue with Google</span>
+                      </button>
           </form>
 
           {/* Sign Up */}
           <p className="text-center text-sm text-slate-500 mt-6">
             Don&apos;t have an account?{" "}
             <Link
-              href="/sign-up"
+              href="/auth/sign-up"
               className="font-semibold text-blue-600 hover:text-blue-700"
             >
               Sign up

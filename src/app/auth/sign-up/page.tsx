@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import {
   GraduationCap,
   UserRound,
@@ -13,8 +14,10 @@ import {
   ArrowRight,
   BookOpen,
   Check,
+  Sparkles,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import type { UserRole } from "@/lib/auth";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -23,10 +26,11 @@ export default function SignUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState("student");
+  const [role, setRole] = useState<UserRole>("student");
   const [terms, setTerms] = useState(false);
   const [loading, setLoading] = useState(false);
-  const router = useRouter()
+
+  const router = useRouter();
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,6 +52,7 @@ export default function SignUpPage() {
         name,
         email,
         password,
+        role,
       });
 
       if (error) {
@@ -56,26 +61,62 @@ export default function SignUpPage() {
       }
 
       toast.success("Account created successfully!");
-
       console.log(data);
 
-      router.push("/")
-
-    } catch (error) {
+      router.push("/");
+    } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
+
+
+  const handleSignUpWithGoogle = async () => {
+  try {
+    toast.loading("Connecting to Google...", {
+      id: "google-signIn",
+    });
+
+    const { data, error } = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
+
+    if (error) {
+      toast.error(error.message || "Google sign-In failed.", {
+        id: "google-signIn",
+      });
+      return;
+    }
+
+    if (data) {
+      toast.success("Redirecting to Google...", {
+        id: "google-signIn",
+      });
+    }
+  } catch (error) {
+    toast.error("Something went wrong. Please try again.", {
+      id: "google-signIn",
+    });
+
+    console.error("Google sign-In exception:", error);
+  }
+};
+
   return (
-    <main className="min-h-screen bg-[#F4F7FC] flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-[440px]">
+    <main className="min-h-screen bg-[#F4F7FC] flex items-center justify-center px-4 py-10">
+
+      <div className="w-full max-w-[450px]">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center justify-center gap-2 mb-6">
-          <div className="bg-blue-600 text-white p-2 rounded-xl shadow-md shadow-blue-200">
-            <GraduationCap size={25} />
+        <Link
+          href="/"
+          className="flex items-center justify-center gap-2.5 mb-7 group"
+        >
+          <div className="bg-blue-600 text-white p-2.5 rounded-xl shadow-lg shadow-blue-600/20 transition-transform duration-300 group-hover:-rotate-6">
+            <GraduationCap size={26} />
           </div>
 
           <span className="text-2xl font-extrabold tracking-tight text-slate-900">
@@ -83,17 +124,22 @@ export default function SignUpPage() {
           </span>
         </Link>
 
-        {/* Form Card */}
-        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xl shadow-slate-200/50 p-6 sm:p-7">
+        {/* Signup Card */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xl shadow-slate-200/60 p-6 sm:p-8">
 
           {/* Heading */}
-          <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-slate-900">
-              Create an Account
+          <div className="text-center mb-7">
+            <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold mb-3">
+              <Sparkles size={13} />
+              Start Learning Today
+            </div>
+
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+              Create Your Account
             </h1>
 
             <p className="text-sm text-slate-500 mt-2">
-              Join MentorLagbe and start your journey.
+              Join MentorLagbe and connect with the right people.
             </p>
           </div>
 
@@ -101,7 +147,7 @@ export default function SignUpPage() {
 
             {/* Role Selection */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 mb-2">
+              <label className="block text-sm font-semibold text-slate-700 mb-2.5">
                 I want to join as a
               </label>
 
@@ -111,25 +157,34 @@ export default function SignUpPage() {
                 <button
                   type="button"
                   onClick={() => setRole("student")}
-                  className={`relative flex items-center gap-2.5 p-3 rounded-xl border text-left transition ${
+                  className={`relative flex items-center gap-3 p-3 rounded-xl border transition-all duration-200 ${
                     role === "student"
-                      ? "border-blue-500 bg-blue-50/70 text-blue-700"
-                      : "border-slate-200 hover:border-slate-300 text-slate-600"
+                      ? "border-blue-500 bg-blue-50/70 text-blue-700 shadow-sm shadow-blue-100"
+                      : "border-slate-200 bg-white hover:border-blue-300 text-slate-600"
                   }`}
                 >
-                  <div className={`p-2 rounded-lg ${
-                    role === "student" ? "bg-blue-100" : "bg-slate-100"
-                  }`}>
-                    <UserRound size={19} />
+                  <div
+                    className={`p-2.5 rounded-lg ${
+                      role === "student"
+                        ? "bg-blue-100"
+                        : "bg-slate-100"
+                    }`}
+                  >
+                    <UserRound size={20} />
                   </div>
 
-                  <div>
-                    <p className="text-sm font-semibold">Student</p>
-                    <p className="text-[11px] text-slate-500">Find a tutor</p>
+                  <div className="text-left">
+                    <p className="text-sm font-bold">Student</p>
+                    <p className="text-[11px] text-slate-500 mt-0.5">
+                      Find a tutor
+                    </p>
                   </div>
 
                   {role === "student" && (
-                    <Check size={15} className="absolute top-2 right-2 text-blue-600" />
+                    <Check
+                      size={16}
+                      className="absolute top-2 right-2 text-blue-600"
+                    />
                   )}
                 </button>
 
@@ -137,25 +192,34 @@ export default function SignUpPage() {
                 <button
                   type="button"
                   onClick={() => setRole("tutor")}
-                  className={`relative flex items-center gap-2.5 p-3 rounded-xl border text-left transition ${
+                  className={`relative flex items-center gap-3 p-3 rounded-xl border transition-all duration-200 ${
                     role === "tutor"
-                      ? "border-blue-500 bg-blue-50/70 text-blue-700"
-                      : "border-slate-200 hover:border-slate-300 text-slate-600"
+                      ? "border-blue-500 bg-blue-50/70 text-blue-700 shadow-sm shadow-blue-100"
+                      : "border-slate-200 bg-white hover:border-blue-300 text-slate-600"
                   }`}
                 >
-                  <div className={`p-2 rounded-lg ${
-                    role === "tutor" ? "bg-blue-100" : "bg-slate-100"
-                  }`}>
-                    <BookOpen size={19} />
+                  <div
+                    className={`p-2.5 rounded-lg ${
+                      role === "tutor"
+                        ? "bg-blue-100"
+                        : "bg-slate-100"
+                    }`}
+                  >
+                    <BookOpen size={20} />
                   </div>
 
-                  <div>
-                    <p className="text-sm font-semibold">Tutor</p>
-                    <p className="text-[11px] text-slate-500">Teach students</p>
+                  <div className="text-left">
+                    <p className="text-sm font-bold">Tutor</p>
+                    <p className="text-[11px] text-slate-500 mt-0.5">
+                      Teach students
+                    </p>
                   </div>
 
                   {role === "tutor" && (
-                    <Check size={15} className="absolute top-2 right-2 text-blue-600" />
+                    <Check
+                      size={16}
+                      className="absolute top-2 right-2 text-blue-600"
+                    />
                   )}
                 </button>
 
@@ -164,12 +228,18 @@ export default function SignUpPage() {
 
             {/* Full Name */}
             <div>
-              <label htmlFor="name" className="block text-sm font-semibold text-slate-700 mb-1.5">
+              <label
+                htmlFor="name"
+                className="block text-sm font-semibold text-slate-700 mb-1.5"
+              >
                 Full Name
               </label>
 
               <div className="relative">
-                <UserRound size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <UserRound
+                  size={18}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                />
 
                 <input
                   id="name"
@@ -179,19 +249,25 @@ export default function SignUpPage() {
                   placeholder="Enter your full name"
                   autoComplete="name"
                   required
-                  className="w-full h-11 pl-10 pr-3 rounded-lg border border-slate-200 bg-slate-50/70 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                 />
               </div>
             </div>
 
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-1.5">
+              <label
+                htmlFor="email"
+                className="block text-sm font-semibold text-slate-700 mb-1.5"
+              >
                 Email Address
               </label>
 
               <div className="relative">
-                <Mail size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Mail
+                  size={18}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                />
 
                 <input
                   id="email"
@@ -201,19 +277,25 @@ export default function SignUpPage() {
                   placeholder="you@example.com"
                   autoComplete="email"
                   required
-                  className="w-full h-11 pl-10 pr-3 rounded-lg border border-slate-200 bg-slate-50/70 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                 />
               </div>
             </div>
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-semibold text-slate-700 mb-1.5">
+              <label
+                htmlFor="password"
+                className="block text-sm font-semibold text-slate-700 mb-1.5"
+              >
                 Password
               </label>
 
               <div className="relative">
-                <LockKeyhole size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <LockKeyhole
+                  size={18}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"
+                />
 
                 <input
                   id="password"
@@ -224,18 +306,26 @@ export default function SignUpPage() {
                   autoComplete="new-password"
                   required
                   minLength={8}
-                  className="w-full h-11 pl-10 pr-11 rounded-lg border border-slate-200 bg-slate-50/70 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full h-11 pl-10 pr-11 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600 transition-colors"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPassword ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
                 </button>
               </div>
+
+              <p className="text-[11px] text-slate-400 mt-1.5">
+                Password must contain at least 8 characters.
+              </p>
             </div>
 
             {/* Terms */}
@@ -248,37 +338,76 @@ export default function SignUpPage() {
                 className="w-4 h-4 mt-0.5 rounded accent-blue-600 cursor-pointer"
               />
 
-              <label htmlFor="terms" className="text-xs text-slate-500 leading-5 cursor-pointer">
+              <label
+                htmlFor="terms"
+                className="text-xs text-slate-500 leading-5 cursor-pointer"
+              >
                 I agree to the{" "}
-                <Link href="/terms" className="text-blue-600 font-semibold hover:underline">
+                <Link
+                  href="/terms"
+                  className="text-blue-600 font-semibold hover:underline"
+                >
                   Terms of Service
                 </Link>{" "}
                 and{" "}
-                <Link href="/privacy" className="text-blue-600 font-semibold hover:underline">
+                <Link
+                  href="/privacy"
+                  className="text-blue-600 font-semibold hover:underline"
+                >
                   Privacy Policy
                 </Link>.
               </label>
             </div>
 
-            {/* Submit */}
+            {/* Create Account */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-11 flex items-center justify-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-md shadow-blue-600/20 transition duration-200"
+              className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
             >
               {loading ? "Creating Account..." : "Create Account"}
-              {!loading && <ArrowRight size={17} />}
+
+              {!loading && <ArrowRight size={18} />}
             </button>
 
           </form>
 
+          {/* Divider */}
+          <div className="relative flex items-center gap-4 my-6">
+            <div className="flex-1 border-t border-slate-200" />
+            <span className="text-[11px] font-medium tracking-wider text-slate-400">
+              OR CONTINUE WITH
+            </span>
+            <div className="flex-1 border-t border-slate-200" />
+          </div>
+
+          {/* Google Button */}
+          <button
+          onClick={handleSignUpWithGoogle}
+            type="button"
+            className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md active:translate-y-0"
+          >
+            <FcGoogle className="text-xl transition-transform duration-300 group-hover:scale-110" />
+            <span>Continue with Google</span>
+          </button>
+
+          <div className="flex justify-center mt-4">
+  <p className="text-xs text-[#A8BAC5]">
+    Your information is securely protected.
+  </p>
+</div>
+
           {/* Sign In */}
           <p className="text-center text-sm text-slate-500 mt-6">
             Already have an account?{" "}
-            <Link href="/sign-in" className="font-semibold text-blue-600 hover:text-blue-700">
+            <Link
+              href="/auth/sign-in"
+              className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+            >
               Sign in
             </Link>
           </p>
+
         </div>
 
         {/* Footer */}
