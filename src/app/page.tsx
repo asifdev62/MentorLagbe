@@ -1,8 +1,9 @@
 
 import HeroSection from "./components/banner";
+import TheWayes from "./components/TheWaye";
+import TutoringMethod from "./components/tutoring-method";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
-import TheWayes from "./components/TheWaye";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <TheWayes />
+      <TutoringMethod />
       <Footer />
     </div>
   );

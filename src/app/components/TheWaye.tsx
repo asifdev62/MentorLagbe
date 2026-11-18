@@ -24,8 +24,7 @@ const steps = [
   {
     icon: BadgeCheck,
     title: "Select Your Tutor",
-    description:
-      "Evaluate tutors & start learning with your favorite one.",
+    description: "Evaluate tutors & start learning with your favorite one.",
   },
 ];
 
@@ -92,19 +91,19 @@ function Connector({
 
 export default function TheWayes() {
   return (
-    <section className="bg-white py-16 lg:py-24">
+    <section className="bg-white py-14 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <h2 className="text-2xl font-bold leading-snug tracking-tight text-[#20242C] sm:text-3xl lg:text-[40px]">
+        <h2 className="text-balance text-2xl font-bold leading-snug tracking-tight text-[#20242C] sm:text-3xl lg:text-[40px]">
           The ways <span className="text-[#155DFC]">Students/Parents</span> can
           connect with us.
         </h2>
 
-        <div className="relative mt-14 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:mt-20 lg:grid-cols-4 lg:gap-x-0 lg:gap-y-0">
+        <div className="relative mt-10 grid grid-cols-1 gap-y-10 sm:mt-14 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-14 lg:mt-20 lg:grid-cols-4 lg:gap-x-0 lg:gap-y-0">
           {/* Dashed curved arrows between the circles (large screens only) */}
           {connectors.map(({ left, direction, id }) => (
             <div
               key={id}
-              className="pointer-events-none absolute top-10 z-0 hidden w-1/4 -translate-y-1/2 lg:block"
+              className="pointer-events-none absolute top-10 z-0 hidden w-1/4 -translate-y-1/2 lg:block xl:top-12"
               style={{ left }}
             >
               <Connector id={id} direction={direction} />
@@ -114,17 +113,21 @@ export default function TheWayes() {
           {steps.map(({ icon: Icon, title, description }) => (
             <div
               key={title}
-              className="relative z-10 flex flex-col items-center text-center"
+              className="relative z-10 flex flex-col items-center px-2 text-center"
             >
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#155DFC] text-white shadow-[0_12px_28px_-8px_rgba(21,93,252,0.45)] ring-[6px] ring-[#155DFC]/15 xl:h-24 xl:w-24">
-                <Icon size={30} strokeWidth={1.9} className="xl:size-[34px]" />
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#155DFC] text-white shadow-[0_12px_28px_-8px_rgba(21,93,252,0.45)] ring-[5px] ring-[#155DFC]/15 sm:h-20 sm:w-20 sm:ring-[6px] xl:h-24 xl:w-24">
+                <Icon
+                  size={26}
+                  strokeWidth={1.9}
+                  className="sm:size-[30px] xl:size-[34px]"
+                />
               </div>
 
-              <h3 className="mt-7 text-lg font-semibold text-[#20242C] xl:text-xl">
+              <h3 className="mt-5 text-base font-semibold text-[#20242C] sm:mt-6 sm:text-lg xl:mt-7 xl:text-xl">
                 {title}
               </h3>
 
-              <p className="mt-3 max-w-[270px] text-[15px] leading-7 text-[#4C5462]">
+              <p className="mt-2.5 max-w-[290px] text-pretty text-sm leading-6 text-[#4C5462] sm:text-[15px] sm:leading-7">
                 {description}
               </p>
             </div>
