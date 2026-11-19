@@ -60,3 +60,26 @@ export const getTuitions = async (): Promise<TuitionItem[]> => {
     return [];
   }
 };
+
+
+
+
+// tution details page 
+export const getTuitionById = async (
+  id: string
+): Promise<TuitionItem | null> => {
+  try {
+    const res = await fetch(`${BASE_URL}/tuitions/${id}`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      return null;
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Failed to fetch tuition:", error);
+    return null;
+  }
+};
