@@ -7,6 +7,8 @@ import {
   BookOpen,
 } from "lucide-react";
 
+const currentYear = new Date().getFullYear();
+
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "Browse Tuitions", href: "/browse-tuitions" },
@@ -193,7 +195,7 @@ export default function Footer() {
         <div className="border-t border-white/10 mt-10 pt-7 flex flex-col md:flex-row items-center justify-between gap-5">
 
           <p className="text-sm text-slate-400 text-center">
-            © {new Date().getFullYear()} MentorLagbe. All rights reserved.
+            © {currentYear} MentorLagbe. All rights reserved.
           </p>
 
           <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-slate-400">

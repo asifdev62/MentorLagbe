@@ -45,11 +45,19 @@ export default function SignInPage() {
 
       toast.success("Login successful!");
 
-      console.log(data);
+      const role = (data?.user as { role?: string } | undefined)?.role?.toLowerCase();
 
-      router.push("/")
+      const dashboardUrl =
+        role === "admin"
+          ? "/dashboard/admin"
+          : role === "tutor"
+            ? "/dashboard/tutor"
+            : "/dashboard/student";
 
-    } catch (error) {
+      router.push(dashboardUrl);
+      router.refresh();
+
+    } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);

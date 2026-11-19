@@ -48,7 +48,7 @@ export default function SignUpPage() {
     try {
       setLoading(true);
 
-      const { data, error } = await authClient.signUp.email({
+      const { error } = await authClient.signUp.email({
         name,
         email,
         password,
@@ -61,9 +61,9 @@ export default function SignUpPage() {
       }
 
       toast.success("Account created successfully!");
-      console.log(data);
 
-      router.push("/");
+      router.push(role === "tutor" ? "/dashboard/tutor" : "/dashboard/student");
+      router.refresh();
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
