@@ -89,13 +89,13 @@ const menuItemsByRole: Record<SidebarRole, MenuItem[]> = {
     {
       id: "tutor-tuitions",
       name: "Manage Tuitions",
-      url: "/dashboard/tutor/tuitions",
+      url: "/dashboard/tutor/manage-tuition",
       icon: BookOpen,
     },
     {
-      id: "tutor-applications",
-      name: "My Students",
-      url: "/dashboard/tutor/applications",
+      id: "tutor-applicants",
+      name: "Applicants",
+      url: "/dashboard/tutor/applicants",
       icon: Users,
     },
     {

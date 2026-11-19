@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -71,45 +70,41 @@ export default function SignUpPage() {
     }
   };
 
-
-
   const handleSignUpWithGoogle = async () => {
-  try {
-    toast.loading("Connecting to Google...", {
-      id: "google-signIn",
-    });
-
-    const { data, error } = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
-    });
-
-    if (error) {
-      toast.error(error.message || "Google sign-In failed.", {
+    try {
+      toast.loading("Connecting to Google...", {
         id: "google-signIn",
       });
-      return;
-    }
 
-    if (data) {
-      toast.success("Redirecting to Google...", {
+      const { data, error } = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+
+      if (error) {
+        toast.error(error.message || "Google sign-In failed.", {
+          id: "google-signIn",
+        });
+        return;
+      }
+
+      if (data) {
+        toast.success("Redirecting to Google...", {
+          id: "google-signIn",
+        });
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.", {
         id: "google-signIn",
       });
-    }
-  } catch (error) {
-    toast.error("Something went wrong. Please try again.", {
-      id: "google-signIn",
-    });
 
-    console.error("Google sign-In exception:", error);
-  }
-};
+      console.error("Google sign-In exception:", error);
+    }
+  };
 
   return (
     <main className="min-h-screen bg-[#F4F7FC] flex items-center justify-center px-4 py-10">
-
       <div className="w-full max-w-[450px]">
-
         {/* Logo */}
         <Link
           href="/"
@@ -126,7 +121,6 @@ export default function SignUpPage() {
 
         {/* Signup Card */}
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xl shadow-slate-200/60 p-6 sm:p-8">
-
           {/* Heading */}
           <div className="text-center mb-7">
             <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold mb-3">
@@ -144,7 +138,6 @@ export default function SignUpPage() {
           </div>
 
           <form onSubmit={handleSignUp} className="space-y-4">
-
             {/* Role Selection */}
             <div>
               <label className="block text-sm font-semibold text-slate-700 mb-2.5">
@@ -152,7 +145,6 @@ export default function SignUpPage() {
               </label>
 
               <div className="grid grid-cols-2 gap-3">
-
                 {/* Student */}
                 <button
                   type="button"
@@ -222,7 +214,6 @@ export default function SignUpPage() {
                     />
                   )}
                 </button>
-
               </div>
             </div>
 
@@ -249,12 +240,12 @@ export default function SignUpPage() {
                   placeholder="Enter your full name"
                   autoComplete="name"
                   required
-                  className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                 />
               </div>
             </div>
 
-            {/* Email */}
+            {/* Email Address */}
             <div>
               <label
                 htmlFor="email"
@@ -274,10 +265,10 @@ export default function SignUpPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
+                  placeholder="name@example.com"
                   autoComplete="email"
                   required
-                  className="w-full h-11 pl-10 pr-3 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                 />
               </div>
             </div>
@@ -369,7 +360,6 @@ export default function SignUpPage() {
 
               {!loading && <ArrowRight size={18} />}
             </button>
-
           </form>
 
           {/* Divider */}
@@ -383,7 +373,7 @@ export default function SignUpPage() {
 
           {/* Google Button */}
           <button
-          onClick={handleSignUpWithGoogle}
+            onClick={handleSignUpWithGoogle}
             type="button"
             className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md active:translate-y-0"
           >
@@ -392,10 +382,10 @@ export default function SignUpPage() {
           </button>
 
           <div className="flex justify-center mt-4">
-  <p className="text-xs text-[#A8BAC5]">
-    Your information is securely protected.
-  </p>
-</div>
+            <p className="text-xs text-[#A8BAC5]">
+              Your information is securely protected.
+            </p>
+          </div>
 
           {/* Sign In */}
           <p className="text-center text-sm text-slate-500 mt-6">
@@ -407,14 +397,12 @@ export default function SignUpPage() {
               Sign in
             </Link>
           </p>
-
         </div>
 
         {/* Footer */}
         <p className="text-center text-xs text-slate-400 mt-6">
           © 2026 MentorLagbe. All rights reserved.
         </p>
-
       </div>
     </main>
   );
