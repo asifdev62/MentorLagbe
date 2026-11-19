@@ -78,8 +78,10 @@ export function TuitionEditModal({
     };
 
     try {
+      
       setIsSaving(true);
       await updateTuition(id, updatedData);
+
       toast.success("Tuition post updated successfully!");
       onSuccess(updatedData);
       onClose();

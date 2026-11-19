@@ -21,7 +21,6 @@ import {
     MapPin,
     MessageCircle,
     Phone,
-    Save,
     Send,
     Sparkles,
     UserRound,
@@ -29,6 +28,7 @@ import {
     Wallet,
 } from "lucide-react";
 import { addTuitions, type TuitionFormData } from "@/lib/actions/tuitions";
+import { useSession } from "@/lib/auth-client";
 
 const inputClass =
     "h-11 w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10";
@@ -69,31 +69,31 @@ const tuitionTypes = [
     {
         value: "home",
         title: "Home Visit",
-        description: "Tutor teaches at the student home",
+        description: "You teach at the student's home",
         icon: Home,
         checked: true,
     },
     {
         value: "online",
         title: "Online",
-        description: "Classes will be held online",
+        description: "You take classes online",
         icon: Laptop,
         checked: false,
     },
     {
         value: "batch",
         title: "Group / Batch",
-        description: "Multiple students in one batch",
+        description: "You teach multiple students together",
         icon: Users,
         checked: false,
     },
 ];
 
 const tips = [
-    "Write a clear title so tutors understand the requirement quickly.",
-    "Mention the exact location, preferred days and time.",
-    "A realistic monthly budget gets more tutor applications.",
-    "Add subject details and any special requirements in the description.",
+    "Write a clear title so students understand what you teach quickly.",
+    "Mention the area you can travel to, plus your preferred days and time.",
+    "A realistic monthly fee helps students decide faster.",
+    "Add your qualification, experience and teaching style in the description.",
 ];
 
 function FormSection({
@@ -141,12 +141,18 @@ function SelectWrapper({ children }: { children: React.ReactNode }) {
 
 export default function AddTuitionPage() {
   const router = useRouter();
+  const { data: session } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+
+    if (!session?.user) {
+      toast.error("Please sign in before posting a tuition.");
+      return;
+    }
 
     const formData = new FormData(event.currentTarget);
 
@@ -156,6 +162,8 @@ export default function AddTuitionPage() {
 
     const tuitionData = {
       ...Object.fromEntries(formData),
+      studentGender: String(formData.get("studentGender") ?? "Any"),
+      tutorGender: String(formData.get("tutorGender") ?? "Any"),
       studentCount: Number(formData.get("studentCount") ?? 1),
       budget: Number(formData.get("budget") ?? 0),
       preferredDays: formData.getAll("preferredDays").map(String),
@@ -164,6 +172,10 @@ export default function AddTuitionPage() {
       whatsapp: whatsappSameAsContact
         ? String(formData.get("contactNumber") ?? "")
         : String(formData.get("whatsapp") ?? ""),
+      // Link the post to the signed-in tutor so it appears in
+      // "Manage Tuitions" for this account only.
+      userId: session.user.id,
+      tutorEmail: session.user.email,
     } as TuitionFormData;
 
     try {
@@ -171,9 +183,9 @@ export default function AddTuitionPage() {
 
       await addTuitions(tuitionData);
 
-      toast.success("Tuition posted successfully!");
+      toast.success("Tuition posted successfully! Waiting for admin approval.");
 
-      router.push("/dashboard/tutor");
+      router.push("/dashboard/tutor/manage-tuition");
     } catch (error) {
       console.error("Failed to add tuition:", error);
 
@@ -201,11 +213,11 @@ export default function AddTuitionPage() {
                         </Link>
 
                         <h1 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
-                            Post a Tuition
+                            Post Your Tuition
                         </h1>
 
                         <p className="mt-1.5 text-sm text-slate-500">
-                            Fill in the details below and publish your tuition requirement.
+                            Share your tutoring details so students can find you and apply.
                         </p>
                     </div>
 
@@ -225,7 +237,7 @@ export default function AddTuitionPage() {
                         <FormSection
                             icon={FileText}
                             title="Basic Information"
-                            description="Tell tutors what kind of tuition you are looking for."
+                            description="Tell students what you teach and how you like to teach."
                         >
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div className="md:col-span-2">
@@ -237,7 +249,7 @@ export default function AddTuitionPage() {
                                         name="title"
                                         type="text"
                                         required
-                                        placeholder="e.g. Need a Math tutor for Class 9 student"
+                                        placeholder="e.g. Math & Physics tutor for Class 9-10 students"
                                         className={inputClass}
                                     />
                                 </div>
@@ -301,17 +313,17 @@ export default function AddTuitionPage() {
                                 </div>
 
                                 <div>
-                                    <label htmlFor="studentGender" className={labelClass}>
-                                        Student Gender
+                                    <label htmlFor="tutorGender" className={labelClass}>
+                                        Your Gender
                                     </label>
                                     <SelectWrapper>
                                         <select
-                                            id="studentGender"
-                                            name="studentGender"
+                                            id="tutorGender"
+                                            name="tutorGender"
                                             defaultValue="Any"
                                             className={selectClass}
                                         >
-                                            <option value="Any">Any</option>
+                                            <option value="Any">Prefer not to say</option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
@@ -319,8 +331,28 @@ export default function AddTuitionPage() {
                                 </div>
 
                                 <div>
+                                    <label htmlFor="experience" className={labelClass}>
+                                        Teaching Experience
+                                    </label>
+                                    <SelectWrapper>
+                                        <select
+                                            id="experience"
+                                            name="experience"
+                                            defaultValue="1+ years"
+                                            className={selectClass}
+                                        >
+                                            <option value="No experience">No experience</option>
+                                            <option value="1+ years">1+ years</option>
+                                            <option value="2+ years">2+ years</option>
+                                            <option value="3+ years">3+ years</option>
+                                            <option value="5+ years">5+ years</option>
+                                        </select>
+                                    </SelectWrapper>
+                                </div>
+
+                                <div>
                                     <label htmlFor="studentCount" className={labelClass}>
-                                        Number of Students
+                                        Students per Batch
                                     </label>
                                     <input
                                         id="studentCount"
@@ -376,11 +408,46 @@ export default function AddTuitionPage() {
                             </div>
                         </FormSection>
 
+                        {/* Qualification */}
+                        <FormSection
+                            icon={GraduationCap}
+                            title="Your Qualification"
+                            description="Students love to know where you study or studied."
+                        >
+                            <div className="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label htmlFor="tutorUniversity" className={labelClass}>
+                                        University / Institution
+                                    </label>
+                                    <input
+                                        id="tutorUniversity"
+                                        name="tutorUniversity"
+                                        type="text"
+                                        placeholder="e.g. University of Dhaka"
+                                        className={inputClass}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label htmlFor="tutorDepartment" className={labelClass}>
+                                        Department / Major
+                                    </label>
+                                    <input
+                                        id="tutorDepartment"
+                                        name="tutorDepartment"
+                                        type="text"
+                                        placeholder="e.g. Computer Science & Engineering"
+                                        className={inputClass}
+                                    />
+                                </div>
+                            </div>
+                        </FormSection>
+
                         {/* Location & schedule */}
                         <FormSection
                             icon={MapPin}
                             title="Location & Schedule"
-                            description="Set where and when the classes will take place."
+                            description="Set where and when you can take classes."
                         >
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div className="md:col-span-2">
@@ -398,7 +465,7 @@ export default function AddTuitionPage() {
                                             name="area"
                                             type="text"
                                             required
-                                            placeholder="e.g. Dhanmondi, Dhaka"
+                                            placeholder="e.g. Dhanmondi, Dhaka (area you can teach in)"
                                             className={`${inputClass} pl-10`}
                                         />
                                     </div>
@@ -487,16 +554,16 @@ export default function AddTuitionPage() {
                             </div>
                         </FormSection>
 
-                        {/* Budget & requirements */}
+                        {/* Fee & details */}
                         <FormSection
                             icon={Wallet}
-                            title="Budget & Requirements"
-                            description="Mention your budget and tutor preferences."
+                            title="Fee & Details"
+                            description="Set your expected fee and share anything students should know."
                         >
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div>
                                     <label htmlFor="budget" className={labelClass}>
-                                        Monthly Budget <span className="text-red-500">*</span>
+                                        Expected Monthly Fee <span className="text-red-500">*</span>
                                     </label>
 
                                     <div className="relative">
@@ -520,58 +587,20 @@ export default function AddTuitionPage() {
                                             name="negotiable"
                                             className="size-4 rounded border-slate-300 accent-blue-600"
                                         />
-                                        Budget is negotiable
+                                        Fee is negotiable
                                     </label>
-                                </div>
-
-                                <div>
-                                    <label htmlFor="tutorGender" className={labelClass}>
-                                        Preferred Tutor Gender
-                                    </label>
-                                    <SelectWrapper>
-                                        <select
-                                            id="tutorGender"
-                                            name="tutorGender"
-                                            defaultValue="Any"
-                                            className={selectClass}
-                                        >
-                                            <option value="Any">Any</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                    </SelectWrapper>
-                                </div>
-
-                                <div>
-                                    <label htmlFor="experience" className={labelClass}>
-                                        Tutor Experience
-                                    </label>
-                                    <SelectWrapper>
-                                        <select
-                                            id="experience"
-                                            name="experience"
-                                            defaultValue="No preference"
-                                            className={selectClass}
-                                        >
-                                            <option value="No preference">No preference</option>
-                                            <option value="1+ years">1+ years</option>
-                                            <option value="2+ years">2+ years</option>
-                                            <option value="3+ years">3+ years</option>
-                                            <option value="5+ years">5+ years</option>
-                                        </select>
-                                    </SelectWrapper>
                                 </div>
 
                                 <div className="md:col-span-2">
                                     <label htmlFor="description" className={labelClass}>
-                                        Additional Requirements
+                                        About You & Your Teaching
                                     </label>
 
                                     <textarea
                                         id="description"
                                         name="description"
                                         rows={4}
-                                        placeholder="Write about the student, syllabus, special requirements or anything tutors should know..."
+                                        placeholder="Write about your teaching style, syllabus coverage, results, or anything students should know..."
                                         className="w-full resize-y rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                                     />
 
@@ -587,7 +616,7 @@ export default function AddTuitionPage() {
                         <FormSection
                             icon={Phone}
                             title="Contact Information"
-                            description="Interested tutors will use this information to reach you."
+                            description="Students will use this information to contact you."
                         >
                             <div className="grid gap-4 md:grid-cols-2">
                                 <div>
@@ -646,30 +675,20 @@ export default function AddTuitionPage() {
                         {/* Actions */}
                         <div className="flex flex-col-reverse gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm shadow-slate-200/40 sm:flex-row sm:items-center sm:justify-between">
                             <Link
-                                href="/dashboard/tutor"
+                                href="/dashboard/tutor/manage-tuition"
                                 className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
                             >
                                 Cancel
                             </Link>
 
-                            <div className="flex flex-col gap-3 sm:flex-row">
-                                <button
-                                    type="button"
-                                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-4 py-2.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
-                                >
-                                    <Save size={16} />
-                                    Save as Draft
-                                </button>
-
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
-                                >
-                                    <Send size={16} />
-                                    {isSubmitting ? "Publishing..." : "Publish Tuition"}
-                                </button>
-                            </div>
+                            <button
+                                type="submit"
+                                disabled={isSubmitting}
+                                className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                            >
+                                <Send size={16} />
+                                {isSubmitting ? "Publishing..." : "Publish Tuition"}
+                            </button>
                         </div>
                     </div>
 
@@ -706,7 +725,7 @@ export default function AddTuitionPage() {
                                         Status
                                     </dt>
                                     <dd className="rounded-md bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-700">
-                                        Draft
+                                        Pending approval
                                     </dd>
                                 </div>
 
@@ -729,15 +748,25 @@ export default function AddTuitionPage() {
                                 <div className="flex items-center justify-between gap-3">
                                     <dt className="flex items-center gap-2 text-slate-500">
                                         <CircleDollarSign size={15} />
-                                        Budget
+                                        Expected fee
                                     </dt>
                                     <dd className="font-semibold text-slate-700">Not set</dd>
+                                </div>
+
+                                <div className="flex items-center justify-between gap-3">
+                                    <dt className="flex items-center gap-2 text-slate-500">
+                                        <UserRound size={15} />
+                                        Posting as
+                                    </dt>
+                                    <dd className="max-w-[140px] truncate font-semibold text-slate-700">
+                                        {session?.user?.name || "Tutor"}
+                                    </dd>
                                 </div>
                             </dl>
 
                             <p className="mt-4 rounded-lg bg-slate-50 p-3 text-xs leading-5 text-slate-500">
-                                Your post will be visible to tutors after publishing. You can
-                                edit or close it anytime from the dashboard.
+                                Your post will be visible to students after admin approval.
+                                You can edit or close it anytime from Manage Tuitions.
                             </p>
                         </div>
 

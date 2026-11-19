@@ -104,7 +104,7 @@ export function TuitionTableRow({
           onClick={() => onToggleStatus(id, item.status)}
           className={`rounded-full px-2.5 py-0.5 text-xs font-bold transition ${
             isActive
-              ? "bg-blue-50 text-blue-700 hover:bg-blue-100"
+              ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
               : "bg-slate-100 text-slate-600 hover:bg-slate-200"
           }`}
           title="Click to toggle status"
@@ -120,7 +120,7 @@ export function TuitionTableRow({
           <button
             onClick={() => onEdit(item)}
             className="rounded-lg border border-blue-200 bg-blue-50 p-1.5 text-blue-600 hover:bg-blue-100"
-            title="Edit Circular"
+            title="Edit Tuition"
           >
             <Pencil size={14} />
           </button>

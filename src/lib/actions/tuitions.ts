@@ -33,8 +33,16 @@ export type TuitionFormData = {
   contactNumber: string;
   whatsapp: string;
   whatsappSameAsContact: boolean;
+  // Ownership: the tutor who created the post
+  userId?: string;
+  tutorEmail?: string;
+  approvalStatus?: string;
+  tuitionId?: string;
 };
 
+
+
+//add tuition
 export const addTuitions = async (data: TuitionFormData) => {
   let res: Response;
 
@@ -59,6 +67,10 @@ export const addTuitions = async (data: TuitionFormData) => {
   return res.json();
 };
 
+
+
+
+//delete tuition
 export const deleteTuition = async (id: string) => {
   let res: Response;
 
@@ -79,9 +91,15 @@ export const deleteTuition = async (id: string) => {
   return res.json();
 };
 
+
+
+//update tuition
 export const updateTuition = async (
   id: string,
-  data: Partial<TuitionFormData>
+  data: Partial<TuitionFormData> & {
+    status?: string;
+    approvalStatus?: string;
+  }
 ) => {
   let res: Response;
 
@@ -105,3 +123,6 @@ export const updateTuition = async (
 
   return res.json();
 };
+
+
+
