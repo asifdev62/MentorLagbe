@@ -492,11 +492,12 @@ const TuitionDetailsContent = async ({ params }: Props) => {
                   </p>
                 </div>
 
-                <TuitionApplyButton
-                  tuitionId={tuition._id ?? id}
-                  tuitionTitle={tuition.title}
-                  classLevel={tuition.classLevel}
-                />
+               <TuitionApplyButton
+  tuitionId={tuition._id ?? id}
+  tuitionTitle={tuition.title}
+  classLevel={tuition.classLevel}
+  tutorEmail={tuition.tutorEmail || ""}
+/>
 
                 <p className="mt-3 text-center text-xs text-slate-400">
                   Your application will be sent to the tuition poster.

@@ -162,12 +162,12 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="/dashboard/profile"
+                    href="/profile"
                     onClick={() => setProfileOpen(false)}
                     className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600"
                   >
                     <UserRound size={18} />
-                    Update Profile
+                    My Profile
                   </Link>
 
                   <button

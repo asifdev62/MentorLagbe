@@ -1,6 +1,7 @@
 'use client'
 
 import { applyToATuition } from '@/lib/actions/applicants';
+import { getApplicationCount } from '@/lib/api/tuitions';
 import { useSession } from '@/lib/auth-client';
 import {
     CalendarClock,
@@ -13,7 +14,7 @@ import {
     UserRound,
     X,
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -21,9 +22,10 @@ type Props = {
     tuitionId: string;
     tuitionTitle: string;
     classLevel?: string;
+    tutorEmail: string;
 };
 
-const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel }: Props) => {
+const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }: Props) => {
     const router = useRouter();
     const { data: session, isPending } = useSession();
     const [isOpen, setIsOpen] = useState(false);
@@ -37,21 +39,35 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel }: Props) => {
     const role =
         (user as { role?: string } | undefined)?.role?.toLowerCase() ?? 'student';
 
-    const handleOpenForm = () => {
-        if (isPending || isSubmitting || isApplied) return;
+   const handleOpenForm = async () => {
+  if (isPending || isSubmitting || isApplied) return;
 
-        if (!user) {
-            router.push(`/auth/sign-in?redirectTo=/browse-tuitions/${tuitionId}`);
-            return;
-        }
+  if (!user) {
+    router.push(`/auth/sign-in?redirectTo=/browse-tuitions/${tuitionId}`);
+    return;
+  }
 
-        if (role !== 'student') {
-            toast.error('Only students can apply for a tuition.');
-            return;
-        }
+  if (role !== "student") {
+    toast.error("Only students can apply for a tuition.");
+    return;
+  }
 
-        setIsOpen(true);
-    };
+  if (!tutorEmail) {
+    toast.error("Tutor email not found.");
+    return;
+  }
+
+  // Check student's application count
+  const countResult = await getApplicationCount(user.id);
+
+  if (countResult >= 2) {
+    toast.error("You have reached your application limit.");
+    router.push("/payment");
+    return;
+  }
+
+  setIsOpen(true);
+};
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -72,6 +88,7 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel }: Props) => {
                 classLevel,
                 studentName: user.name,
                 email: user.email,
+                tutorEmail,
                 phone: phone.trim(),
                 preferredSchedule: preferredSchedule.trim(),
                 note: note.trim() || undefined,

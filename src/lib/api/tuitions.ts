@@ -81,3 +81,27 @@ export const getTuitionById = async (
     return null;
   }
 };
+
+
+//application count 
+ export const getApplicationCount = async (
+  applicantId: string
+): Promise<number> => {
+  try {
+    const res = await fetch(
+      `${BASE_URL}/applications/count?applicantId=${applicantId}`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) return 0;
+
+    const data = await res.json();
+
+    return data.count || 0;
+  } catch (error) {
+    console.error("Failed to get application count:", error);
+    return 0;
+  }
+};
