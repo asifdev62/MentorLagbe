@@ -48,6 +48,24 @@ export type ApplicationItem = {
   monthlyFee?: number;
 };
 
+
+export interface TutorApplicant {
+  _id: string;
+  tuitionId: string;
+  userId: string;
+  studentName: string;
+  email: string;
+  phone?: string;
+  tuitionTitle: string;
+  classLevel?: string;
+  preferredSchedule?: string;
+  appliedDate?: string;
+  note?: string;
+  status: "Pending" | "Accepted" | "Rejected";
+}
+
+
+
 export const applyToATuition = async (data: ApplicationData) => {
   let res: Response;
 
@@ -184,4 +202,24 @@ export const updateApplicantStatus = async (
         error instanceof Error ? error.message : "Backend server not reachable",
     };
   }
+};
+
+
+
+
+//application get by user email
+
+export const getTutorApplicants = async (email: string) => {
+  const res = await fetch(
+    `${BASE_URL}/applications/tutor/${encodeURIComponent(email)}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch applicants");
+  }
+
+  return res.json();
 };
