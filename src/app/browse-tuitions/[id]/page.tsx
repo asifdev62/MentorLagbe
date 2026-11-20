@@ -20,12 +20,12 @@ import {
   BadgeCheck,
   School,
   Info,
-  Send,
   ShieldCheck,
   Sparkles,
   ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
+import TuitionApplyButton from "../TuitionApplyButton";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -492,17 +492,14 @@ const TuitionDetailsContent = async ({ params }: Props) => {
                   </p>
                 </div>
 
-                <button
-                  type="button"
-                  disabled
-                  className="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 text-sm font-bold text-white opacity-60"
-                >
-                  <Send size={17} />
-                  Apply for This Tuition
-                </button>
+                <TuitionApplyButton
+                  tuitionId={tuition._id ?? id}
+                  tuitionTitle={tuition.title}
+                  classLevel={tuition.classLevel}
+                />
 
                 <p className="mt-3 text-center text-xs text-slate-400">
-                  Application feature coming soon
+                  Your application will be sent to the tuition poster.
                 </p>
 
                 <div className="mt-5 border-t border-slate-100 pt-5">
