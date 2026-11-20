@@ -24,9 +24,9 @@ export default function SignInPage() {
   const [loading, setLoading] = useState(false);
   const [remember, setRemember] = useState(false);
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") ?? "/"
+  const redirectTo = searchParams.get("redirectTo") ?? "/";
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -66,50 +66,50 @@ export default function SignInPage() {
     }
   };
 
-
   const handleSignInWithGoogle = async () => {
-  try {
-    toast.loading("Connecting to Google...", {
-      id: "google-signIn",
-    });
-
-    const { data, error } = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
-    });
-
-    if (error) {
-      toast.error(error.message || "Google sign-In failed.", {
+    try {
+      toast.loading("Connecting to Google...", {
         id: "google-signIn",
       });
-      return;
-    }
 
-    if (data) {
-      toast.success("Redirecting to Google...", {
+      const { data, error } = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+
+      if (error) {
+        toast.error(error.message || "Google sign-In failed.", {
+          id: "google-signIn",
+        });
+        return;
+      }
+
+      if (data) {
+        toast.success("Redirecting to Google...", {
+          id: "google-signIn",
+        });
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.", {
         id: "google-signIn",
       });
-    }
-  } catch (error) {
-    toast.error("Something went wrong. Please try again.", {
-      id: "google-signIn",
-    });
 
-    console.error("Google sign-In exception:", error);
-  }
-};
+      console.error("Google sign-In exception:", error);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-[#F4F7FC] flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-[420px]">
 
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center gap-2 mb-7">
-          <div className="bg-blue-600 text-white p-2 rounded-xl shadow-md shadow-blue-200">
+          <div className="bg-[#087E9D] text-white p-2 rounded-xl shadow-md shadow-[#087E9D]/20">
             <GraduationCap size={25} />
           </div>
 
           <span className="text-2xl font-extrabold tracking-tight text-slate-900">
-            Mentor<span className="text-blue-600">Lagbe</span>
+            Mentor<span className="text-[#087E9D]">Lagbe</span>
           </span>
         </Link>
 
@@ -118,7 +118,7 @@ export default function SignInPage() {
 
           {/* Heading */}
           <div className="text-center mb-7">
-            <div className="mx-auto mb-4 flex items-center justify-center w-11 h-11 rounded-xl bg-blue-50 text-blue-600">
+            <div className="mx-auto mb-4 flex items-center justify-center w-11 h-11 rounded-xl bg-[#087E9D]/10 text-[#087E9D]">
               <Sparkles size={22} />
             </div>
 
@@ -156,7 +156,7 @@ export default function SignInPage() {
                   placeholder="you@example.com"
                   autoComplete="email"
                   required
-                  className="w-full h-11 pl-10 pr-3 rounded-lg border border-slate-200 bg-slate-50/70 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full h-11 pl-10 pr-3 rounded-lg border border-slate-200 bg-slate-50/70 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#087E9D] focus:bg-white focus:ring-4 focus:ring-[#087E9D]/10"
                 />
               </div>
             </div>
@@ -173,7 +173,7 @@ export default function SignInPage() {
 
                 <Link
                   href="/forgot-password"
-                  className="text-xs font-semibold text-blue-600 hover:text-blue-700"
+                  className="text-xs font-semibold text-[#087E9D] hover:text-[#066780]"
                 >
                   Forgot password?
                 </Link>
@@ -193,7 +193,7 @@ export default function SignInPage() {
                   placeholder="Enter your password"
                   autoComplete="current-password"
                   required
-                  className="w-full h-11 pl-10 pr-11 rounded-lg border border-slate-200 bg-slate-50/70 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full h-11 pl-10 pr-11 rounded-lg border border-slate-200 bg-slate-50/70 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#087E9D] focus:bg-white focus:ring-4 focus:ring-[#087E9D]/10"
                 />
 
                 <button
@@ -214,7 +214,7 @@ export default function SignInPage() {
                 id="remember"
                 checked={remember}
                 onChange={(e) => setRemember(e.target.checked)}
-                className="w-4 h-4 rounded accent-blue-600 cursor-pointer"
+                className="w-4 h-4 rounded accent-[#087E9D] cursor-pointer"
               />
 
               <label
@@ -229,31 +229,30 @@ export default function SignInPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-11 flex items-center justify-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-md shadow-blue-600/20 transition duration-200"
+              className="w-full h-11 flex items-center justify-center gap-2 rounded-lg bg-[#087E9D] hover:bg-[#066780] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-md shadow-[#087E9D]/20 transition duration-200"
             >
               {loading ? "Signing In..." : "Sign In"}
               {!loading && <ArrowRight size={17} />}
             </button>
 
+            {/* Divider */}
+            <div className="relative flex items-center gap-4 my-6">
+              <div className="flex-1 border-t border-slate-200" />
+              <span className="text-[11px] font-medium tracking-wider text-slate-400">
+                OR CONTINUE WITH
+              </span>
+              <div className="flex-1 border-t border-slate-200" />
+            </div>
 
-             {/* Divider */}
-                      <div className="relative flex items-center gap-4 my-6">
-                        <div className="flex-1 border-t border-slate-200" />
-                        <span className="text-[11px] font-medium tracking-wider text-slate-400">
-                          OR CONTINUE WITH
-                        </span>
-                        <div className="flex-1 border-t border-slate-200" />
-                      </div>
-            
-                      {/* Google Button */}
-                      <button
-                      onClick={handleSignInWithGoogle}
-                        type="button"
-                        className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md active:translate-y-0"
-                      >
-                        <FcGoogle className="text-xl transition-transform duration-300 group-hover:scale-110" />
-                        <span>Continue with Google</span>
-                      </button>
+            {/* Google Button */}
+            <button
+              onClick={handleSignInWithGoogle}
+              type="button"
+              className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#087E9D]/40 hover:bg-[#087E9D]/5 hover:shadow-md active:translate-y-0"
+            >
+              <FcGoogle className="text-xl transition-transform duration-300 group-hover:scale-110" />
+              <span>Continue with Google</span>
+            </button>
           </form>
 
           {/* Sign Up */}
@@ -261,7 +260,7 @@ export default function SignInPage() {
             Don&apos;t have an account?{" "}
             <Link
               href="/auth/sign-up"
-              className="font-semibold text-blue-600 hover:text-blue-700"
+              className="font-semibold text-[#087E9D] hover:text-[#066780]"
             >
               Sign up
             </Link>

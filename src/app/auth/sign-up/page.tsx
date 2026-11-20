@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -110,12 +111,12 @@ export default function SignUpPage() {
           href="/"
           className="flex items-center justify-center gap-2.5 mb-7 group"
         >
-          <div className="bg-blue-600 text-white p-2.5 rounded-xl shadow-lg shadow-blue-600/20 transition-transform duration-300 group-hover:-rotate-6">
+          <div className="bg-[#087E9D] text-white p-2.5 rounded-xl shadow-lg shadow-[#087E9D]/20 transition-transform duration-300 group-hover:-rotate-6">
             <GraduationCap size={26} />
           </div>
 
           <span className="text-2xl font-extrabold tracking-tight text-slate-900">
-            Mentor<span className="text-blue-600">Lagbe</span>
+            Mentor<span className="text-[#087E9D]">Lagbe</span>
           </span>
         </Link>
 
@@ -123,7 +124,7 @@ export default function SignUpPage() {
         <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xl shadow-slate-200/60 p-6 sm:p-8">
           {/* Heading */}
           <div className="text-center mb-7">
-            <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold mb-3">
+            <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-full bg-[#087E9D]/10 text-[#087E9D] text-xs font-semibold mb-3">
               <Sparkles size={13} />
               Start Learning Today
             </div>
@@ -151,14 +152,14 @@ export default function SignUpPage() {
                   onClick={() => setRole("student")}
                   className={`relative flex items-center gap-3 p-3 rounded-xl border transition-all duration-200 ${
                     role === "student"
-                      ? "border-blue-500 bg-blue-50/70 text-blue-700 shadow-sm shadow-blue-100"
-                      : "border-slate-200 bg-white hover:border-blue-300 text-slate-600"
+                      ? "border-[#087E9D] bg-[#087E9D]/10 text-[#087E9D] shadow-sm shadow-[#087E9D]/10"
+                      : "border-slate-200 bg-white hover:border-[#087E9D]/50 text-slate-600"
                   }`}
                 >
                   <div
                     className={`p-2.5 rounded-lg ${
                       role === "student"
-                        ? "bg-blue-100"
+                        ? "bg-[#087E9D]/15"
                         : "bg-slate-100"
                     }`}
                   >
@@ -175,7 +176,7 @@ export default function SignUpPage() {
                   {role === "student" && (
                     <Check
                       size={16}
-                      className="absolute top-2 right-2 text-blue-600"
+                      className="absolute top-2 right-2 text-[#087E9D]"
                     />
                   )}
                 </button>
@@ -186,14 +187,14 @@ export default function SignUpPage() {
                   onClick={() => setRole("tutor")}
                   className={`relative flex items-center gap-3 p-3 rounded-xl border transition-all duration-200 ${
                     role === "tutor"
-                      ? "border-blue-500 bg-blue-50/70 text-blue-700 shadow-sm shadow-blue-100"
-                      : "border-slate-200 bg-white hover:border-blue-300 text-slate-600"
+                      ? "border-[#087E9D] bg-[#087E9D]/10 text-[#087E9D] shadow-sm shadow-[#087E9D]/10"
+                      : "border-slate-200 bg-white hover:border-[#087E9D]/50 text-slate-600"
                   }`}
                 >
                   <div
                     className={`p-2.5 rounded-lg ${
                       role === "tutor"
-                        ? "bg-blue-100"
+                        ? "bg-[#087E9D]/15"
                         : "bg-slate-100"
                     }`}
                   >
@@ -210,7 +211,7 @@ export default function SignUpPage() {
                   {role === "tutor" && (
                     <Check
                       size={16}
-                      className="absolute top-2 right-2 text-blue-600"
+                      className="absolute top-2 right-2 text-[#087E9D]"
                     />
                   )}
                 </button>
@@ -240,7 +241,7 @@ export default function SignUpPage() {
                   placeholder="Enter your full name"
                   autoComplete="name"
                   required
-                  className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-[#087E9D] focus:bg-white focus:ring-4 focus:ring-[#087E9D]/10"
                 />
               </div>
             </div>
@@ -268,7 +269,7 @@ export default function SignUpPage() {
                   placeholder="name@example.com"
                   autoComplete="email"
                   required
-                  className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-[#087E9D] focus:bg-white focus:ring-4 focus:ring-[#087E9D]/10"
                 />
               </div>
             </div>
@@ -297,13 +298,13 @@ export default function SignUpPage() {
                   autoComplete="new-password"
                   required
                   minLength={8}
-                  className="w-full h-11 pl-10 pr-11 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full h-11 pl-10 pr-11 rounded-xl border border-slate-200 bg-slate-50/60 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-[#087E9D] focus:bg-white focus:ring-4 focus:ring-[#087E9D]/10"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600 transition-colors"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#087E9D] transition-colors"
                   aria-label={showPassword ? "Hide password" : "Show password"}
                 >
                   {showPassword ? (
@@ -326,7 +327,7 @@ export default function SignUpPage() {
                 id="terms"
                 checked={terms}
                 onChange={(e) => setTerms(e.target.checked)}
-                className="w-4 h-4 mt-0.5 rounded accent-blue-600 cursor-pointer"
+                className="w-4 h-4 mt-0.5 rounded accent-[#087E9D] cursor-pointer"
               />
 
               <label
@@ -336,14 +337,14 @@ export default function SignUpPage() {
                 I agree to the{" "}
                 <Link
                   href="/terms"
-                  className="text-blue-600 font-semibold hover:underline"
+                  className="text-[#087E9D] font-semibold hover:underline"
                 >
                   Terms of Service
                 </Link>{" "}
                 and{" "}
                 <Link
                   href="/privacy"
-                  className="text-blue-600 font-semibold hover:underline"
+                  className="text-[#087E9D] font-semibold hover:underline"
                 >
                   Privacy Policy
                 </Link>.
@@ -354,7 +355,7 @@ export default function SignUpPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-lg shadow-blue-600/20 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
+              className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-[#087E9D] hover:bg-[#066780] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-lg shadow-[#087E9D]/20 transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0"
             >
               {loading ? "Creating Account..." : "Create Account"}
 
@@ -375,7 +376,7 @@ export default function SignUpPage() {
           <button
             onClick={handleSignUpWithGoogle}
             type="button"
-            className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-md active:translate-y-0"
+            className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#087E9D]/40 hover:bg-[#087E9D]/5 hover:shadow-md active:translate-y-0"
           >
             <FcGoogle className="text-xl transition-transform duration-300 group-hover:scale-110" />
             <span>Continue with Google</span>
@@ -392,7 +393,7 @@ export default function SignUpPage() {
             Already have an account?{" "}
             <Link
               href="/auth/sign-in"
-              className="font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+              className="font-semibold text-[#087E9D] hover:text-[#066780] transition-colors"
             >
               Sign in
             </Link>
