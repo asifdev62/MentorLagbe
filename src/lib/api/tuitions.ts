@@ -1,3 +1,4 @@
+
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
@@ -5,8 +6,7 @@ export type ApprovalStatus = "pending" | "approved" | "rejected";
 export type ActiveStatus = "active" | "closed";
 
 export type TuitionItem = {
-  _id?: string;
-  id?: string;
+  _id: string;
   title: string;
   classLevel: string;
   subject: string;
@@ -42,6 +42,7 @@ export type TuitionItem = {
   applicantCount?: number;
 };
 
+// Get all tuitions
 export const getTuitions = async (): Promise<TuitionItem[]> => {
   try {
     const res = await fetch(`${BASE_URL}/tuitions`, {
@@ -49,22 +50,19 @@ export const getTuitions = async (): Promise<TuitionItem[]> => {
     });
 
     if (!res.ok) {
-      console.warn(`Failed to fetch tuitions: HTTP ${res.status}`);
       return [];
     }
 
     const data = await res.json();
-    return Array.isArray(data) ? data : data.tuitions || [];
+
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.warn("Backend not reachable at", BASE_URL, error);
+    console.error("Failed to fetch tuitions:", error);
     return [];
   }
 };
 
-
-
-
-// tution details page 
+// Get single tuition by ID
 export const getTuitionById = async (
   id: string
 ): Promise<TuitionItem | null> => {

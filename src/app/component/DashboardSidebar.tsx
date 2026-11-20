@@ -12,7 +12,6 @@ import {
   LayoutDashboard,
   PlusCircle,
   Settings,
-  ShieldCheck,
   UserRound,
   Users,
 } from "lucide-react";
@@ -120,24 +119,14 @@ const menuItemsByRole: Record<SidebarRole, MenuItem[]> = {
       url: "/dashboard/admin/users",
       icon: Users,
     },
-    {
-      id: "admin-tutors",
-      name: "Tutors",
-      url: "/dashboard/admin/tutors",
-      icon: ShieldCheck,
-    },
+
     {
       id: "admin-tuitions",
       name: "Tuitions",
       url: "/dashboard/admin/tuitions",
       icon: BookOpen,
     },
-    {
-      id: "admin-applications",
-      name: "Applications",
-      url: "/dashboard/admin/applications",
-      icon: FileText,
-    },
+
     {
       id: "admin-payments",
       name: "Payments",
