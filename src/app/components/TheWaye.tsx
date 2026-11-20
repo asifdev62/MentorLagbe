@@ -1,3 +1,4 @@
+
 import {
   UserRoundPlus,
   ClipboardList,
@@ -28,7 +29,6 @@ const steps = [
   },
 ];
 
-/* Center of each step column (percentage of the 4-column grid). */
 const connectors = [
   { left: "12.5%", direction: "up" as const, id: "connect-arrow-1" },
   { left: "37.5%", direction: "down" as const, id: "connect-arrow-2" },
@@ -67,7 +67,7 @@ function Connector({
           <path
             d="M0 0 L10 5 L0 10"
             fill="none"
-            stroke="#155DFC"
+            stroke="#087E9D"
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -78,7 +78,7 @@ function Connector({
       <path
         d={PATHS[direction]}
         fill="none"
-        stroke="#155DFC"
+        stroke="#087E9D"
         strokeOpacity="0.75"
         strokeWidth="1.6"
         strokeDasharray="5 7"
@@ -94,7 +94,7 @@ export default function TheWayes() {
     <section className="bg-white py-14 sm:py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <h2 className="text-balance text-2xl font-bold leading-snug tracking-tight text-[#20242C] sm:text-3xl lg:text-[40px]">
-          The ways <span className="text-[#155DFC]">Students/Parents</span> can
+          The ways <span className="text-[#087E9D]">Students/Parents</span> can
           connect with us.
         </h2>
 
@@ -115,7 +115,7 @@ export default function TheWayes() {
               key={title}
               className="relative z-10 flex flex-col items-center px-2 text-center"
             >
-              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#155DFC] text-white shadow-[0_12px_28px_-8px_rgba(21,93,252,0.45)] ring-[5px] ring-[#155DFC]/15 sm:h-20 sm:w-20 sm:ring-[6px] xl:h-24 xl:w-24">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#087E9D] text-white shadow-[0_12px_28px_-8px_rgba(8,126,157,0.45)] ring-[5px] ring-[#087E9D]/15 sm:h-20 sm:w-20 sm:ring-[6px] xl:h-24 xl:w-24">
                 <Icon
                   size={26}
                   strokeWidth={1.9}

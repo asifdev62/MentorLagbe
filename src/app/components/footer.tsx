@@ -1,3 +1,4 @@
+
 import Link from "next/link";
 import {
   GraduationCap,
@@ -32,22 +33,18 @@ const tutorLinks = [
 export default function Footer() {
   return (
     <footer className="bg-[#101D36] text-white">
-
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-5 lg:px-8 pt-16 pb-10">
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
-
           {/* Brand */}
           <div className="lg:col-span-2">
-
             <Link href="/" className="inline-flex items-center gap-2">
-              <div className="bg-blue-600 p-2 rounded-xl">
+              <div className="bg-[#087E9D] p-2 rounded-xl">
                 <GraduationCap size={27} />
               </div>
 
               <span className="text-2xl font-extrabold tracking-tight">
-                Mentor<span className="text-blue-400">Lagbe</span>
+                Mentor<span className="text-[#087E9D]">Lagbe</span>
               </span>
             </Link>
 
@@ -58,34 +55,34 @@ export default function Footer() {
             </p>
 
             {/* Social Links */}
-          <div className="flex items-center gap-3 mt-6">
-  <Link
-    href="https://facebook.com"
-    target="_blank"
-    aria-label="Facebook"
-    className="w-10 h-10 rounded-xl bg-white/10 hover:bg-blue-600 flex items-center justify-center transition"
-  >
-    <span className="font-bold text-lg">f</span>
-  </Link>
+            <div className="flex items-center gap-3 mt-6">
+              <Link
+                href="https://facebook.com"
+                target="_blank"
+                aria-label="Facebook"
+                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087E9D] flex items-center justify-center transition"
+              >
+                <span className="font-bold text-lg">f</span>
+              </Link>
 
-  <Link
-    href="https://instagram.com"
-    target="_blank"
-    aria-label="Instagram"
-    className="w-10 h-10 rounded-xl bg-white/10 hover:bg-blue-600 flex items-center justify-center transition"
-  >
-    <span className="font-bold text-xl">◎</span>
-  </Link>
+              <Link
+                href="https://instagram.com"
+                target="_blank"
+                aria-label="Instagram"
+                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087E9D] flex items-center justify-center transition"
+              >
+                <span className="font-bold text-xl">◎</span>
+              </Link>
 
-  <Link
-    href="https://linkedin.com"
-    target="_blank"
-    aria-label="LinkedIn"
-    className="w-10 h-10 rounded-xl bg-white/10 hover:bg-blue-600 flex items-center justify-center transition"
-  >
-    <span className="font-bold text-sm">in</span>
-  </Link>
-</div>
+              <Link
+                href="https://linkedin.com"
+                target="_blank"
+                aria-label="LinkedIn"
+                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087E9D] flex items-center justify-center transition"
+              >
+                <span className="font-bold text-sm">in</span>
+              </Link>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -99,7 +96,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-blue-400 transition"
+                    className="text-sm text-slate-400 hover:text-[#087E9D] transition"
                   >
                     {link.label}
                   </Link>
@@ -119,7 +116,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-blue-400 transition"
+                    className="text-sm text-slate-400 hover:text-[#087E9D] transition"
                   >
                     {link.label}
                   </Link>
@@ -139,7 +136,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-blue-400 transition"
+                    className="text-sm text-slate-400 hover:text-[#087E9D] transition"
                   >
                     {link.label}
                   </Link>
@@ -147,14 +144,12 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-
         </div>
 
         {/* Contact Section */}
         <div className="grid sm:grid-cols-3 gap-5 mt-14 p-6 rounded-2xl bg-white/5 border border-white/10">
-
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#087E9D]/20 text-[#087E9D] flex items-center justify-center">
               <Mail size={19} />
             </div>
             <div>
@@ -166,7 +161,7 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#087E9D]/20 text-[#087E9D] flex items-center justify-center">
               <Phone size={19} />
             </div>
             <div>
@@ -178,7 +173,7 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#087E9D]/20 text-[#087E9D] flex items-center justify-center">
               <MapPin size={19} />
             </div>
             <div>
@@ -188,37 +183,33 @@ export default function Footer() {
               </p>
             </div>
           </div>
-
         </div>
 
         {/* Bottom Footer */}
         <div className="border-t border-white/10 mt-10 pt-7 flex flex-col md:flex-row items-center justify-between gap-5">
-
           <p className="text-sm text-slate-400 text-center">
             © {currentYear} MentorLagbe. All rights reserved.
           </p>
 
           <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-slate-400">
-            <Link href="/privacy" className="hover:text-blue-400 transition">
+            <Link href="/privacy" className="hover:text-[#087E9D] transition">
               Privacy Policy
             </Link>
 
-            <Link href="/terms" className="hover:text-blue-400 transition">
+            <Link href="/terms" className="hover:text-[#087E9D] transition">
               Terms of Service
             </Link>
 
-            <Link href="/contact" className="hover:text-blue-400 transition">
+            <Link href="/contact" className="hover:text-[#087E9D] transition">
               Contact
             </Link>
           </div>
 
           <p className="text-sm text-slate-400 flex items-center gap-1">
             Made for better learning
-            <BookOpen size={15} className="text-blue-400" />
+            <BookOpen size={15} className="text-[#087E9D]" />
           </p>
-
         </div>
-
       </div>
     </footer>
   );

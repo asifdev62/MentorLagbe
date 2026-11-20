@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 import { House, MonitorPlay, BookOpenCheck, Users, Plus } from "lucide-react";
@@ -45,7 +46,7 @@ function Feature({
         align === "right" ? "items-end text-right" : "items-start text-left"
       }`}
     >
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#155DFC] text-white shadow-[0_8px_18px_-6px_rgba(21,93,252,0.55)] sm:h-11 sm:w-11 xl:h-12 xl:w-12">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#087E9D] text-white shadow-[0_8px_18px_-6px_rgba(8,126,157,0.55)] sm:h-11 sm:w-11 xl:h-12 xl:w-12">
         <Icon size={20} strokeWidth={2} className="xl:size-[22px]" />
       </div>
 
@@ -64,19 +65,19 @@ function MethodCircle() {
   return (
     <div className="relative mx-auto aspect-square w-[78vw] max-w-[300px] sm:w-[340px] sm:max-w-[340px] lg:w-[380px] lg:max-w-[380px] xl:w-[430px] xl:max-w-[430px]">
       {/* Pale outer ring */}
-      <div className="absolute inset-0 rounded-full border-[10px] border-[#155DFC]/15 sm:border-[12px] xl:border-[14px]" />
+      <div className="absolute inset-0 rounded-full border-[10px] border-[#087E9D]/15 sm:border-[12px] xl:border-[14px]" />
 
-      {/* Dashed circle (kept proportional at every size) */}
+      {/* Dashed circle */}
       <div className="absolute inset-[4.5%] rounded-full border-2 border-dashed border-[#4B5563]/75" />
 
-      {/* Plus badges sitting on the dashed circle */}
+      {/* Plus badges */}
       {[45, 135, 225, 315].map((deg) => (
         <div
           key={deg}
           className="absolute inset-[4.5%]"
           style={{ transform: `rotate(${deg}deg)` }}
         >
-          <span className="absolute left-1/2 top-0 flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#155DFC] text-white shadow-[0_4px_10px_rgba(21,93,252,0.4)] sm:h-6 sm:w-6">
+          <span className="absolute left-1/2 top-0 flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#087E9D] text-white shadow-[0_4px_10px_rgba(8,126,157,0.4)] sm:h-6 sm:w-6">
             <span
               className="flex items-center justify-center"
               style={{
@@ -95,7 +96,7 @@ function MethodCircle() {
       ))}
 
       {/* Photo */}
-      <div className="absolute left-1/2 top-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-blue-50 ring-4 ring-white shadow-[0_24px_60px_-24px_rgba(17,27,53,0.45)]">
+      <div className="absolute left-1/2 top-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-[#087E9D]/5 ring-4 ring-white shadow-[0_24px_60px_-24px_rgba(17,27,53,0.45)]">
         <Image
           src="/images/photo.png"
           alt="A student using MentorLagbe on the go"
@@ -163,7 +164,7 @@ export default function TutoringMethod() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8">
         <h2 className="text-balance text-2xl font-bold leading-snug tracking-tight text-[#20242C] sm:text-3xl lg:text-[40px]">
-          Tutoring <span className="text-[#155DFC]">Method</span>
+          Tutoring <span className="text-[#087E9D]">Method</span>
         </h2>
 
         {/* Desktop: features around the circle */}
@@ -181,7 +182,7 @@ export default function TutoringMethod() {
           </div>
         </div>
 
-        {/* Mobile & tablet: circle on top, features below */}
+        {/* Mobile & tablet */}
         <div className="mt-10 lg:hidden">
           <MethodCircle />
 

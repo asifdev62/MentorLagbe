@@ -17,20 +17,17 @@ export default function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-[#F5F8FF]">
       {/* Background Decoration */}
-      <div className="absolute top-0 right-0 w-137.5 h-137.5 bg-blue-100/50 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-72 h-72 bg-indigo-100/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-137.5 h-137.5 bg-[#087E9D]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#087E9D]/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-5 lg:px-8 pt-16 lg:pt-20">
-
         <div className="grid lg:grid-cols-2 items-center gap-10 lg:gap-6">
-
           {/* LEFT CONTENT */}
           <div className="relative z-10 max-w-155">
-
             {/* Trust Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full bg-blue-100/80 border border-blue-200/60 px-4 py-2 mb-7">
-              <ShieldCheck size={17} className="text-blue-600" />
-              <span className="text-sm font-semibold text-blue-700">
+            <div className="inline-flex items-center gap-2 rounded-full bg-[#087E9D]/10 border border-[#087E9D]/20 px-4 py-2 mb-7">
+              <ShieldCheck size={17} className="text-[#087E9D]" />
+              <span className="text-sm font-semibold text-[#087E9D]">
                 Your Trusted Learning Partner
               </span>
             </div>
@@ -39,7 +36,7 @@ export default function HeroSection() {
             <h1 className="text-[42px] sm:text-5xl lg:text-[56px] xl:text-[62px] font-extrabold text-[#111B35] leading-[1.13] tracking-[-2px]">
               Find the Right
               <br />
-              <span className="text-blue-600">Tutor</span> for Your
+              <span className="text-[#087E9D]">Tutor</span> for Your
               <br />
               Learning Journey
             </h1>
@@ -51,12 +48,10 @@ export default function HeroSection() {
             </p>
 
             {/* Search Card */}
-            <div className="mt-8 max-w-147.5 bg-white p-2 rounded-2xl border border-blue-100 shadow-lg shadow-blue-100/60">
-
+            <div className="mt-8 max-w-147.5 bg-white p-2 rounded-2xl border border-[#087E9D]/20 shadow-lg shadow-[#087E9D]/10">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-
                 <div className="flex items-center gap-3 flex-1 px-3">
-                  <Search size={21} className="text-blue-600 shrink-0" />
+                  <Search size={21} className="text-[#087E9D] shrink-0" />
 
                   <input
                     type="text"
@@ -80,21 +75,19 @@ export default function HeroSection() {
 
                 <Link
                   href="/browse-tuitions"
-                  className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all shadow-md shadow-blue-200"
+                  className="flex items-center justify-center gap-2 bg-[#087E9D] hover:bg-[#066780] text-white font-semibold text-sm px-6 py-3.5 rounded-xl transition-all shadow-md shadow-[#087E9D]/20"
                 >
                   Search
                   <ArrowRight size={17} />
                 </Link>
-
               </div>
             </div>
 
             {/* Benefits */}
             <div className="flex flex-wrap items-center gap-x-7 gap-y-4 mt-8">
-
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center">
-                  <ShieldCheck size={19} className="text-blue-600" />
+                <div className="w-9 h-9 rounded-full bg-[#087E9D]/10 flex items-center justify-center">
+                  <ShieldCheck size={19} className="text-[#087E9D]" />
                 </div>
                 <span className="text-sm font-semibold text-slate-700">
                   Verified Tutors
@@ -102,8 +95,8 @@ export default function HeroSection() {
               </div>
 
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center">
-                  <Zap size={19} className="text-blue-600" />
+                <div className="w-9 h-9 rounded-full bg-[#087E9D]/10 flex items-center justify-center">
+                  <Zap size={19} className="text-[#087E9D]" />
                 </div>
                 <span className="text-sm font-semibold text-slate-700">
                   Easy Application
@@ -111,25 +104,22 @@ export default function HeroSection() {
               </div>
 
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center">
-                  <Headphones size={19} className="text-blue-600" />
+                <div className="w-9 h-9 rounded-full bg-[#087E9D]/10 flex items-center justify-center">
+                  <Headphones size={19} className="text-[#087E9D]" />
                 </div>
                 <span className="text-sm font-semibold text-slate-700">
                   Support
                 </span>
               </div>
-
             </div>
           </div>
 
           {/* RIGHT IMAGE */}
           <div className="relative flex justify-center items-center lg:pl-4">
-
             {/* Image Background */}
-            <div className="absolute w-[85%] aspect-square rounded-full bg-blue-200/50 blur-2xl" />
+            <div className="absolute w-[85%] aspect-square rounded-full bg-[#087E9D]/15 blur-2xl" />
 
             <div className="relative w-full max-w-147.5">
-
               <Image
                 src="/images/mentorlagbe-student-tutor.png"
                 alt="Student learning with a tutor"
@@ -141,7 +131,7 @@ export default function HeroSection() {
 
               {/* Floating Card */}
               <div className="absolute z-20 top-[15%] -left-2 sm:-left-5 bg-white rounded-2xl shadow-xl shadow-slate-300/40 p-3 flex items-center gap-3">
-                <div className="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center text-blue-600">
+                <div className="w-11 h-11 rounded-xl bg-[#087E9D]/10 flex items-center justify-center text-[#087E9D]">
                   <GraduationCap size={25} />
                 </div>
 
@@ -170,16 +160,14 @@ export default function HeroSection() {
                   </p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
 
         {/* BOTTOM STATS */}
-        <div className="relative z-20 grid grid-cols-1 sm:grid-cols-3 gap-5 bg-white border border-slate-100 shadow-lg shadow-blue-100/50 rounded-2xl p-6 mt-12 mb-10">
-
+        <div className="relative z-20 grid grid-cols-1 sm:grid-cols-3 gap-5 bg-white border border-slate-100 shadow-lg shadow-[#087E9D]/10 rounded-2xl p-6 mt-12 mb-10">
           <div className="flex items-center justify-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+            <div className="w-12 h-12 rounded-xl bg-[#087E9D]/5 flex items-center justify-center text-[#087E9D]">
               <Users size={26} />
             </div>
             <div>
@@ -193,7 +181,7 @@ export default function HeroSection() {
           </div>
 
           <div className="flex items-center justify-center gap-4 sm:border-x border-slate-100 sm:px-4">
-            <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+            <div className="w-12 h-12 rounded-xl bg-[#087E9D]/5 flex items-center justify-center text-[#087E9D]">
               <GraduationCap size={26} />
             </div>
             <div>
@@ -219,9 +207,7 @@ export default function HeroSection() {
               </p>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   );

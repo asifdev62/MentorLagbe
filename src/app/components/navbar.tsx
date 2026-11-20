@@ -35,12 +35,10 @@ export default function Navbar() {
 
   const user = session?.user;
 
-  // Get user role
   const role = (user as typeof user & {
     role?: string;
   })?.role?.toLowerCase();
 
-  // Dashboard URL based on role
   const dashboardUrl =
     role === "admin"
       ? "/dashboard/admin"
@@ -48,10 +46,8 @@ export default function Navbar() {
         ? "/dashboard/tutor"
         : "/dashboard/student";
 
-  // User initial
   const initial = user?.name?.charAt(0).toUpperCase() || "U";
 
-  // Sign Out
   const handleSignOut = async () => {
     try {
       setLoggingOut(true);
@@ -76,12 +72,12 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-200">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#087E9D] text-white shadow-md shadow-[#087E9D]/20">
             <GraduationCap size={26} />
           </div>
 
           <span className="text-2xl font-extrabold tracking-tight text-slate-900">
-            Mentor<span className="text-blue-600">Lagbe</span>
+            Mentor<span className="text-[#087E9D]">Lagbe</span>
           </span>
         </Link>
 
@@ -91,7 +87,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-semibold text-slate-600 transition hover:text-blue-600"
+              className="text-sm font-semibold text-slate-600 transition hover:text-[#087E9D]"
             >
               {link.name}
             </Link>
@@ -100,19 +96,15 @@ export default function Navbar() {
 
         {/* Authentication */}
         <div className="hidden items-center gap-3 md:flex">
-
           {isPending ? (
             <div className="h-10 w-28 animate-pulse rounded-xl bg-slate-100" />
           ) : user ? (
-
-            /* Logged In User */
             <div className="relative">
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-2 rounded-xl border border-slate-200 p-2 transition hover:bg-slate-50"
               >
-                {/* Avatar */}
-                <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-blue-100 font-bold text-blue-700">
+                <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-[#087E9D]/10 font-bold text-[#087E9D]">
                   {user.image ? (
                     <Image
                       src={user.image}
@@ -131,7 +123,7 @@ export default function Navbar() {
                     {user.name}
                   </p>
 
-                  <p className="text-xs font-semibold capitalize text-blue-600">
+                  <p className="text-xs font-semibold capitalize text-[#087E9D]">
                     {role || "User"}
                   </p>
                 </div>
@@ -142,7 +134,6 @@ export default function Navbar() {
               {/* Profile Dropdown */}
               {profileOpen && (
                 <div className="absolute right-0 top-14 z-50 w-60 rounded-xl border border-slate-100 bg-white p-2 shadow-xl">
-
                   <div className="border-b border-slate-100 px-3 py-3">
                     <p className="truncate text-sm font-bold text-slate-800">
                       {user.name}
@@ -155,7 +146,7 @@ export default function Navbar() {
                   <Link
                     href={dashboardUrl}
                     onClick={() => setProfileOpen(false)}
-                    className="mt-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+                    className="mt-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-[#087E9D]/10 hover:text-[#087E9D]"
                   >
                     <LayoutDashboard size={18} />
                     Dashboard
@@ -164,7 +155,7 @@ export default function Navbar() {
                   <Link
                     href="/profile"
                     onClick={() => setProfileOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-[#087E9D]/10 hover:text-[#087E9D]"
                   >
                     <UserRound size={18} />
                     My Profile
@@ -181,10 +172,7 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-
           ) : (
-
-            /* Logged Out User */
             <>
               <Link
                 href="/auth/sign-in"
@@ -195,7 +183,7 @@ export default function Navbar() {
 
               <Link
                 href="/auth/sign-up"
-                className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-700"
+                className="rounded-xl bg-[#087E9D] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#087E9D]/20 transition hover:bg-[#066780]"
               >
                 Get Started
               </Link>
@@ -217,30 +205,25 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="border-t border-slate-100 bg-white px-5 py-5 shadow-lg md:hidden">
-
           <div className="flex flex-col gap-2">
-
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-blue-50 hover:text-blue-600"
+                className="rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087E9D]/10 hover:text-[#087E9D]"
               >
                 {link.name}
               </Link>
             ))}
 
             <div className="mt-3 border-t border-slate-100 pt-4">
-
               {isPending ? (
                 <div className="h-10 animate-pulse rounded-xl bg-slate-100" />
               ) : user ? (
-
                 <div className="space-y-3">
-
                   <div className="flex items-center gap-3 px-2">
-                    <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-blue-100 font-bold text-blue-700">
+                    <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-[#087E9D]/10 font-bold text-[#087E9D]">
                       {user.image ? (
                         <Image
                           src={user.image}
@@ -256,7 +239,7 @@ export default function Navbar() {
                       <p className="truncate text-sm font-bold text-slate-800">
                         {user.name}
                       </p>
-                      <p className="text-xs font-semibold capitalize text-blue-600">
+                      <p className="text-xs font-semibold capitalize text-[#087E9D]">
                         {role || "User"}
                       </p>
                     </div>
@@ -265,7 +248,7 @@ export default function Navbar() {
                   <Link
                     href={dashboardUrl}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-blue-50"
+                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087E9D]/10 hover:text-[#087E9D]"
                   >
                     <LayoutDashboard size={18} />
                     Dashboard
@@ -274,7 +257,7 @@ export default function Navbar() {
                   <Link
                     href="/dashboard/profile"
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-blue-50"
+                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087E9D]/10 hover:text-[#087E9D]"
                   >
                     <UserRound size={18} />
                     Update Profile
@@ -288,11 +271,8 @@ export default function Navbar() {
                     <LogOut size={18} />
                     {loggingOut ? "Signing Out..." : "Sign Out"}
                   </button>
-
                 </div>
-
               ) : (
-
                 <div className="flex gap-3">
                   <Link
                     href="/auth/sign-in"
@@ -305,12 +285,11 @@ export default function Navbar() {
                   <Link
                     href="/auth/sign-up"
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 rounded-xl bg-blue-600 py-3 text-center text-sm font-semibold text-white"
+                    className="flex-1 rounded-xl bg-[#087E9D] py-3 text-center text-sm font-semibold text-white"
                   >
                     Get Started
                   </Link>
                 </div>
-
               )}
             </div>
           </div>
