@@ -15,9 +15,17 @@ import {
   BriefcaseBusiness,
   LayoutDashboard,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
+import Navbar from "../components/navbar";
 
-const studentSteps = [
+type Step = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+};
+
+const studentSteps: Step[] = [
   {
     icon: UserPlus,
     title: "Create an Account",
@@ -50,7 +58,7 @@ const studentSteps = [
   },
 ];
 
-const tutorSteps = [
+const tutorSteps: Step[] = [
   {
     icon: UserPlus,
     title: "Register as a Tutor",
@@ -83,7 +91,7 @@ const tutorSteps = [
   },
 ];
 
-const adminSteps = [
+const adminSteps: Step[] = [
   {
     icon: LayoutDashboard,
     title: "Access Dashboard",
@@ -114,20 +122,20 @@ const StepCard = ({
   step,
   index,
 }: {
-  step: (typeof studentSteps)[number];
+  step: Step;
   index: number;
 }) => {
   const Icon = step.icon;
 
   return (
-    <div className="group relative rounded-2xl border border-base-300 bg-base-100 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl">
+    <div className="group relative rounded-2xl border border-base-300 bg-base-100 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#087E9D]/40 hover:shadow-xl">
       <div className="mb-5 flex items-center justify-between">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-content">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#087E9D]/10 text-[#087E9D] transition-colors group-hover:bg-[#087E9D] group-hover:text-white">
           <Icon size={23} />
         </div>
 
         <span className="text-3xl font-bold text-base-300">
-          0{index + 1}
+          {String(index + 1).padStart(2, "0")}
         </span>
       </div>
 
@@ -143,17 +151,18 @@ const StepCard = ({
 const HowitWorksPage = () => {
   return (
     <main className="min-h-screen bg-base-100">
+      <Navbar />
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-primary/5 px-4 py-20 md:py-28">
+      <section className="relative overflow-hidden bg-[#087E9D]/5 px-2 py-33 md:py-25">
         <div className="mx-auto max-w-7xl text-center">
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#087E9D]/20 bg-[#087E9D]/10 px-4 py-2 text-sm font-semibold text-[#087E9D]">
             <GraduationCap size={17} />
             How MentorLagbe Works
           </span>
 
           <h1 className="mx-auto max-w-3xl text-4xl font-extrabold leading-tight tracking-tight md:text-6xl">
             Your Journey to Better
-            <span className="text-primary"> Learning </span>
+            <span className="text-[#087E9D]"> Learning </span>
             Starts Here
           </h1>
 
@@ -163,33 +172,41 @@ const HowitWorksPage = () => {
             the process simple and convenient.
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link
-              href="/browse-tuitions"
-              className="btn btn-primary rounded-xl px-7"
-            >
-              Browse Tuitions
-              <ArrowRight size={18} />
-            </Link>
+         
+<div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+  {/* Browse Tuitions Button */}
+  <Link
+    href="/browse-tuitions"
+    className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#087E9D] px-8 py-3 font-sans text-base font-semibold text-white shadow-lg shadow-[#087E9D]/20 transition-all duration-300 hover:-translate-y-1 hover:bg-[#066780] hover:shadow-xl hover:shadow-[#087E9D]/30 active:scale-95"
+  >
+    Browse Tuitions
+    <ArrowRight
+      size={19}
+      className="transition-transform duration-300 group-hover:translate-x-1"
+    />
+  </Link>
 
-            <Link
-              href="/register"
-              className="btn btn-outline btn-primary rounded-xl px-7"
-            >
-              Join MentorLagbe
-            </Link>
-          </div>
+  {/* Join MentorLagbe Button */}
+  <Link
+    href="/register"
+    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-[#087E9D] bg-white px-8 py-3 font-sans text-base font-semibold text-[#087E9D] transition-all duration-300 hover:-translate-y-1 hover:bg-[#087E9D] hover:text-white hover:shadow-lg hover:shadow-[#087E9D]/20 active:scale-95"
+  >
+    <UserPlus size={18} />
+    Join MentorLagbe
+  </Link>
+</div>
+
         </div>
       </section>
 
       {/* Student Section */}
       <section className="mx-auto max-w-7xl px-4 py-20">
         <div className="mb-12 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-500">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#087E9D]/10 text-[#087E9D]">
             <GraduationCap size={28} />
           </div>
 
-          <p className="mb-2 text-sm font-bold uppercase tracking-widest text-primary">
+          <p className="mb-2 text-sm font-bold uppercase tracking-widest text-[#087E9D]">
             For Students
           </p>
 
@@ -218,7 +235,7 @@ const HowitWorksPage = () => {
               <BriefcaseBusiness size={27} />
             </div>
 
-            <p className="mb-2 text-sm font-bold uppercase tracking-widest text-primary">
+            <p className="mb-2 text-sm font-bold uppercase tracking-widest text-[#087E9D]">
               For Tutors
             </p>
 
@@ -247,7 +264,7 @@ const HowitWorksPage = () => {
             <ShieldCheck size={27} />
           </div>
 
-          <p className="mb-2 text-sm font-bold uppercase tracking-widest text-primary">
+          <p className="mb-2 text-sm font-bold uppercase tracking-widest text-[#087E9D]">
             For Administrators
           </p>
 
@@ -270,7 +287,7 @@ const HowitWorksPage = () => {
 
       {/* CTA Section */}
       <section className="px-4 pb-20">
-        <div className="mx-auto max-w-5xl rounded-3xl bg-primary px-6 py-14 text-center text-primary-content md:px-12">
+        <div className="mx-auto max-w-5xl rounded-3xl bg-[#087E9D] px-6 py-14 text-center text-white md:px-12">
           <h2 className="text-3xl font-extrabold md:text-4xl">
             Ready to Get Started?
           </h2>
@@ -282,7 +299,7 @@ const HowitWorksPage = () => {
 
           <Link
             href="/register"
-            className="btn mt-8 rounded-xl border-0 bg-white px-8 text-primary hover:bg-white/90"
+            className="btn mt-8 rounded-xl border-0 bg-white px-8 text-[#087E9D] hover:bg-white/90"
           >
             Create Your Account
             <ArrowRight size={18} />

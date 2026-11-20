@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Headphones,
 } from "lucide-react";
+import Navbar from "../components/navbar";
 
 const plans = [
   {
@@ -75,6 +76,7 @@ const plans = [
 const PricingPage = () => {
   return (
     <main className="min-h-screen bg-[#F4F7FC]">
+        <Navbar />
       {/* Hero Section */}
       <section className="relative overflow-hidden px-4 pt-20 pb-12 text-center">
         <div className="absolute top-10 left-10 w-40 h-40 bg-[#087E9D]/10 rounded-full blur-3xl" />
