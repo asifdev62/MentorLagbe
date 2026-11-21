@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 
-import { stripe } from "@/lib/stripe";
+import { getStripe } from "@/lib/stripe";
 
 const PRICE_ID =
   process.env.STRIPE_PRICE_ID ?? "price_1UeLq9RxznHYYJr5vwhDqRGo";
@@ -16,6 +16,8 @@ export async function POST(request: Request) {
 
     const formData = await request.formData();
     const plan = formData.get("plan") === "tutor" ? "tutor" : "student";
+
+    const stripe = getStripe();
 
     // Support both one-time and monthly recurring prices.
     const price = await stripe.prices.retrieve(PRICE_ID);
