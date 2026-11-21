@@ -2,7 +2,7 @@ import { getTuitions, type TuitionItem } from "@/lib/api/tuitions";
 
 import StudentBrowseTuitions from "./StudentBrowseTuitions";
 
-export const instant = false;
+export const dynamic = "force-dynamic";
 
 const StudentBrowseTuitionsPage = async () => {
   let tuitions: TuitionItem[] = [];

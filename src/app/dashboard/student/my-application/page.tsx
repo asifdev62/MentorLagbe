@@ -8,7 +8,7 @@ import {
 } from "@/lib/actions/applicants";
 import MyApplicationsClient from "./MyApplicationsClient";
 
-export const instant = false;
+export const dynamic = "force-dynamic";
 
 const MyApplicationPage = async () => {
   const session = await auth.api.getSession({ headers: await headers() });

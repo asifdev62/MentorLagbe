@@ -5,7 +5,7 @@ import {
 
 import BrowseTuitions from "./BrowseTuitions";
 
-export const instant = false;
+export const dynamic = "force-dynamic";
 
 const TuitionsPage = async () => {
   let tuitions: TuitionItem[] = [];

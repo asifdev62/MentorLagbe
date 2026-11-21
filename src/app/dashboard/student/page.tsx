@@ -20,7 +20,7 @@ import {
 } from "@/lib/actions/applicants";
 import { OverviewStatCard } from "@/components/dashboard/OverviewStatCard";
 
-export const instant = false;
+export const dynamic = "force-dynamic";
 
 const formatDate = (value?: string) => {
   if (!value) return "Unknown date";
