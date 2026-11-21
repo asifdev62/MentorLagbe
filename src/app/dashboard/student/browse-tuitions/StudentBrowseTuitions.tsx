@@ -61,7 +61,7 @@ const InfoItem = ({
   value: string;
 }) => (
   <div className="flex min-w-0 items-start gap-2.5">
-    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#087F9F]/5 text-[#087F9F]">
       <Icon size={16} />
     </div>
 
@@ -190,9 +190,9 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
     <div className="min-h-svh bg-[#F4F7FC] px-4 py-6 md:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         {/* Hero */}
-        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-700 p-6 text-white shadow-xl shadow-blue-200/60 sm:p-8">
+        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#087F9F] via-[#087F9F] to-[#066B85] p-6 text-white shadow-xl shadow-[#087F9F]/20 sm:p-8">
           <div className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
-          <div className="pointer-events-none absolute -bottom-24 right-24 h-56 w-56 rounded-full bg-cyan-300/20 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-24 right-24 h-56 w-56 rounded-full bg-[#087F9F]/30 blur-3xl" />
 
           <div className="relative flex flex-wrap items-start justify-between gap-6">
             <div className="max-w-2xl">
@@ -205,7 +205,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
                 Find your next teaching opportunity
               </h1>
 
-              <p className="mt-2 max-w-xl text-sm leading-6 text-blue-100">
+              <p className="mt-2 max-w-xl text-sm leading-6 text-white/80">
                 Browse all approved tuitions, compare salary and schedule, then
                 apply to the ones that fit you best.
               </p>
@@ -213,7 +213,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
               <div className="mt-5 flex flex-wrap items-center gap-3">
                 <Link
                   href="/dashboard/student/my-application"
-                  className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-blue-700 shadow-sm transition hover:bg-blue-50"
+                  className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-[#066B85] shadow-sm transition hover:bg-[#087F9F]/5"
                 >
                   <FileText size={16} />
                   My Applications
@@ -247,7 +247,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Search by title, subject, class or location..."
-                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3 pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-[#087F9F]/60 focus:bg-white focus:ring-4 focus:ring-[#087F9F]/5"
               />
             </div>
 
@@ -255,7 +255,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
               <select
                 value={sortBy}
                 onChange={(event) => setSortBy(event.target.value)}
-                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-medium text-slate-600 outline-none transition focus:border-blue-400 lg:w-auto"
+                className="w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-sm font-medium text-slate-600 outline-none transition focus:border-[#087F9F]/60 lg:w-auto"
               >
                 <option value="newest">Newest first</option>
                 <option value="salary-high">Salary: high to low</option>
@@ -266,7 +266,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
                 type="button"
                 onClick={handleRefresh}
                 disabled={isRefreshing}
-                className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm font-semibold text-slate-600 transition hover:border-blue-200 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-sm font-semibold text-slate-600 transition hover:border-[#087F9F]/20 hover:text-[#087F9F] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <RefreshCw
                   size={16}
@@ -281,7 +281,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
             <select
               value={classFilter}
               onChange={(event) => setClassFilter(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none transition focus:border-blue-400"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none transition focus:border-[#087F9F]/60"
             >
               <option value="all">All Classes</option>
               {classes.map((value) => (
@@ -294,7 +294,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
             <select
               value={subjectFilter}
               onChange={(event) => setSubjectFilter(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none transition focus:border-blue-400"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none transition focus:border-[#087F9F]/60"
             >
               <option value="all">All Subjects</option>
               {subjects.map((value) => (
@@ -307,7 +307,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
             <select
               value={locationFilter}
               onChange={(event) => setLocationFilter(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none transition focus:border-blue-400"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none transition focus:border-[#087F9F]/60"
             >
               <option value="all">All Locations</option>
               {locations.map((value) => (
@@ -320,7 +320,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
             <select
               value={typeFilter}
               onChange={(event) => setTypeFilter(event.target.value)}
-              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none transition focus:border-blue-400"
+              className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none transition focus:border-[#087F9F]/60"
             >
               <option value="all">All Tuition Types</option>
               <option value="home">Home Tuition</option>
@@ -331,7 +331,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3">
             <div className="flex items-center gap-2 text-xs text-slate-500">
-              <SlidersHorizontal size={15} className="text-blue-600" />
+              <SlidersHorizontal size={15} className="text-[#087F9F]" />
               <span>
                 Showing{" "}
                 <strong className="text-slate-900">
@@ -346,7 +346,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
               <button
                 type="button"
                 onClick={clearFilters}
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 transition hover:text-blue-800"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#087F9F] transition hover:text-[#05596F]"
               >
                 <RotateCcw size={13} />
                 Clear Filters
@@ -359,7 +359,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
         <section className="mt-5">
           {filteredTuitions.length === 0 ? (
             <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#087F9F]/5 text-[#087F9F]">
                 <BookOpen size={26} />
               </div>
 
@@ -377,7 +377,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
                 <button
                   type="button"
                   onClick={clearFilters}
-                  className="mt-5 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700"
+                  className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#087F9F] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#066B85]"
                 >
                   <RotateCcw size={15} />
                   Clear All Filters
@@ -393,11 +393,11 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
                 return (
                   <article
                     key={id}
-                    className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/50 transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-lg"
+                    className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/50 transition hover:-translate-y-0.5 hover:border-[#087F9F]/20 hover:shadow-lg"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="rounded-full bg-blue-50 px-2.5 py-1 text-[11px] font-bold text-blue-700">
+                        <span className="rounded-full bg-[#087F9F]/5 px-2.5 py-1 text-[11px] font-bold text-[#066B85]">
                           {item.classLevel || "Any Class"}
                         </span>
 
@@ -412,24 +412,24 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
                       </span>
                     </div>
 
-                    <h2 className="mt-3 line-clamp-2 text-lg font-bold leading-snug text-slate-900 transition group-hover:text-blue-600">
+                    <h2 className="mt-3 line-clamp-2 text-lg font-bold leading-snug text-slate-900 transition group-hover:text-[#087F9F]">
                       {item.title}
                     </h2>
 
                     <p className="mt-2 flex items-center gap-1.5 text-sm text-slate-500">
-                      <MapPin size={15} className="shrink-0 text-blue-600" />
+                      <MapPin size={15} className="shrink-0 text-[#087F9F]" />
                       <span className="truncate">
                         {item.area || "Location not specified"}
                         {item.district ? `, ${item.district}` : ""}
                       </span>
                     </p>
 
-                    <div className="mt-4 flex items-end justify-between gap-3 rounded-xl border border-blue-100 bg-blue-50/70 p-3.5">
+                    <div className="mt-4 flex items-end justify-between gap-3 rounded-xl border border-[#087F9F]/10 bg-[#087F9F]/10 p-3.5">
                       <div>
                         <p className="text-[11px] font-medium text-slate-500">
                           Monthly Salary
                         </p>
-                        <p className="mt-0.5 text-2xl font-extrabold tracking-tight text-blue-700">
+                        <p className="mt-0.5 text-2xl font-extrabold tracking-tight text-[#066B85]">
                           ৳{budget.toLocaleString("en-BD")}
                           <span className="ml-1 text-[11px] font-medium text-slate-500">
                             / month
@@ -437,7 +437,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
                         </p>
                       </div>
 
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-blue-600 shadow-sm">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#087F9F] shadow-sm">
                         <Wallet size={19} />
                       </div>
                     </div>
@@ -490,7 +490,7 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
 
                       <Link
                         href={`/browse-tuitions/${item._id || item.id}`}
-                        className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100"
+                        className="inline-flex items-center gap-1.5 rounded-xl bg-[#087F9F] px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#066B85] focus:outline-none focus:ring-4 focus:ring-[#087F9F]/10"
                       >
                         View & Apply
                         <ArrowRight size={14} />

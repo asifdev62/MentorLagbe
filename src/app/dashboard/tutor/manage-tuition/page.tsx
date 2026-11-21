@@ -235,7 +235,7 @@ export default function ManageTuitionPage() {
         <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700 sm:size-9">
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#066B85] sm:size-9">
                 <BookOpen size={18} className="sm:size-5" />
               </span>
               <h1 className="text-xl font-bold tracking-tight text-slate-900 sm:text-2xl md:text-3xl">
@@ -264,7 +264,7 @@ export default function ManageTuitionPage() {
 
             <Link
               href="/dashboard/tutor/add-tuition"
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 sm:flex-initial sm:px-4 sm:py-2.5 sm:text-sm"
+              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-[#087F9F]/20 transition hover:bg-[#066B85] sm:flex-initial sm:px-4 sm:py-2.5 sm:text-sm"
             >
               <PlusCircle size={16} className="sm:size-[18px]" />
               Post Tuition
@@ -279,7 +279,7 @@ export default function ManageTuitionPage() {
               <span className="truncate text-[10px] font-semibold uppercase tracking-wider text-slate-500 sm:text-xs">
                 Total Posts
               </span>
-              <span className="flex size-7 items-center justify-center rounded-lg bg-blue-50 text-blue-600 sm:size-8">
+              <span className="flex size-7 items-center justify-center rounded-lg bg-[#087F9F]/5 text-[#087F9F] sm:size-8">
                 <Layers size={14} className="sm:size-4" />
               </span>
             </div>
@@ -331,17 +331,17 @@ export default function ManageTuitionPage() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-indigo-100 bg-white p-3 shadow-sm sm:rounded-2xl sm:p-4">
+          <div className="rounded-xl border border-[#087F9F]/10 bg-white p-3 shadow-sm sm:rounded-2xl sm:p-4">
             <div className="flex items-center justify-between">
-              <span className="truncate text-[10px] font-semibold uppercase tracking-wider text-indigo-700 sm:text-xs">
+              <span className="truncate text-[10px] font-semibold uppercase tracking-wider text-[#066B85] sm:text-xs">
                 Approved
               </span>
-              <span className="flex size-7 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 sm:size-8">
+              <span className="flex size-7 items-center justify-center rounded-lg bg-[#087F9F]/5 text-[#087F9F] sm:size-8">
                 <Check size={14} className="sm:size-4" />
               </span>
             </div>
             <div className="mt-2 flex items-baseline gap-1.5 sm:mt-3">
-              <span className="text-xl font-extrabold text-indigo-700 sm:text-2xl">
+              <span className="text-xl font-extrabold text-[#066B85] sm:text-2xl">
                 {stats.approved}
               </span>
               {stats.rejected > 0 && (
@@ -365,7 +365,7 @@ export default function ManageTuitionPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by title, subject (Math, Physics), area, class..."
-              className="h-9 w-full rounded-xl border border-slate-200 bg-slate-50/70 pr-4 pl-9 text-xs text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 sm:h-10 sm:pl-10 sm:text-sm"
+              className="h-9 w-full rounded-xl border border-slate-200 bg-slate-50/70 pr-4 pl-9 text-xs text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10 sm:h-10 sm:pl-10 sm:text-sm"
             />
             {searchTerm && (
               <button
@@ -384,7 +384,7 @@ export default function ManageTuitionPage() {
                 onClick={() => setStatusFilter("all")}
                 className={`whitespace-nowrap rounded-lg px-2.5 py-1 transition sm:py-1.5 ${
                   statusFilter === "all"
-                    ? "bg-white font-bold text-blue-600 shadow-sm"
+                    ? "bg-white font-bold text-[#087F9F] shadow-sm"
                     : "hover:text-slate-900"
                 }`}
               >
@@ -442,7 +442,7 @@ export default function ManageTuitionPage() {
                 onClick={() => setViewMode("grid")}
                 className={`flex size-7 items-center justify-center rounded-lg transition sm:size-8 ${
                   viewMode === "grid"
-                    ? "bg-white text-blue-600 shadow-sm"
+                    ? "bg-white text-[#087F9F] shadow-sm"
                     : "text-slate-400 hover:text-slate-700"
                 }`}
                 title="Grid View"
@@ -453,7 +453,7 @@ export default function ManageTuitionPage() {
                 onClick={() => setViewMode("table")}
                 className={`flex size-7 items-center justify-center rounded-lg transition sm:size-8 ${
                   viewMode === "table"
-                    ? "bg-white text-blue-600 shadow-sm"
+                    ? "bg-white text-[#087F9F] shadow-sm"
                     : "text-slate-400 hover:text-slate-700"
                 }`}
                 title="Table View"
@@ -493,7 +493,7 @@ export default function ManageTuitionPage() {
         ) : !session ? (
           /* Signed-out State */
           <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white p-8 text-center shadow-sm sm:p-12">
-            <div className="flex size-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 sm:size-14">
+            <div className="flex size-12 items-center justify-center rounded-2xl bg-[#087F9F]/5 text-[#087F9F] sm:size-14">
               <LogIn size={22} className="sm:size-6" />
             </div>
             <h3 className="mt-4 text-sm font-bold text-slate-800 sm:text-base">
@@ -505,7 +505,7 @@ export default function ManageTuitionPage() {
             </p>
             <Link
               href="/auth/sign-in"
-              className="mt-5 inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700"
+              className="mt-5 inline-flex items-center gap-1.5 rounded-xl bg-[#087F9F] px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-[#066B85]"
             >
               <LogIn size={14} />
               Sign In
@@ -514,7 +514,7 @@ export default function ManageTuitionPage() {
         ) : myTuitions.length === 0 ? (
           /* Empty State */
           <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white p-8 text-center shadow-sm sm:p-12">
-            <div className="flex size-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 sm:size-14">
+            <div className="flex size-12 items-center justify-center rounded-2xl bg-[#087F9F]/5 text-[#087F9F] sm:size-14">
               <BookOpen size={22} className="sm:size-6" />
             </div>
             <h3 className="mt-4 text-sm font-bold text-slate-800 sm:text-base">
@@ -526,7 +526,7 @@ export default function ManageTuitionPage() {
             </p>
             <Link
               href="/dashboard/tutor/add-tuition"
-              className="mt-5 inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700"
+              className="mt-5 inline-flex items-center gap-1.5 rounded-xl bg-[#087F9F] px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-[#066B85]"
             >
               <Plus size={14} />
               Post a Tuition
@@ -535,7 +535,7 @@ export default function ManageTuitionPage() {
         ) : filteredTuitions.length === 0 ? (
           /* No Matches */
           <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-200 bg-white p-8 text-center shadow-sm sm:p-12">
-            <div className="flex size-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 sm:size-14">
+            <div className="flex size-12 items-center justify-center rounded-2xl bg-[#087F9F]/5 text-[#087F9F] sm:size-14">
               <Search size={22} className="sm:size-6" />
             </div>
             <h3 className="mt-4 text-sm font-bold text-slate-800 sm:text-base">

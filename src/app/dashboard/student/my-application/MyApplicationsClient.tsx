@@ -96,7 +96,7 @@ const InfoItem = ({
   sub?: string;
 }) => (
   <div className="flex items-start gap-3">
-    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#087F9F]/5 text-[#087F9F]">
       <Icon size={17} />
     </div>
 
@@ -221,7 +221,7 @@ export default function MyApplicationsClient({
             onClick={handleRefresh}
             disabled={isRefreshing}
             type="button"
-            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-[#087F9F]/20 hover:text-[#087F9F] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <RefreshCw
               size={16}
@@ -237,7 +237,7 @@ export default function MyApplicationsClient({
             label="Total Applications"
             value={stats.total}
             icon={FileText}
-            className="bg-blue-50 text-blue-600"
+            className="bg-[#087F9F]/5 text-[#087F9F]"
           />
           <StatCard
             label="Pending"
@@ -287,7 +287,7 @@ export default function MyApplicationsClient({
         {/* Empty state */}
         {applications.length === 0 && !error && (
           <div className="mt-6 flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#087F9F]/5 text-[#087F9F]">
               <Search size={26} />
             </div>
 
@@ -301,7 +301,7 @@ export default function MyApplicationsClient({
 
             <Link
               href="/browse-tuitions"
-              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700"
+              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#087F9F] px-5 py-2.5 text-sm font-bold text-white transition hover:bg-[#066B85]"
             >
               Browse Tuitions
             </Link>
@@ -328,7 +328,7 @@ export default function MyApplicationsClient({
               return (
                 <article
                   key={id}
-                  className="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/50 transition hover:border-blue-200 hover:shadow-md"
+                  className="flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/50 transition hover:border-[#087F9F]/20 hover:shadow-md"
                 >
                   <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-4">
                     <div className="min-w-0">

@@ -72,12 +72,12 @@ export default function Navbar() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#087E9D] text-white shadow-md shadow-[#087E9D]/20">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#087F9F] text-white shadow-md shadow-[#087F9F]/20">
             <GraduationCap size={26} />
           </div>
 
           <span className="text-2xl font-extrabold tracking-tight text-slate-900">
-            Mentor<span className="text-[#087E9D]">Lagbe</span>
+            Mentor<span className="text-[#087F9F]">Lagbe</span>
           </span>
         </Link>
 
@@ -87,7 +87,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-semibold text-slate-600 transition hover:text-[#087E9D]"
+              className="text-sm font-semibold text-slate-600 transition hover:text-[#087F9F]"
             >
               {link.name}
             </Link>
@@ -104,7 +104,7 @@ export default function Navbar() {
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-2 rounded-xl border border-slate-200 p-2 transition hover:bg-slate-50"
               >
-                <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-[#087E9D]/10 font-bold text-[#087E9D]">
+                <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-[#087F9F]/10 font-bold text-[#087F9F]">
                   {user.image ? (
                     <Image
                       src={user.image}
@@ -123,7 +123,7 @@ export default function Navbar() {
                     {user.name}
                   </p>
 
-                  <p className="text-xs font-semibold capitalize text-[#087E9D]">
+                  <p className="text-xs font-semibold capitalize text-[#087F9F]">
                     {role || "User"}
                   </p>
                 </div>
@@ -146,7 +146,7 @@ export default function Navbar() {
                   <Link
                     href={dashboardUrl}
                     onClick={() => setProfileOpen(false)}
-                    className="mt-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-[#087E9D]/10 hover:text-[#087E9D]"
+                    className="mt-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
                   >
                     <LayoutDashboard size={18} />
                     Dashboard
@@ -155,7 +155,7 @@ export default function Navbar() {
                   <Link
                     href="/profile"
                     onClick={() => setProfileOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-[#087E9D]/10 hover:text-[#087E9D]"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
                   >
                     <UserRound size={18} />
                     My Profile
@@ -183,7 +183,7 @@ export default function Navbar() {
 
               <Link
                 href="/auth/sign-up"
-                className="rounded-xl bg-[#087E9D] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#087E9D]/20 transition hover:bg-[#066780]"
+                className="rounded-xl bg-[#087F9F] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#087F9F]/20 transition hover:bg-[#066B85]"
               >
                 Get Started
               </Link>
@@ -211,7 +211,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setIsOpen(false)}
-                className="rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087E9D]/10 hover:text-[#087E9D]"
+                className="rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
               >
                 {link.name}
               </Link>
@@ -223,7 +223,7 @@ export default function Navbar() {
               ) : user ? (
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 px-2">
-                    <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-[#087E9D]/10 font-bold text-[#087E9D]">
+                    <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-[#087F9F]/10 font-bold text-[#087F9F]">
                       {user.image ? (
                         <Image
                           src={user.image}
@@ -239,7 +239,7 @@ export default function Navbar() {
                       <p className="truncate text-sm font-bold text-slate-800">
                         {user.name}
                       </p>
-                      <p className="text-xs font-semibold capitalize text-[#087E9D]">
+                      <p className="text-xs font-semibold capitalize text-[#087F9F]">
                         {role || "User"}
                       </p>
                     </div>
@@ -248,7 +248,7 @@ export default function Navbar() {
                   <Link
                     href={dashboardUrl}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087E9D]/10 hover:text-[#087E9D]"
+                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
                   >
                     <LayoutDashboard size={18} />
                     Dashboard
@@ -257,7 +257,7 @@ export default function Navbar() {
                   <Link
                     href="/dashboard/profile"
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087E9D]/10 hover:text-[#087E9D]"
+                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
                   >
                     <UserRound size={18} />
                     Update Profile
@@ -285,7 +285,7 @@ export default function Navbar() {
                   <Link
                     href="/auth/sign-up"
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 rounded-xl bg-[#087E9D] py-3 text-center text-sm font-semibold text-white"
+                    className="flex-1 rounded-xl bg-[#087F9F] py-3 text-center text-sm font-semibold text-white"
                   >
                     Get Started
                   </Link>

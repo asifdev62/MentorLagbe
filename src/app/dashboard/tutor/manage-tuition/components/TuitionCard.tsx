@@ -42,7 +42,7 @@ export function TuitionCard({
   const approvalStatus = (item.approvalStatus || "pending").toLowerCase();
 
   return (
-    <div className="group relative flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-sm shadow-slate-200/50 transition hover:border-blue-200 hover:shadow-md sm:p-5">
+    <div className="group relative flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 shadow-sm shadow-slate-200/50 transition hover:border-[#087F9F]/20 hover:shadow-md sm:p-5">
 
       <div>
         {/* Top Badges */}
@@ -87,7 +87,7 @@ export function TuitionCard({
           </div>
 
           <div className="flex items-center gap-1.5 text-xs text-slate-400">
-            <Users size={13} className="text-blue-500" />
+            <Users size={13} className="text-[#087F9F]" />
             <span className="font-semibold text-slate-700">
               {item.applicantCount ?? 0}
             </span>
@@ -96,13 +96,13 @@ export function TuitionCard({
         </div>
 
         {/* Title */}
-        <h2 className="mt-3 line-clamp-2 text-sm font-bold text-slate-900 transition group-hover:text-blue-600 sm:text-base">
+        <h2 className="mt-3 line-clamp-2 text-sm font-bold text-slate-900 transition group-hover:text-[#087F9F] sm:text-base">
           {item.title}
         </h2>
 
         {/* Class & Medium */}
         <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
-          <span className="rounded bg-blue-50 px-2 py-0.5 font-bold text-blue-700">
+          <span className="rounded bg-[#087F9F]/5 px-2 py-0.5 font-bold text-[#066B85]">
             {item.classLevel}
           </span>
 
@@ -178,12 +178,12 @@ export function TuitionCard({
           </span>
 
           <div className="flex items-baseline gap-1.5">
-            <span className="text-base font-black text-blue-700 sm:text-lg">
+            <span className="text-base font-black text-[#066B85] sm:text-lg">
               ৳ {Number(item.budget || 0).toLocaleString()}
             </span>
 
             {item.negotiable && (
-              <span className="text-[10px] font-semibold text-blue-600 sm:text-[11px]">
+              <span className="text-[10px] font-semibold text-[#087F9F] sm:text-[11px]">
                 (Negotiable)
               </span>
             )}
@@ -197,7 +197,7 @@ export function TuitionCard({
           <button
             type="button"
             onClick={() => onEdit(item)}
-            className="inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1.5 text-xs font-semibold text-blue-700 shadow-sm transition hover:bg-blue-100"
+            className="inline-flex items-center gap-1 rounded-lg border border-[#087F9F]/20 bg-[#087F9F]/5 px-2.5 py-1.5 text-xs font-semibold text-[#066B85] shadow-sm transition hover:bg-[#087F9F]/10"
             title="Edit Tuition"
           >
             <Pencil size={13} />

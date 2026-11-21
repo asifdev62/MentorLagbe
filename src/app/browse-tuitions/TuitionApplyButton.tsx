@@ -1,4 +1,5 @@
-'use client'
+
+'use client';
 
 import { applyToATuition } from '@/lib/actions/applicants';
 import { getApplicationCount } from '@/lib/api/tuitions';
@@ -14,7 +15,7 @@ import {
     UserRound,
     X,
 } from 'lucide-react';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -25,9 +26,15 @@ type Props = {
     tutorEmail: string;
 };
 
-const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }: Props) => {
+const TuitionApplyButton = ({
+    tuitionId,
+    tuitionTitle,
+    classLevel,
+    tutorEmail,
+}: Props) => {
     const router = useRouter();
     const { data: session, isPending } = useSession();
+
     const [isOpen, setIsOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isApplied, setIsApplied] = useState(false);
@@ -36,40 +43,47 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
     const [note, setNote] = useState('');
 
     const user = session?.user;
+
     const role =
-        (user as { role?: string } | undefined)?.role?.toLowerCase() ?? 'student';
+        (user as { role?: string } | undefined)?.role?.toLowerCase() ??
+        'student';
 
-   const handleOpenForm = async () => {
-  if (isPending || isSubmitting || isApplied) return;
+    const handleOpenForm = async () => {
+        if (isPending || isSubmitting || isApplied) return;
 
-  if (!user) {
-    router.push(`/auth/sign-in?redirectTo=/browse-tuitions/${tuitionId}`);
-    return;
-  }
+        if (!user) {
+            router.push(`/auth/sign-in?redirectTo=/browse-tuitions/${tuitionId}`);
+            return;
+        }
 
-  if (role !== "student") {
-    toast.error("Only students can apply for a tuition.");
-    return;
-  }
+        if (role !== 'student') {
+            toast.error('Only students can apply for a tuition.');
+            return;
+        }
 
-  if (!tutorEmail) {
-    toast.error("Tutor email not found.");
-    return;
-  }
+        if (!tutorEmail) {
+            toast.error('Tutor email not found.');
+            return;
+        }
 
-  // Check student's application count
-  const countResult = await getApplicationCount(user.id);
+        try {
+            const countResult = await getApplicationCount(user.id);
 
-  if (countResult >= 2) {
-    toast.error("You have reached your application limit.");
-    router.push("/payment");
-    return;
-  }
+            if (countResult >= 2) {
+                toast.error('You have reached your application limit.');
+                router.push('/payment');
+                return;
+            }
 
-  setIsOpen(true);
-};
+            setIsOpen(true);
+        } catch {
+            toast.error('Unable to check your application limit.');
+        }
+    };
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (
+        event: React.FormEvent<HTMLFormElement>
+    ) => {
         event.preventDefault();
 
         if (isSubmitting) return;
@@ -105,6 +119,7 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
 
             setIsApplied(true);
             setIsOpen(false);
+
             toast.success('Application submitted successfully!');
             router.refresh();
         } catch (error) {
@@ -126,7 +141,7 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                 onClick={handleOpenForm}
                 type="button"
                 disabled={isDisabled}
-                className={`flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-blue-700 ${
+                className={`flex w-full items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#066B85] ${
                     isDisabled ? 'cursor-not-allowed opacity-60' : ''
                 }`}
             >
@@ -137,6 +152,7 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                 ) : (
                     <Send size={17} />
                 )}
+
                 {isSubmitting
                     ? 'Applying...'
                     : isApplied
@@ -152,6 +168,7 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                     aria-labelledby="apply-dialog-title"
                 >
                     <div className="max-h-[92vh] w-full max-w-md overflow-y-auto rounded-t-2xl bg-white shadow-xl sm:rounded-2xl">
+
                         {/* Header */}
                         <div className="flex items-start justify-between gap-3 border-b border-slate-100 p-5">
                             <div className="min-w-0">
@@ -161,6 +178,7 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                                 >
                                     Apply for this tuition
                                 </h2>
+
                                 <p className="mt-1 line-clamp-2 text-xs text-slate-500">
                                     {tuitionTitle}
                                 </p>
@@ -178,6 +196,7 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                         </div>
 
                         <form onSubmit={handleSubmit} className="p-5">
+
                             {/* Student summary */}
                             <div className="mb-4 grid grid-cols-1 gap-2 rounded-xl bg-slate-50 p-3 text-xs sm:grid-cols-2">
                                 <p className="flex min-w-0 items-center gap-1.5 truncate font-semibold text-slate-700">
@@ -185,30 +204,36 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                                         size={13}
                                         className="shrink-0 text-slate-400"
                                     />
+
                                     <span className="truncate">
                                         {user?.name ?? 'Student'}
                                     </span>
                                 </p>
+
                                 <p className="flex min-w-0 items-center gap-1.5 truncate text-slate-500">
                                     <Mail
                                         size={13}
                                         className="shrink-0 text-slate-400"
                                     />
+
                                     <span className="truncate">
                                         {user?.email ?? ''}
                                     </span>
                                 </p>
                             </div>
 
+                            {/* Phone Number */}
                             <label className="block text-xs font-semibold text-slate-700">
                                 Phone Number
                                 <span className="text-rose-500"> *</span>
                             </label>
+
                             <div className="relative mt-1.5">
                                 <Phone
                                     size={15}
                                     className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
                                 />
+
                                 <input
                                     type="tel"
                                     required
@@ -218,19 +243,22 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                                     }
                                     placeholder="01XXXXXXXXX"
                                     maxLength={20}
-                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-3 pl-9 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"
+                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-3 pl-9 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10"
                                 />
                             </div>
 
+                            {/* Preferred Schedule */}
                             <label className="mt-4 block text-xs font-semibold text-slate-700">
                                 Preferred Schedule
                                 <span className="text-rose-500"> *</span>
                             </label>
+
                             <div className="relative mt-1.5">
                                 <CalendarClock
                                     size={15}
                                     className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
                                 />
+
                                 <input
                                     type="text"
                                     required
@@ -240,21 +268,25 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                                     }
                                     placeholder="e.g. Sat–Thu, 5 PM – 8 PM"
                                     maxLength={120}
-                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-3 pl-9 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"
+                                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-3 pl-9 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10"
                                 />
                             </div>
 
+                            {/* Note */}
                             <label className="mt-4 block text-xs font-semibold text-slate-700">
                                 Note to the guardian
+
                                 <span className="ml-1 font-normal text-slate-400">
                                     (optional)
                                 </span>
                             </label>
+
                             <div className="relative mt-1.5">
                                 <MessageSquareQuote
                                     size={15}
                                     className="absolute top-3 left-3 text-slate-400"
                                 />
+
                                 <textarea
                                     value={note}
                                     onChange={(event) =>
@@ -263,10 +295,11 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                                     rows={3}
                                     maxLength={500}
                                     placeholder="Share your experience, availability or anything else that helps..."
-                                    className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-3 pl-9 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-50"
+                                    className="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 py-2.5 pr-3 pl-9 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10"
                                 />
                             </div>
 
+                            {/* Buttons */}
                             <div className="mt-5 flex items-center gap-2">
                                 <button
                                     type="button"
@@ -280,7 +313,7 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#066B85] disabled:cursor-not-allowed disabled:opacity-60"
                                 >
                                     {isSubmitting ? (
                                         <Loader2
@@ -290,6 +323,7 @@ const TuitionApplyButton = ({ tuitionId, tuitionTitle, classLevel, tutorEmail }:
                                     ) : (
                                         <Send size={16} />
                                     )}
+
                                     {isSubmitting ? 'Submitting...' : 'Submit'}
                                 </button>
                             </div>

@@ -79,18 +79,18 @@ const PricingPage = () => {
         <Navbar />
       {/* Hero Section */}
       <section className="relative overflow-hidden px-4 pt-20 pb-12 text-center">
-        <div className="absolute top-10 left-10 w-40 h-40 bg-[#087E9D]/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-10 w-52 h-52 bg-[#087E9D]/10 rounded-full blur-3xl" />
+        <div className="absolute top-10 left-10 w-40 h-40 bg-[#087F9F]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-10 w-52 h-52 bg-[#087F9F]/10 rounded-full blur-3xl" />
 
         <div className="relative max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#087E9D]/20 bg-[#087E9D]/10 px-4 py-2 text-sm font-semibold text-[#087E9D] mb-5">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#087F9F]/20 bg-[#087F9F]/10 px-4 py-2 text-sm font-semibold text-[#087F9F] mb-5">
             <Sparkles size={16} />
             Simple & Transparent Pricing
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
             Choose the Right Plan for Your{" "}
-            <span className="text-[#087E9D]">Learning Journey</span>
+            <span className="text-[#087F9F]">Learning Journey</span>
           </h1>
 
           <p className="mt-5 text-slate-500 text-sm sm:text-base leading-7 max-w-2xl mx-auto">
@@ -111,19 +111,19 @@ const PricingPage = () => {
                 key={plan.name}
                 className={`relative flex flex-col rounded-2xl bg-white p-7 transition-all duration-300 hover:-translate-y-2 ${
                   plan.popular
-                    ? "border-2 border-[#087E9D] shadow-xl shadow-[#087E9D]/10 lg:scale-105"
+                    ? "border-2 border-[#087F9F] shadow-xl shadow-[#087F9F]/10 lg:scale-105"
                     : "border border-slate-200 shadow-lg shadow-slate-200/50"
                 }`}
               >
                 {/* Popular Badge */}
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#087E9D] px-5 py-2 text-xs font-bold text-white shadow-lg shadow-[#087E9D]/20">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#087F9F] px-5 py-2 text-xs font-bold text-white shadow-lg shadow-[#087F9F]/20">
                     MOST POPULAR
                   </div>
                 )}
 
                 {/* Plan Icon */}
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#087E9D]/10 text-[#087E9D]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#087F9F]">
                   <Icon size={25} />
                 </div>
 
@@ -156,8 +156,8 @@ const PricingPage = () => {
                   href={plan.buttonLink}
                   className={`mt-6 flex h-12 items-center justify-center gap-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
                     plan.popular
-                      ? "bg-[#087E9D] text-white hover:bg-[#066780] shadow-lg shadow-[#087E9D]/20"
-                      : "border border-[#087E9D]/30 bg-[#087E9D]/5 text-[#087E9D] hover:bg-[#087E9D] hover:text-white"
+                      ? "bg-[#087F9F] text-white hover:bg-[#066B85] shadow-lg shadow-[#087F9F]/20"
+                      : "border border-[#087F9F]/30 bg-[#087F9F]/5 text-[#087F9F] hover:bg-[#087F9F] hover:text-white"
                   }`}
                 >
                   {plan.buttonText}
@@ -180,7 +180,7 @@ const PricingPage = () => {
                       {feature.included ? (
                         <Check
                           size={18}
-                          className="mt-0.5 shrink-0 text-[#087E9D]"
+                          className="mt-0.5 shrink-0 text-[#087F9F]"
                         />
                       ) : (
                         <X
@@ -209,7 +209,7 @@ const PricingPage = () => {
 
       {/* Benefits Section */}
       <section className="px-4 pb-20">
-        <div className="max-w-5xl mx-auto rounded-2xl bg-[#087E9D] px-6 py-10 sm:p-12 text-center text-white">
+        <div className="max-w-5xl mx-auto rounded-2xl bg-[#087F9F] px-6 py-10 sm:p-12 text-center text-white">
           <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
             <ShieldCheck size={30} />
           </div>
@@ -225,7 +225,7 @@ const PricingPage = () => {
 
           <Link
             href="/auth/sign-up"
-            className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-[#087E9D] transition hover:bg-slate-100"
+            className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-[#087F9F] transition hover:bg-slate-100"
           >
             Join MentorLagbe
             <ArrowRight size={17} />
@@ -236,7 +236,7 @@ const PricingPage = () => {
       {/* Support Section */}
       <section className="px-4 pb-16">
         <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 rounded-2xl border border-slate-200 bg-white p-6 text-center sm:text-left shadow-sm">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#087E9D]/10 text-[#087E9D]">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#087F9F]">
             <Headphones size={24} />
           </div>
 
@@ -251,7 +251,7 @@ const PricingPage = () => {
 
           <Link
             href="/contact"
-            className="text-sm font-semibold text-[#087E9D] hover:text-[#066780] transition-colors"
+            className="text-sm font-semibold text-[#087F9F] hover:text-[#066B85] transition-colors"
           >
             Contact Us →
           </Link>

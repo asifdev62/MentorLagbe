@@ -15,7 +15,6 @@ import {
   BriefcaseBusiness,
   CalendarCheck,
   ArrowLeft,
-  CheckCircle2,
   UserRound,
   BadgeCheck,
   School,
@@ -48,7 +47,7 @@ const InfoItem = ({
   value: string | number;
 }) => (
   <div className="flex items-start gap-3 py-3">
-    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#087F9F]/5 text-[#087F9F]">
       <Icon size={19} strokeWidth={1.8} />
     </div>
 
@@ -71,7 +70,7 @@ const SectionHeader = ({
   subtitle: string;
 }) => (
   <div className="mb-6 flex items-start gap-3">
-    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#087F9F]/5 text-[#087F9F]">
       <Icon size={21} />
     </div>
 
@@ -127,7 +126,7 @@ const TuitionDetailsContent = async ({ params }: Props) => {
         <div className="mb-6 flex items-center gap-2 text-sm">
           <Link
             href="/browse-tuitions"
-            className="flex items-center gap-1.5 font-medium text-slate-500 transition hover:text-blue-600"
+            className="flex items-center gap-1.5 font-medium text-slate-500 transition hover:text-[#087F9F]"
           >
             <ArrowLeft size={16} />
             Browse Tuitions
@@ -161,7 +160,7 @@ const TuitionDetailsContent = async ({ params }: Props) => {
                 {formatValue(tuition.status, "Active")}
               </span>
 
-              <span className="rounded-full bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700">
+              <span className="rounded-full bg-[#087F9F]/5 px-3 py-1.5 text-xs font-semibold text-[#087F9F]">
                 {formatValue(tuition.tuitionType, "Home Tuition")}
               </span>
             </div>
@@ -173,19 +172,19 @@ const TuitionDetailsContent = async ({ params }: Props) => {
             <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3 text-sm text-slate-500">
 
               <span className="flex items-center gap-2">
-                <MapPin size={17} className="text-blue-600" />
+                <MapPin size={17} className="text-[#087F9F]" />
                 {formatValue(tuition.area, "Area not specified")},{" "}
                 {formatValue(tuition.district, "District not specified")}
               </span>
 
               <span className="flex items-center gap-2">
-                <CalendarDays size={17} className="text-blue-600" />
+                <CalendarDays size={17} className="text-[#087F9F]" />
                 Posted {postedDate}
               </span>
             </div>
 
             {/* Salary */}
-            <div className="mt-7 flex flex-wrap items-center justify-between gap-5 rounded-xl border border-blue-100 bg-blue-50/60 p-5 sm:p-6">
+            <div className="mt-7 flex flex-wrap items-center justify-between gap-5 rounded-xl border border-[#087F9F]/20 bg-[#087F9F]/5 p-5 sm:p-6">
 
               <div>
                 <p className="text-sm font-medium text-slate-500">
@@ -193,7 +192,7 @@ const TuitionDetailsContent = async ({ params }: Props) => {
                 </p>
 
                 <div className="mt-1 flex items-baseline gap-2">
-                  <span className="text-3xl font-extrabold tracking-tight text-blue-700">
+                  <span className="text-3xl font-extrabold tracking-tight text-[#087F9F]">
                     ৳{budget.toLocaleString("en-BD")}
                   </span>
                   <span className="text-sm text-slate-500">/ month</span>
@@ -207,7 +206,7 @@ const TuitionDetailsContent = async ({ params }: Props) => {
               </div>
 
               <div className="flex items-center gap-2 rounded-lg bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm">
-                <Wallet size={18} className="text-blue-600" />
+                <Wallet size={18} className="text-[#087F9F]" />
                 Monthly Payment
               </div>
 
@@ -249,7 +248,7 @@ const TuitionDetailsContent = async ({ params }: Props) => {
               >
                 <item.icon
                   size={20}
-                  className="shrink-0 text-blue-600"
+                  className="shrink-0 text-[#087F9F]"
                 />
 
                 <div className="min-w-0">
@@ -372,15 +371,15 @@ const TuitionDetailsContent = async ({ params }: Props) => {
                 subtitle="Where the tutor needs to teach"
               />
 
-              <div className="rounded-xl bg-blue-50/70 p-4 sm:p-5">
+              <div className="rounded-xl bg-[#087F9F]/5 p-4 sm:p-5">
 
                 <div className="flex items-start gap-3">
-                  <div className="rounded-xl bg-white p-3 text-blue-600 shadow-sm">
+                  <div className="rounded-xl bg-white p-3 text-[#087F9F] shadow-sm">
                     <MapPin size={22} />
                   </div>
 
                   <div>
-                    <p className="text-xs font-medium text-blue-700">
+                    <p className="text-xs font-medium text-[#087F9F]">
                       Tuition Address
                     </p>
 
@@ -462,9 +461,9 @@ const TuitionDetailsContent = async ({ params }: Props) => {
             </section>
 
             {/* Apply Card */}
-            <section className="overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm">
+            <section className="overflow-hidden rounded-2xl border border-[#087F9F]/20 bg-white shadow-sm">
 
-              <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-white">
+              <div className="bg-gradient-to-br from-[#087F9F] to-[#066B85] p-6 text-white">
 
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15">
                   <Sparkles size={22} />
@@ -474,7 +473,7 @@ const TuitionDetailsContent = async ({ params }: Props) => {
                   Interested in this tuition?
                 </h2>
 
-                <p className="mt-2 text-sm leading-6 text-blue-100">
+                <p className="mt-2 text-sm leading-6 text-white/85">
                   Think you are a good match? Get ready to apply for this teaching opportunity.
                 </p>
               </div>
@@ -492,12 +491,12 @@ const TuitionDetailsContent = async ({ params }: Props) => {
                   </p>
                 </div>
 
-               <TuitionApplyButton
-  tuitionId={tuition._id ?? id}
-  tuitionTitle={tuition.title}
-  classLevel={tuition.classLevel}
-  tutorEmail={tuition.tutorEmail || ""}
-/>
+                <TuitionApplyButton
+                  tuitionId={tuition._id ?? id}
+                  tuitionTitle={tuition.title}
+                  classLevel={tuition.classLevel}
+                  tutorEmail={tuition.tutorEmail || ""}
+                />
 
                 <p className="mt-3 text-center text-xs text-slate-400">
                   Your application will be sent to the tuition poster.
@@ -558,7 +557,7 @@ const TuitionDetailsContent = async ({ params }: Props) => {
         <div className="mt-8 border-t border-slate-200 pt-6">
           <Link
             href="/browse-tuitions"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 transition hover:text-blue-800"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#087F9F] transition hover:text-[#066B85]"
           >
             <ArrowLeft size={17} />
             Explore More Tuitions
@@ -579,7 +578,7 @@ const TuitionDetailsPage = ({ params }: Props) => {
         fallback={
           <div className="flex min-h-[60vh] items-center justify-center">
             <div className="text-center">
-              <div className="mx-auto h-9 w-9 animate-spin rounded-full border-4 border-blue-100 border-t-blue-600" />
+              <div className="mx-auto h-9 w-9 animate-spin rounded-full border-4 border-[#087F9F]/20 border-t-[#087F9F]" />
               <p className="mt-4 text-sm font-medium text-slate-500">
                 Loading tuition details...
               </p>

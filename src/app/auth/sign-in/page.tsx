@@ -104,12 +104,12 @@ export default function SignInPage() {
 
         {/* Logo */}
         <Link href="/" className="flex items-center justify-center gap-2 mb-7">
-          <div className="bg-[#087E9D] text-white p-2 rounded-xl shadow-md shadow-[#087E9D]/20">
+          <div className="bg-[#087F9F] text-white p-2 rounded-xl shadow-md shadow-[#087F9F]/20">
             <GraduationCap size={25} />
           </div>
 
           <span className="text-2xl font-extrabold tracking-tight text-slate-900">
-            Mentor<span className="text-[#087E9D]">Lagbe</span>
+            Mentor<span className="text-[#087F9F]">Lagbe</span>
           </span>
         </Link>
 
@@ -118,7 +118,7 @@ export default function SignInPage() {
 
           {/* Heading */}
           <div className="text-center mb-7">
-            <div className="mx-auto mb-4 flex items-center justify-center w-11 h-11 rounded-xl bg-[#087E9D]/10 text-[#087E9D]">
+            <div className="mx-auto mb-4 flex items-center justify-center w-11 h-11 rounded-xl bg-[#087F9F]/10 text-[#087F9F]">
               <Sparkles size={22} />
             </div>
 
@@ -156,7 +156,7 @@ export default function SignInPage() {
                   placeholder="you@example.com"
                   autoComplete="email"
                   required
-                  className="w-full h-11 pl-10 pr-3 rounded-lg border border-slate-200 bg-slate-50/70 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#087E9D] focus:bg-white focus:ring-4 focus:ring-[#087E9D]/10"
+                  className="w-full h-11 pl-10 pr-3 rounded-lg border border-slate-200 bg-slate-50/70 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10"
                 />
               </div>
             </div>
@@ -173,7 +173,7 @@ export default function SignInPage() {
 
                 <Link
                   href="/forgot-password"
-                  className="text-xs font-semibold text-[#087E9D] hover:text-[#066780]"
+                  className="text-xs font-semibold text-[#087F9F] hover:text-[#066B85]"
                 >
                   Forgot password?
                 </Link>
@@ -193,7 +193,7 @@ export default function SignInPage() {
                   placeholder="Enter your password"
                   autoComplete="current-password"
                   required
-                  className="w-full h-11 pl-10 pr-11 rounded-lg border border-slate-200 bg-slate-50/70 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#087E9D] focus:bg-white focus:ring-4 focus:ring-[#087E9D]/10"
+                  className="w-full h-11 pl-10 pr-11 rounded-lg border border-slate-200 bg-slate-50/70 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10"
                 />
 
                 <button
@@ -214,7 +214,7 @@ export default function SignInPage() {
                 id="remember"
                 checked={remember}
                 onChange={(e) => setRemember(e.target.checked)}
-                className="w-4 h-4 rounded accent-[#087E9D] cursor-pointer"
+                className="w-4 h-4 rounded accent-[#087F9F] cursor-pointer"
               />
 
               <label
@@ -229,7 +229,7 @@ export default function SignInPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-11 flex items-center justify-center gap-2 rounded-lg bg-[#087E9D] hover:bg-[#066780] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-md shadow-[#087E9D]/20 transition duration-200"
+              className="w-full h-11 flex items-center justify-center gap-2 rounded-lg bg-[#087F9F] hover:bg-[#066B85] disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold shadow-md shadow-[#087F9F]/20 transition duration-200"
             >
               {loading ? "Signing In..." : "Sign In"}
               {!loading && <ArrowRight size={17} />}
@@ -248,7 +248,7 @@ export default function SignInPage() {
             <button
               onClick={handleSignInWithGoogle}
               type="button"
-              className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#087E9D]/40 hover:bg-[#087E9D]/5 hover:shadow-md active:translate-y-0"
+              className="group flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#087F9F]/40 hover:bg-[#087F9F]/5 hover:shadow-md active:translate-y-0"
             >
               <FcGoogle className="text-xl transition-transform duration-300 group-hover:scale-110" />
               <span>Continue with Google</span>
@@ -260,7 +260,7 @@ export default function SignInPage() {
             Don&apos;t have an account?{" "}
             <Link
               href="/auth/sign-up"
-              className="font-semibold text-[#087E9D] hover:text-[#066780]"
+              className="font-semibold text-[#087F9F] hover:text-[#066B85]"
             >
               Sign up
             </Link>

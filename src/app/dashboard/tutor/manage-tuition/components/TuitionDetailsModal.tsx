@@ -43,7 +43,7 @@ export function TuitionDetailsModal({
         {/* Badges Header: Tuition Type, Admin Approval, Active Status */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Tuition Type */}
-          <span className="rounded-full bg-blue-100 px-3 py-0.5 sm:py-1 text-xs font-bold text-blue-700 capitalize">
+          <span className="rounded-full bg-[#087F9F]/10 px-3 py-0.5 sm:py-1 text-xs font-bold text-[#066B85] capitalize">
             {tuition.tuitionType === "home" ? "Home Tutoring" : tuition.tuitionType}
           </span>
 
@@ -108,7 +108,7 @@ export function TuitionDetailsModal({
             <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 block uppercase">
               Salary
             </span>
-            <span className="text-xs font-extrabold text-blue-600">
+            <span className="text-xs font-extrabold text-[#087F9F]">
               ৳ {Number(tuition.budget).toLocaleString()}{" "}
               {tuition.negotiable ? "(Neg)" : ""}
             </span>
@@ -128,10 +128,10 @@ export function TuitionDetailsModal({
         <div className="mt-5 sm:mt-6 space-y-3.5 sm:space-y-4 text-sm">
           <div>
             <h3 className="font-bold text-slate-900 flex items-center gap-1.5 text-xs sm:text-sm">
-              <BookOpen size={15} className="text-blue-600" />
+              <BookOpen size={15} className="text-[#087F9F]" />
               Subject(s)
             </h3>
-            <p className="mt-1 text-slate-700 bg-blue-50/50 p-2 sm:p-2.5 rounded-xl border border-blue-100 font-semibold text-xs sm:text-sm">
+            <p className="mt-1 text-slate-700 bg-[#087F9F]/10 p-2 sm:p-2.5 rounded-xl border border-[#087F9F]/10 font-semibold text-xs sm:text-sm">
               {tuition.subject}
             </p>
           </div>
@@ -139,7 +139,7 @@ export function TuitionDetailsModal({
           {tuition.institution && (
             <div>
               <h3 className="font-bold text-slate-900 flex items-center gap-1.5 text-xs sm:text-sm">
-                <Building2 size={15} className="text-blue-600" />
+                <Building2 size={15} className="text-[#087F9F]" />
                 Student&apos;s Institution
               </h3>
               <p className="mt-1 text-xs sm:text-sm text-slate-600">
@@ -150,7 +150,7 @@ export function TuitionDetailsModal({
 
           <div>
             <h3 className="font-bold text-slate-900 flex items-center gap-1.5 text-xs sm:text-sm">
-              <MapPin size={15} className="text-blue-600" />
+              <MapPin size={15} className="text-[#087F9F]" />
               Tuition Location
             </h3>
             <p className="mt-1 text-xs sm:text-sm text-slate-600">
@@ -161,7 +161,7 @@ export function TuitionDetailsModal({
 
           <div>
             <h3 className="font-bold text-slate-900 flex items-center gap-1.5 text-xs sm:text-sm">
-              <UserCheck size={15} className="text-blue-600" />
+              <UserCheck size={15} className="text-[#087F9F]" />
               Preferred Tutor Requirements
             </h3>
             <div className="mt-1.5 space-y-1 text-xs text-slate-600">
@@ -204,9 +204,9 @@ export function TuitionDetailsModal({
           )}
 
           {/* Contact Box */}
-          <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-3 sm:p-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
-              <Phone size={13} className="text-blue-600" />
+          <div className="rounded-2xl border border-[#087F9F]/10 bg-[#087F9F]/10 p-3 sm:p-4">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-[#044A5C] flex items-center gap-1.5">
+              <Phone size={13} className="text-[#087F9F]" />
               Contact Details
             </h3>
             <div className="mt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 text-xs sm:text-sm">
@@ -224,7 +224,7 @@ export function TuitionDetailsModal({
                 {tuition.contactNumber && (
                   <a
                     href={`tel:${tuition.contactNumber}`}
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-blue-700"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#087F9F] px-3 py-1.5 text-xs font-semibold text-white shadow-sm hover:bg-[#066B85]"
                   >
                     <Phone size={12} />
                     Call Now
@@ -254,7 +254,7 @@ export function TuitionDetailsModal({
               onClose();
               onEditClick();
             }}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl border border-blue-200 bg-blue-50 px-4 py-2 text-xs font-semibold text-blue-700 hover:bg-blue-100"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl border border-[#087F9F]/20 bg-[#087F9F]/5 px-4 py-2 text-xs font-semibold text-[#066B85] hover:bg-[#087F9F]/10"
           >
             <Pencil size={13} />
             Edit This Circular

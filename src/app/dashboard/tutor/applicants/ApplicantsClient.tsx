@@ -294,7 +294,7 @@ export default function ApplicantsClient({
         <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-700 sm:size-9">
+              <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#066B85] sm:size-9">
                 <Users size={18} />
               </span>
 
@@ -325,7 +325,7 @@ export default function ApplicantsClient({
 
             <Link
               href="/dashboard/tutor/manage-tuition"
-              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-blue-700 sm:flex-initial sm:py-2.5 sm:text-sm"
+              className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-3.5 py-2 text-xs font-semibold text-white shadow-md transition hover:bg-[#066B85] sm:flex-initial sm:py-2.5 sm:text-sm"
             >
               <BookOpen size={15} />
               My Tuitions
@@ -339,7 +339,7 @@ export default function ApplicantsClient({
             label="Total Applicants"
             value={stats.total}
             icon={Users}
-            className="bg-blue-50 text-blue-600"
+            className="bg-[#087F9F]/5 text-[#087F9F]"
           />
 
           <StatCard
@@ -377,7 +377,7 @@ export default function ApplicantsClient({
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Search by student name, email, phone or tuition title..."
-              className="h-9 w-full rounded-xl border border-slate-200 bg-slate-50/70 pr-9 pl-9 text-xs text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 sm:h-10 sm:pl-10 sm:text-sm"
+              className="h-9 w-full rounded-xl border border-slate-200 bg-slate-50/70 pr-9 pl-9 text-xs text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10 sm:h-10 sm:pl-10 sm:text-sm"
             />
 
             {search && (
@@ -408,7 +408,7 @@ export default function ApplicantsClient({
                   onClick={() => setStatusFilter(value)}
                   className={`whitespace-nowrap rounded-lg px-2.5 py-1 transition sm:py-1.5 ${
                     statusFilter === value
-                      ? "bg-white font-bold text-blue-600 shadow-sm"
+                      ? "bg-white font-bold text-[#087F9F] shadow-sm"
                       : "hover:text-slate-900"
                   }`}
                 >
@@ -424,7 +424,7 @@ export default function ApplicantsClient({
                   setSearch("");
                   setStatusFilter("all");
                 }}
-                className="inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1.5 text-xs font-semibold text-slate-500 hover:bg-slate-50 hover:text-blue-600"
+                className="inline-flex shrink-0 items-center gap-1 rounded-lg px-2 py-1.5 text-xs font-semibold text-slate-500 hover:bg-slate-50 hover:text-[#087F9F]"
               >
                 <RotateCcw size={13} />
                 Reset
@@ -464,7 +464,7 @@ export default function ApplicantsClient({
         {/* Empty States and Applicants */}
         {applicants.length === 0 && !error ? (
           <div className="mt-5 flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
-            <div className="flex size-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+            <div className="flex size-14 items-center justify-center rounded-2xl bg-[#087F9F]/5 text-[#087F9F]">
               <UserRound size={26} />
             </div>
 
@@ -479,14 +479,14 @@ export default function ApplicantsClient({
 
             <Link
               href="/dashboard/tutor/add-tuition"
-              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-blue-700"
+              className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#087F9F] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#066B85]"
             >
               Post a Tuition
             </Link>
           </div>
         ) : filteredApplicants.length === 0 && !error ? (
           <div className="mt-5 flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white px-6 py-16 text-center">
-            <div className="flex size-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+            <div className="flex size-14 items-center justify-center rounded-2xl bg-[#087F9F]/5 text-[#087F9F]">
               <Search size={26} />
             </div>
 
@@ -530,12 +530,12 @@ export default function ApplicantsClient({
               return (
                 <article
                   key={applicant._id}
-                  className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-blue-200 hover:shadow-md"
+                  className="flex flex-col rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-[#087F9F]/20 hover:shadow-md"
                 >
                   {/* Student */}
                   <div className="flex items-start justify-between gap-3 border-b border-slate-100 p-4 sm:p-5">
                     <div className="flex min-w-0 items-center gap-3">
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-sm font-bold text-white">
+                      <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#087F9F] to-[#066B85] text-sm font-bold text-white">
                         {getInitial(applicant.studentName)}
                       </div>
 
@@ -555,8 +555,8 @@ export default function ApplicantsClient({
 
                   <div className="flex flex-1 flex-col p-4 sm:p-5">
                     {/* Tuition */}
-                    <div className="rounded-xl border border-blue-100 bg-blue-50/60 px-3 py-2.5">
-                      <p className="text-[10px] font-semibold uppercase tracking-wide text-blue-500">
+                    <div className="rounded-xl border border-[#087F9F]/10 bg-[#087F9F]/10 px-3 py-2.5">
+                      <p className="text-[10px] font-semibold uppercase tracking-wide text-[#066B85]">
                         Applied to
                       </p>
 
@@ -565,7 +565,7 @@ export default function ApplicantsClient({
                       </p>
 
                       {applicant.classLevel && (
-                        <span className="mt-1.5 inline-flex rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold text-blue-700">
+                        <span className="mt-1.5 inline-flex rounded-full bg-white px-2 py-0.5 text-[10px] font-semibold text-[#066B85]">
                           {applicant.classLevel}
                         </span>
                       )}
@@ -577,7 +577,7 @@ export default function ApplicantsClient({
                         {applicant.email ? (
                           <a
                             href={`mailto:${applicant.email}`}
-                            className="block truncate text-blue-600 hover:underline"
+                            className="block truncate text-[#087F9F] hover:underline"
                           >
                             {applicant.email}
                           </a>
@@ -592,7 +592,7 @@ export default function ApplicantsClient({
                         {applicant.phone ? (
                           <a
                             href={`tel:${applicant.phone}`}
-                            className="block truncate text-blue-600 hover:underline"
+                            className="block truncate text-[#087F9F] hover:underline"
                           >
                             {applicant.phone}
                           </a>

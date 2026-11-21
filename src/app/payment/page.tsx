@@ -70,7 +70,7 @@ const PaymentPage = () => {
         {/* Back Navigation */}
         <Link
           href="/pricing"
-          className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-[#087E9D]"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-[#087F9F]"
         >
           <ArrowLeft size={17} />
           Back to Pricing
@@ -78,22 +78,22 @@ const PaymentPage = () => {
 
         {/* Header */}
         <div className="relative mb-12 overflow-hidden rounded-3xl bg-white border border-slate-200/80 px-6 py-10 sm:px-10 text-center shadow-sm">
-          <div className="absolute -top-16 -left-16 h-48 w-48 rounded-full bg-[#087E9D]/10 blur-3xl" />
-          <div className="absolute -bottom-16 -right-16 h-48 w-48 rounded-full bg-[#087E9D]/10 blur-3xl" />
+          <div className="absolute -top-16 -left-16 h-48 w-48 rounded-full bg-[#087F9F]/10 blur-3xl" />
+          <div className="absolute -bottom-16 -right-16 h-48 w-48 rounded-full bg-[#087F9F]/10 blur-3xl" />
 
           <div className="relative">
-            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#087E9D]/10 text-[#087E9D]">
+            <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#087F9F]/10 text-[#087F9F]">
               <CreditCard size={28} />
             </div>
 
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#087E9D]/10 px-4 py-2 text-xs font-bold text-[#087E9D]">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[#087F9F]/10 px-4 py-2 text-xs font-bold text-[#087F9F]">
               <Sparkles size={14} />
               MentorLagbe Premium
             </div>
 
             <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
               Choose Your{" "}
-              <span className="text-[#087E9D]">Membership</span>
+              <span className="text-[#087F9F]">Membership</span>
             </h1>
 
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-500 sm:text-base">
@@ -131,25 +131,25 @@ const PaymentPage = () => {
                       onClick={() => setSelectedPlan(plan.id)}
                       className={`relative flex flex-col rounded-2xl border-2 p-5 text-left transition-all duration-300 hover:-translate-y-1 ${
                         isSelected
-                          ? "border-[#087E9D] bg-[#087E9D]/5 shadow-lg shadow-[#087E9D]/10"
-                          : "border-slate-200 bg-white hover:border-[#087E9D]/40"
+                          ? "border-[#087F9F] bg-[#087F9F]/5 shadow-lg shadow-[#087F9F]/10"
+                          : "border-slate-200 bg-white hover:border-[#087F9F]/40"
                       }`}
                     >
                       {plan.popular && (
-                        <span className="absolute -top-3 right-4 rounded-full bg-[#087E9D] px-3 py-1 text-[10px] font-bold tracking-wide text-white shadow-md">
+                        <span className="absolute -top-3 right-4 rounded-full bg-[#087F9F] px-3 py-1 text-[10px] font-bold tracking-wide text-white shadow-md">
                           POPULAR
                         </span>
                       )}
 
                       <div className="flex items-center justify-between">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#087E9D]/10 text-[#087E9D]">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#087F9F]">
                           <Icon size={25} />
                         </div>
 
                         <span
                           className={`flex h-5 w-5 items-center justify-center rounded-full border ${
                             isSelected
-                              ? "border-[#087E9D] bg-[#087E9D] text-white"
+                              ? "border-[#087F9F] bg-[#087F9F] text-white"
                               : "border-slate-300"
                           }`}
                         >
@@ -181,8 +181,8 @@ const PaymentPage = () => {
                       <div
                         className={`mt-5 rounded-lg py-2.5 text-center text-xs font-bold transition ${
                           isSelected
-                            ? "bg-[#087E9D] text-white"
-                            : "bg-[#087E9D]/5 text-[#087E9D]"
+                            ? "bg-[#087F9F] text-white"
+                            : "bg-[#087F9F]/5 text-[#087F9F]"
                         }`}
                       >
                         {isSelected ? "Selected Plan" : "Choose This Plan"}
@@ -196,7 +196,7 @@ const PaymentPage = () => {
             {/* Selected Plan Features */}
             <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
               <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#087E9D]/10 text-[#087E9D]">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#087F9F]">
                   <PlanIcon size={23} />
                 </div>
 
@@ -213,7 +213,7 @@ const PaymentPage = () => {
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {currentPlan.features.map((feature) => (
                   <div key={feature} className="flex items-start gap-3">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#087E9D]/10 text-[#087E9D]">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#087F9F]/10 text-[#087F9F]">
                       <Check size={14} />
                     </span>
 
@@ -231,7 +231,7 @@ const PaymentPage = () => {
             <div className="sticky top-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/50">
 
               {/* Summary Header */}
-              <div className="bg-[#087E9D] px-6 py-6 text-white">
+              <div className="bg-[#087F9F] px-6 py-6 text-white">
                 <div className="flex items-center gap-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15">
                     <CreditCard size={23} />
@@ -250,7 +250,7 @@ const PaymentPage = () => {
 
                 {/* Selected Plan */}
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#087E9D]/10 text-[#087E9D]">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#087F9F]">
                     <PlanIcon size={25} />
                   </div>
 
@@ -263,7 +263,7 @@ const PaymentPage = () => {
                     </p>
                   </div>
 
-                  <span className="rounded-full bg-[#087E9D]/10 px-2.5 py-1 text-[10px] font-bold text-[#087E9D]">
+                  <span className="rounded-full bg-[#087F9F]/10 px-2.5 py-1 text-[10px] font-bold text-[#087F9F]">
                     Active Plan
                   </span>
                 </div>
@@ -302,7 +302,7 @@ const PaymentPage = () => {
                     Total Amount
                   </span>
 
-                  <span className="text-3xl font-extrabold text-[#087E9D]">
+                  <span className="text-3xl font-extrabold text-[#087F9F]">
                     ৳{currentPlan.price}
                   </span>
                 </div>
@@ -313,9 +313,9 @@ const PaymentPage = () => {
                     Payment Method
                   </h3>
 
-                  <div className="flex items-center justify-between rounded-xl border-2 border-[#087E9D] bg-[#087E9D]/5 p-4">
+                  <div className="flex items-center justify-between rounded-xl border-2 border-[#087F9F] bg-[#087F9F]/5 p-4">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-[#087E9D] shadow-sm">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-[#087F9F] shadow-sm">
                         <CreditCard size={22} />
                       </div>
 
@@ -329,7 +329,7 @@ const PaymentPage = () => {
                       </div>
                     </div>
 
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#087E9D] text-white">
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#087F9F] text-white">
                       <Check size={13} />
                     </span>
                   </div>
@@ -344,7 +344,7 @@ const PaymentPage = () => {
                 <button
                   type="button"
                   onClick={() => alert("Payment integration coming soon!")}
-                  className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-[#087E9D] px-5 py-4 text-sm font-bold text-white shadow-lg shadow-[#087E9D]/20 transition hover:bg-[#066780] active:scale-[0.98]"
+                  className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-5 py-4 text-sm font-bold text-white shadow-lg shadow-[#087F9F]/20 transition hover:bg-[#066B85] active:scale-[0.98]"
                 >
                   <Lock size={16} />
                   Continue to Payment
@@ -363,7 +363,7 @@ const PaymentPage = () => {
 
         {/* Support */}
         <div className="mt-10 flex flex-col items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white p-6 text-center sm:flex-row sm:text-left">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#087E9D]/10 text-[#087E9D]">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#087F9F]">
             <Headphones size={23} />
           </div>
 
@@ -378,7 +378,7 @@ const PaymentPage = () => {
 
           <Link
             href="/contact"
-            className="text-sm font-bold text-[#087E9D] transition hover:text-[#066780] sm:ml-auto"
+            className="text-sm font-bold text-[#087F9F] transition hover:text-[#066B85] sm:ml-auto"
           >
             Contact Support →
           </Link>

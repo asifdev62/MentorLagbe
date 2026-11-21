@@ -39,12 +39,12 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex items-center gap-2">
-              <div className="bg-[#087E9D] p-2 rounded-xl">
+              <div className="bg-[#087F9F] p-2 rounded-xl">
                 <GraduationCap size={27} />
               </div>
 
               <span className="text-2xl font-extrabold tracking-tight">
-                Mentor<span className="text-[#087E9D]">Lagbe</span>
+                Mentor<span className="text-[#087F9F]">Lagbe</span>
               </span>
             </Link>
 
@@ -60,7 +60,7 @@ export default function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 aria-label="Facebook"
-                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087E9D] flex items-center justify-center transition"
+                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087F9F] flex items-center justify-center transition"
               >
                 <span className="font-bold text-lg">f</span>
               </Link>
@@ -69,7 +69,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 aria-label="Instagram"
-                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087E9D] flex items-center justify-center transition"
+                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087F9F] flex items-center justify-center transition"
               >
                 <span className="font-bold text-xl">◎</span>
               </Link>
@@ -78,7 +78,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 aria-label="LinkedIn"
-                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087E9D] flex items-center justify-center transition"
+                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087F9F] flex items-center justify-center transition"
               >
                 <span className="font-bold text-sm">in</span>
               </Link>
@@ -96,7 +96,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-[#087E9D] transition"
+                    className="text-sm text-slate-400 hover:text-[#087F9F] transition"
                   >
                     {link.label}
                   </Link>
@@ -116,7 +116,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-[#087E9D] transition"
+                    className="text-sm text-slate-400 hover:text-[#087F9F] transition"
                   >
                     {link.label}
                   </Link>
@@ -136,7 +136,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-[#087E9D] transition"
+                    className="text-sm text-slate-400 hover:text-[#087F9F] transition"
                   >
                     {link.label}
                   </Link>
@@ -149,7 +149,7 @@ export default function Footer() {
         {/* Contact Section */}
         <div className="grid sm:grid-cols-3 gap-5 mt-14 p-6 rounded-2xl bg-white/5 border border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#087E9D]/20 text-[#087E9D] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#087F9F]/20 text-[#087F9F] flex items-center justify-center">
               <Mail size={19} />
             </div>
             <div>
@@ -161,7 +161,7 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#087E9D]/20 text-[#087E9D] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#087F9F]/20 text-[#087F9F] flex items-center justify-center">
               <Phone size={19} />
             </div>
             <div>
@@ -173,7 +173,7 @@ export default function Footer() {
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#087E9D]/20 text-[#087E9D] flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-[#087F9F]/20 text-[#087F9F] flex items-center justify-center">
               <MapPin size={19} />
             </div>
             <div>
@@ -192,22 +192,22 @@ export default function Footer() {
           </p>
 
           <div className="flex flex-wrap justify-center items-center gap-6 text-sm text-slate-400">
-            <Link href="/privacy" className="hover:text-[#087E9D] transition">
+            <Link href="/privacy" className="hover:text-[#087F9F] transition">
               Privacy Policy
             </Link>
 
-            <Link href="/terms" className="hover:text-[#087E9D] transition">
+            <Link href="/terms" className="hover:text-[#087F9F] transition">
               Terms of Service
             </Link>
 
-            <Link href="/contact" className="hover:text-[#087E9D] transition">
+            <Link href="/contact" className="hover:text-[#087F9F] transition">
               Contact
             </Link>
           </div>
 
           <p className="text-sm text-slate-400 flex items-center gap-1">
             Made for better learning
-            <BookOpen size={15} className="text-[#087E9D]" />
+            <BookOpen size={15} className="text-[#087F9F]" />
           </p>
         </div>
       </div>

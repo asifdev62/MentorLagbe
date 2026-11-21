@@ -182,18 +182,18 @@ export function DashboardSidebar() {
             href="/"
             className="flex items-center gap-2.5 px-2 py-3 text-lg font-extrabold tracking-tight text-sidebar-foreground"
           >
-            <span className="flex size-9 items-center justify-center rounded-xl bg-blue-600 text-white shadow-md shadow-blue-200">
+            <span className="flex size-9 items-center justify-center rounded-xl bg-[#087F9F] text-white shadow-md shadow-[#087F9F]/20">
               <GraduationCap size={20} />
             </span>
             <span>
-              Mentor<span className="text-blue-600">Lagbe</span>
+              Mentor<span className="text-[#087F9F]">Lagbe</span>
             </span>
           </Link>
 
           {user && (
             <div className="mb-1 flex items-center gap-3 rounded-xl border border-sidebar-border bg-sidebar-accent/60 p-2.5">
               {/* Avatar */}
-              <div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-100 text-sm font-bold text-blue-700">
+              <div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#087F9F]/10 text-sm font-bold text-[#066B85]">
                 {user.image ? (
                   <Image
                     src={user.image}
@@ -214,7 +214,7 @@ export function DashboardSidebar() {
                     {user.name}
                   </p>
 
-                  <span className="shrink-0 rounded-md bg-blue-100 px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-blue-700 uppercase">
+                  <span className="shrink-0 rounded-md bg-[#087F9F]/10 px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-[#066B85] uppercase">
                     {roleLabels[role]}
                   </span>
                 </div>

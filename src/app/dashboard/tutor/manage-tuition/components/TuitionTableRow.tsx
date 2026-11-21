@@ -31,12 +31,12 @@ export function TuitionTableRow({
       <td className="px-4 sm:px-5 py-4">
         <button
           onClick={() => onViewDetails(item)}
-          className="font-bold text-slate-900 hover:text-blue-600 text-left line-clamp-1 max-w-[260px]"
+          className="font-bold text-slate-900 hover:text-[#087F9F] text-left line-clamp-1 max-w-[260px]"
         >
           {item.title}
         </button>
         <div className="mt-1 flex items-center gap-2 text-xs text-slate-500">
-          <span className="font-medium text-blue-600">{item.subject}</span>
+          <span className="font-medium text-[#087F9F]">{item.subject}</span>
           <span>•</span>
           <span className="capitalize">{item.tuitionType}</span>
         </div>
@@ -68,7 +68,7 @@ export function TuitionTableRow({
 
       {/* Salary */}
       <td className="px-3 sm:px-4 py-4 text-xs">
-        <div className="font-extrabold text-blue-700">
+        <div className="font-extrabold text-[#066B85]">
           ৳ {Number(item.budget).toLocaleString()}
         </div>
         {item.negotiable && (
@@ -119,7 +119,7 @@ export function TuitionTableRow({
           {/* Edit */}
           <button
             onClick={() => onEdit(item)}
-            className="rounded-lg border border-blue-200 bg-blue-50 p-1.5 text-blue-600 hover:bg-blue-100"
+            className="rounded-lg border border-[#087F9F]/20 bg-[#087F9F]/5 p-1.5 text-[#087F9F] hover:bg-[#087F9F]/10"
             title="Edit Tuition"
           >
             <Pencil size={14} />

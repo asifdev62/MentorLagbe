@@ -7,10 +7,10 @@ import type { TuitionItem } from "@/lib/api/tuitions";
 import { updateTuition } from "@/lib/actions/tuitions";
 
 const inputClass =
-  "h-10 w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10";
+  "h-10 w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10";
 
 const selectClass =
-  "h-10 w-full appearance-none rounded-lg border border-slate-200 bg-slate-50/70 px-3 pr-8 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10";
+  "h-10 w-full appearance-none rounded-lg border border-slate-200 bg-slate-50/70 px-3 pr-8 text-sm text-slate-800 outline-none transition focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10";
 
 const labelClass = "mb-1 block text-xs font-semibold text-slate-700";
 
@@ -109,7 +109,7 @@ export function TuitionEditModal({
           <X size={16} />
         </button>
 
-        <div className="flex items-center gap-2 text-blue-600">
+        <div className="flex items-center gap-2 text-[#087F9F]">
           <Pencil size={18} className="sm:size-5" />
           <h2 className="text-lg sm:text-xl font-extrabold text-slate-900">
             Edit Tuition Post
@@ -351,7 +351,7 @@ export function TuitionEditModal({
                   type="checkbox"
                   name="negotiable"
                   defaultChecked={tuition.negotiable}
-                  className="size-3.5 rounded border-slate-300 accent-blue-600"
+                  className="size-3.5 rounded border-slate-300 accent-[#087F9F]"
                 />
                 Salary is negotiable
               </label>
@@ -382,7 +382,7 @@ export function TuitionEditModal({
               name="description"
               rows={3}
               defaultValue={tuition.description || ""}
-              className="w-full resize-y rounded-lg border border-slate-200 bg-slate-50/70 p-2.5 text-sm text-slate-800 outline-none focus:border-blue-500 focus:bg-white"
+              className="w-full resize-y rounded-lg border border-slate-200 bg-slate-50/70 p-2.5 text-sm text-slate-800 outline-none focus:border-[#087F9F] focus:bg-white"
             />
           </div>
 
@@ -399,7 +399,7 @@ export function TuitionEditModal({
             <button
               type="submit"
               disabled={isSaving}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-5 py-2 text-xs font-semibold text-white shadow-md shadow-blue-500/20 transition hover:bg-blue-700 disabled:opacity-60"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-5 py-2 text-xs font-semibold text-white shadow-md shadow-[#087F9F]/20 transition hover:bg-[#066B85] disabled:opacity-60"
             >
               <Save size={14} />
               {isSaving ? "Saving..." : "Save Changes"}

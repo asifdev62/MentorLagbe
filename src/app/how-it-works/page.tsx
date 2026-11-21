@@ -128,9 +128,9 @@ const StepCard = ({
   const Icon = step.icon;
 
   return (
-    <div className="group relative rounded-2xl border border-base-300 bg-base-100 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#087E9D]/40 hover:shadow-xl">
+    <div className="group relative rounded-2xl border border-base-300 bg-base-100 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[#087F9F]/40 hover:shadow-xl">
       <div className="mb-5 flex items-center justify-between">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#087E9D]/10 text-[#087E9D] transition-colors group-hover:bg-[#087E9D] group-hover:text-white">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#087F9F] transition-colors group-hover:bg-[#087F9F] group-hover:text-white">
           <Icon size={23} />
         </div>
 
@@ -153,16 +153,16 @@ const HowitWorksPage = () => {
     <main className="min-h-screen bg-base-100">
       <Navbar />
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-[#087E9D]/5 px-2 py-33 md:py-25">
+      <section className="relative overflow-hidden bg-[#087F9F]/5 px-2 py-33 md:py-25">
         <div className="mx-auto max-w-7xl text-center">
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#087E9D]/20 bg-[#087E9D]/10 px-4 py-2 text-sm font-semibold text-[#087E9D]">
+          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#087F9F]/20 bg-[#087F9F]/10 px-4 py-2 text-sm font-semibold text-[#087F9F]">
             <GraduationCap size={17} />
             How MentorLagbe Works
           </span>
 
           <h1 className="mx-auto max-w-3xl text-4xl font-extrabold leading-tight tracking-tight md:text-6xl">
             Your Journey to Better
-            <span className="text-[#087E9D]"> Learning </span>
+            <span className="text-[#087F9F]"> Learning </span>
             Starts Here
           </h1>
 
@@ -177,7 +177,7 @@ const HowitWorksPage = () => {
   {/* Browse Tuitions Button */}
   <Link
     href="/browse-tuitions"
-    className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#087E9D] px-8 py-3 font-sans text-base font-semibold text-white shadow-lg shadow-[#087E9D]/20 transition-all duration-300 hover:-translate-y-1 hover:bg-[#066780] hover:shadow-xl hover:shadow-[#087E9D]/30 active:scale-95"
+    className="group inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#087F9F] px-8 py-3 font-sans text-base font-semibold text-white shadow-lg shadow-[#087F9F]/20 transition-all duration-300 hover:-translate-y-1 hover:bg-[#066B85] hover:shadow-xl hover:shadow-[#087F9F]/30 active:scale-95"
   >
     Browse Tuitions
     <ArrowRight
@@ -189,7 +189,7 @@ const HowitWorksPage = () => {
   {/* Join MentorLagbe Button */}
   <Link
     href="/register"
-    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-[#087E9D] bg-white px-8 py-3 font-sans text-base font-semibold text-[#087E9D] transition-all duration-300 hover:-translate-y-1 hover:bg-[#087E9D] hover:text-white hover:shadow-lg hover:shadow-[#087E9D]/20 active:scale-95"
+    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-[#087F9F] bg-white px-8 py-3 font-sans text-base font-semibold text-[#087F9F] transition-all duration-300 hover:-translate-y-1 hover:bg-[#087F9F] hover:text-white hover:shadow-lg hover:shadow-[#087F9F]/20 active:scale-95"
   >
     <UserPlus size={18} />
     Join MentorLagbe
@@ -202,11 +202,11 @@ const HowitWorksPage = () => {
       {/* Student Section */}
       <section className="mx-auto max-w-7xl px-4 py-20">
         <div className="mb-12 text-center">
-          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#087E9D]/10 text-[#087E9D]">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#087F9F]/10 text-[#087F9F]">
             <GraduationCap size={28} />
           </div>
 
-          <p className="mb-2 text-sm font-bold uppercase tracking-widest text-[#087E9D]">
+          <p className="mb-2 text-sm font-bold uppercase tracking-widest text-[#087F9F]">
             For Students
           </p>
 
@@ -235,7 +235,7 @@ const HowitWorksPage = () => {
               <BriefcaseBusiness size={27} />
             </div>
 
-            <p className="mb-2 text-sm font-bold uppercase tracking-widest text-[#087E9D]">
+            <p className="mb-2 text-sm font-bold uppercase tracking-widest text-[#087F9F]">
               For Tutors
             </p>
 
@@ -264,7 +264,7 @@ const HowitWorksPage = () => {
             <ShieldCheck size={27} />
           </div>
 
-          <p className="mb-2 text-sm font-bold uppercase tracking-widest text-[#087E9D]">
+          <p className="mb-2 text-sm font-bold uppercase tracking-widest text-[#087F9F]">
             For Administrators
           </p>
 
@@ -287,7 +287,7 @@ const HowitWorksPage = () => {
 
       {/* CTA Section */}
       <section className="px-4 pb-20">
-        <div className="mx-auto max-w-5xl rounded-3xl bg-[#087E9D] px-6 py-14 text-center text-white md:px-12">
+        <div className="mx-auto max-w-5xl rounded-3xl bg-[#087F9F] px-6 py-14 text-center text-white md:px-12">
           <h2 className="text-3xl font-extrabold md:text-4xl">
             Ready to Get Started?
           </h2>
@@ -299,7 +299,7 @@ const HowitWorksPage = () => {
 
           <Link
             href="/register"
-            className="btn mt-8 rounded-xl border-0 bg-white px-8 text-[#087E9D] hover:bg-white/90"
+            className="btn mt-8 rounded-xl border-0 bg-white px-8 text-[#087F9F] hover:bg-white/90"
           >
             Create Your Account
             <ArrowRight size={18} />

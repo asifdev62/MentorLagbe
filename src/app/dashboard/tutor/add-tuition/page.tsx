@@ -31,10 +31,10 @@ import { addTuitions, type TuitionFormData } from "@/lib/actions/tuitions";
 import { useSession } from "@/lib/auth-client";
 
 const inputClass =
-    "h-11 w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10";
+    "h-11 w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10";
 
 const selectClass =
-    "h-11 w-full appearance-none rounded-lg border border-slate-200 bg-slate-50/70 px-3 pr-9 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10";
+    "h-11 w-full appearance-none rounded-lg border border-slate-200 bg-slate-50/70 px-3 pr-9 text-sm text-slate-800 outline-none transition focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10";
 
 const labelClass = "mb-1.5 block text-sm font-semibold text-slate-700";
 
@@ -110,7 +110,7 @@ function FormSection({
     return (
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/40 md:p-6">
             <div className="flex items-start gap-3">
-                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#087F9F]/5 text-[#087F9F]">
                     <Icon size={19} />
                 </div>
 
@@ -206,7 +206,7 @@ export default function AddTuitionPage() {
                     <div>
                         <Link
                             href="/dashboard/tutor"
-                            className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-blue-600"
+                            className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[#087F9F]"
                         >
                             <ArrowLeft size={16} />
                             Back to dashboard
@@ -221,7 +221,7 @@ export default function AddTuitionPage() {
                         </p>
                     </div>
 
-                    <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3.5 py-1.5 text-xs font-semibold text-blue-700">
+                    <span className="inline-flex items-center gap-2 rounded-full border border-[#087F9F]/10 bg-[#087F9F]/5 px-3.5 py-1.5 text-xs font-semibold text-[#066B85]">
                         <Sparkles size={14} />
                         New Tuition Post
                     </span>
@@ -374,7 +374,7 @@ export default function AddTuitionPage() {
                                             return (
                                                 <label
                                                     key={type.value}
-                                                    className="group flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 bg-white p-3 transition hover:border-blue-300 has-checked:border-blue-600 has-checked:bg-blue-50/60 has-checked:ring-2 has-checked:ring-blue-500/10"
+                                                    className="group flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 bg-white p-3 transition hover:border-[#087F9F]/30 has-checked:border-[#087F9F] has-checked:bg-[#087F9F]/10 has-checked:ring-2 has-checked:ring-[#087F9F]/10"
                                                 >
                                                     <input
                                                         type="radio"
@@ -384,7 +384,7 @@ export default function AddTuitionPage() {
                                                         className="sr-only"
                                                     />
 
-                                                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600 group-has-checked:bg-blue-100 group-has-checked:text-blue-700">
+                                                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600 group-has-checked:bg-[#087F9F]/10 group-has-checked:text-[#066B85]">
                                                         <Icon size={18} />
                                                     </span>
 
@@ -397,7 +397,7 @@ export default function AddTuitionPage() {
                                                         </span>
                                                     </span>
 
-                                                    <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border border-slate-300 text-transparent group-has-checked:border-blue-600 group-has-checked:bg-blue-600 group-has-checked:text-white">
+                                                    <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border border-slate-300 text-transparent group-has-checked:border-[#087F9F] group-has-checked:bg-[#087F9F] group-has-checked:text-white">
                                                         <Check size={12} />
                                                     </span>
                                                 </label>
@@ -478,7 +478,7 @@ export default function AddTuitionPage() {
                                         {weekDays.map((day) => (
                                             <label
                                                 key={day.value}
-                                                className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 text-sm font-semibold text-slate-600 transition select-none has-checked:border-blue-600 has-checked:bg-blue-50 has-checked:text-blue-700"
+                                                className="cursor-pointer rounded-lg border border-slate-200 bg-white px-3.5 py-1.5 text-sm font-semibold text-slate-600 transition select-none has-checked:border-[#087F9F] has-checked:bg-[#087F9F]/5 has-checked:text-[#066B85]"
                                             >
                                                 <input
                                                     type="checkbox"
@@ -585,7 +585,7 @@ export default function AddTuitionPage() {
                                         <input
                                             type="checkbox"
                                             name="negotiable"
-                                            className="size-4 rounded border-slate-300 accent-blue-600"
+                                            className="size-4 rounded border-slate-300 accent-[#087F9F]"
                                         />
                                         Fee is negotiable
                                     </label>
@@ -601,7 +601,7 @@ export default function AddTuitionPage() {
                                         name="description"
                                         rows={4}
                                         placeholder="Write about your teaching style, syllabus coverage, results, or anything students should know..."
-                                        className="w-full resize-y rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                                        className="w-full resize-y rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10"
                                     />
 
                                     <p className="mt-1.5 flex items-center gap-1.5 text-xs text-slate-400">
@@ -664,7 +664,7 @@ export default function AddTuitionPage() {
                                             type="checkbox"
                                             name="whatsappSameAsContact"
                                             defaultChecked
-                                            className="size-4 rounded border-slate-300 accent-blue-600"
+                                            className="size-4 rounded border-slate-300 accent-[#087F9F]"
                                         />
                                         Same as contact number
                                     </label>
@@ -684,7 +684,7 @@ export default function AddTuitionPage() {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                                className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#087F9F] px-5 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-[#066B85] disabled:cursor-not-allowed disabled:opacity-60"
                             >
                                 <Send size={16} />
                                 {isSubmitting ? "Publishing..." : "Publish Tuition"}
@@ -694,8 +694,8 @@ export default function AddTuitionPage() {
 
                     {/* Sidebar */}
                     <aside className="space-y-4 lg:sticky lg:top-6">
-                        <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-blue-50 to-white p-5">
-                            <div className="flex items-center gap-2 text-blue-700">
+                        <div className="rounded-2xl border border-[#087F9F]/10 bg-gradient-to-br from-[#087F9F]/5 to-white p-5">
+                            <div className="flex items-center gap-2 text-[#066B85]">
                                 <Sparkles size={18} />
                                 <h2 className="text-sm font-bold">Tips for a great post</h2>
                             </div>
@@ -703,7 +703,7 @@ export default function AddTuitionPage() {
                             <ul className="mt-4 space-y-3">
                                 {tips.map((tip) => (
                                     <li key={tip} className="flex gap-2.5 text-sm leading-5 text-slate-600">
-                                        <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
+                                        <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-[#087F9F] text-white">
                                             <Check size={10} />
                                         </span>
                                         {tip}
@@ -714,7 +714,7 @@ export default function AddTuitionPage() {
 
                         <div className="rounded-2xl border border-slate-200 bg-white p-5">
                             <div className="flex items-center gap-2 text-slate-800">
-                                <GraduationCap size={18} className="text-blue-600" />
+                                <GraduationCap size={18} className="text-[#087F9F]" />
                                 <h2 className="text-sm font-bold">Posting Summary</h2>
                             </div>
 
@@ -771,7 +771,7 @@ export default function AddTuitionPage() {
                         </div>
 
                         <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4">
-                            <UserRound size={18} className="mt-0.5 shrink-0 text-blue-600" />
+                            <UserRound size={18} className="mt-0.5 shrink-0 text-[#087F9F]" />
                             <p className="text-xs leading-5 text-slate-500">
                                 Need help? Contact our support team and we will help you create
                                 the perfect tuition post.
