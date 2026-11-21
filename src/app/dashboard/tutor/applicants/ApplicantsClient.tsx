@@ -161,7 +161,7 @@ export default function ApplicantsClient({
 
   const [updating, setUpdating] = useState<{
     id: string;
-    status: "Accepted" | "Rejected";
+    status: "Pending" | "Accepted" | "Rejected";
   } | null>(null);
 
   const [search, setSearch] = useState("");
@@ -240,10 +240,10 @@ export default function ApplicantsClient({
     }
   };
 
-  // Accept or reject application
+  // Accept, reject or move an application back to pending
   const handleStatusChange = async (
     id: string,
-    status: "Accepted" | "Rejected"
+    status: "Pending" | "Accepted" | "Rejected"
   ) => {
     if (updating) return;
 
@@ -283,7 +283,7 @@ export default function ApplicantsClient({
 
   const isUpdating = (
     id: string,
-    status: "Accepted" | "Rejected"
+    status: "Pending" | "Accepted" | "Rejected"
   ) => updating?.id === id && updating.status === status;
 
   return (
@@ -525,6 +525,11 @@ export default function ApplicantsClient({
                 "Rejected"
               );
 
+              const pendingLoading = isUpdating(
+                applicant._id,
+                "Pending"
+              );
+
               const isBusy = updating?.id === applicant._id;
 
               return (
@@ -634,48 +639,73 @@ export default function ApplicantsClient({
                     )}
 
                     {/* Actions */}
-                    <div className="mt-auto flex items-center gap-2 border-t border-slate-100 pt-4">
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleStatusChange(applicant._id, "Accepted")
-                        }
-                        disabled={isBusy || statusKey === "accepted"}
-                        className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition ${
-                          statusKey === "accepted"
-                            ? "cursor-default border border-emerald-200 bg-emerald-50 text-emerald-700"
-                            : "bg-emerald-600 text-white hover:bg-emerald-700"
-                        } disabled:cursor-not-allowed disabled:opacity-70`}
-                      >
-                        {acceptedLoading ? (
-                          <Loader2 size={14} className="animate-spin" />
-                        ) : (
-                          <Check size={14} />
-                        )}
+                    <div className="mt-auto border-t border-slate-100 pt-4">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleStatusChange(applicant._id, "Accepted")
+                          }
+                          disabled={isBusy || statusKey === "accepted"}
+                          className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition ${
+                            statusKey === "accepted"
+                              ? "cursor-default border border-emerald-200 bg-emerald-50 text-emerald-700"
+                              : "bg-emerald-600 text-white hover:bg-emerald-700"
+                          } disabled:cursor-not-allowed disabled:opacity-70`}
+                        >
+                          {acceptedLoading ? (
+                            <Loader2 size={14} className="animate-spin" />
+                          ) : (
+                            <Check size={14} />
+                          )}
 
-                        {statusKey === "accepted" ? "Accepted" : "Accept"}
-                      </button>
+                          {statusKey === "accepted" ? "Accepted" : "Accept"}
+                        </button>
 
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleStatusChange(applicant._id, "Rejected")
-                        }
-                        disabled={isBusy || statusKey === "rejected"}
-                        className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition ${
-                          statusKey === "rejected"
-                            ? "cursor-default border border-rose-200 bg-rose-50 text-rose-700"
-                            : "border border-rose-200 bg-white text-rose-600 hover:bg-rose-50"
-                        } disabled:cursor-not-allowed disabled:opacity-70`}
-                      >
-                        {rejectedLoading ? (
-                          <Loader2 size={14} className="animate-spin" />
-                        ) : (
-                          <X size={14} />
-                        )}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleStatusChange(applicant._id, "Rejected")
+                          }
+                          disabled={isBusy || statusKey === "rejected"}
+                          className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition ${
+                            statusKey === "rejected"
+                              ? "cursor-default border border-rose-200 bg-rose-50 text-rose-700"
+                              : "border border-rose-200 bg-white text-rose-600 hover:bg-rose-50"
+                          } disabled:cursor-not-allowed disabled:opacity-70`}
+                        >
+                          {rejectedLoading ? (
+                            <Loader2 size={14} className="animate-spin" />
+                          ) : (
+                            <X size={14} />
+                          )}
 
-                        {statusKey === "rejected" ? "Rejected" : "Reject"}
-                      </button>
+                          {statusKey === "rejected" ? "Rejected" : "Reject"}
+                        </button>
+                      </div>
+
+                      {statusKey === "pending" ? (
+                        <p className="mt-2 flex items-center justify-center gap-1.5 rounded-xl bg-amber-50 px-3 py-2 text-[11px] font-semibold text-amber-700">
+                          <Clock size={13} />
+                          Waiting for your decision
+                        </p>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleStatusChange(applicant._id, "Pending")
+                          }
+                          disabled={isBusy}
+                          className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-bold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-70"
+                        >
+                          {pendingLoading ? (
+                            <Loader2 size={14} className="animate-spin" />
+                          ) : (
+                            <Clock size={14} />
+                          )}
+                          Move back to Pending
+                        </button>
+                      )}
                     </div>
                   </div>
                 </article>

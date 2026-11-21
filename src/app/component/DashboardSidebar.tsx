@@ -11,7 +11,6 @@ import {
   GraduationCap,
   LayoutDashboard,
   PlusCircle,
-  Settings,
   UserRound,
   Users,
 } from "lucide-react";
@@ -133,12 +132,7 @@ const menuItemsByRole: Record<SidebarRole, MenuItem[]> = {
       url: "/dashboard/admin/payments",
       icon: CreditCard,
     },
-    {
-      id: "admin-settings",
-      name: "Settings",
-      url: "/dashboard/admin/settings",
-      icon: Settings,
-    },
+
     {
       id: "admin-profile",
       name: "My Profile",

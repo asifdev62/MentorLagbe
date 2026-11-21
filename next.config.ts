@@ -10,14 +10,19 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   reactCompiler: true,
 
-  // Allow Google profile images
+  // Allow images from any external domain
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "lh3.googleusercontent.com",
+        hostname: "**",
+      },
+      {
+        protocol: "http",
+        hostname: "**",
       },
     ],
+    unoptimized: true,
   },
 
   turbopack: {

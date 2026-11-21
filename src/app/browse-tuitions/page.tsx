@@ -4,7 +4,6 @@ import {
 } from "@/lib/api/tuitions";
 
 import BrowseTuitions from "./BrowseTuitions";
-import Navbar from "../components/navbar";
 
 const TuitionsPage = async () => {
   let tuitions: TuitionItem[] = [];
@@ -23,7 +22,6 @@ const TuitionsPage = async () => {
 
   return (
     <>
-      <Navbar />
       <BrowseTuitions tuitions={approvedTuitions} />
     </>
   );

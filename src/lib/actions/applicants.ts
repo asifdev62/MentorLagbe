@@ -161,7 +161,7 @@ export const getApplicationById = async (id: string) => {
 // Update Applicant Status
 export const updateApplicantStatus = async (
   id: string,
-  status: "Accepted" | "Rejected"
+  status: "Pending" | "Accepted" | "Rejected"
 ) => {
   const res = await fetch(
     `${BASE_URL}/applications/${id}/status`,

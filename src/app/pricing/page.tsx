@@ -2,76 +2,13 @@
 import React from "react";
 import Link from "next/link";
 import {
-  Check,
-  X,
   Sparkles,
-  GraduationCap,
-  BookOpen,
   ArrowRight,
   ShieldCheck,
   Headphones,
 } from "lucide-react";
 import Navbar from "../components/navbar";
-
-const plans = [
-  {
-    name: "Starter",
-    subtitle: "Get started with MentorLagbe",
-    price: "Free",
-    period: "Forever",
-    description: "Perfect for exploring the platform.",
-    icon: GraduationCap,
-    popular: false,
-    buttonText: "Get Started",
-    buttonLink: "/auth/sign-up",
-    features: [
-      { text: "Browse available tuitions", included: true },
-      { text: "Apply for 2 tuitions", included: true },
-      { text: "Basic profile access", included: true },
-      { text: "Application status tracking", included: true },
-      { text: "Unlimited applications", included: false },
-      { text: "Priority support", included: false },
-    ],
-  },
-  {
-    name: "Student Premium",
-    subtitle: "Find your perfect tutor",
-    price: "৳199",
-    period: "/ month",
-    description: "More opportunities to find the right tuition.",
-    icon: Sparkles,
-    popular: true,
-    buttonText: "Choose Premium",
-    buttonLink: "/payment",
-    features: [
-      { text: "Browse available tuitions", included: true },
-      { text: "Unlimited tuition applications", included: true },
-      { text: "Complete profile access", included: true },
-      { text: "Application status tracking", included: true },
-      { text: "Priority application access", included: true },
-      { text: "Priority support", included: true },
-    ],
-  },
-  {
-    name: "Tutor Pro",
-    subtitle: "Grow your tutoring career",
-    price: "৳299",
-    period: "/ month",
-    description: "Everything you need to grow as a tutor.",
-    icon: BookOpen,
-    popular: false,
-    buttonText: "Become Pro",
-    buttonLink: "/payment",
-    features: [
-      { text: "Create tutoring profile", included: true },
-      { text: "Post tuition opportunities", included: true },
-      { text: "Manage student applications", included: true },
-      { text: "Professional tutor profile", included: true },
-      { text: "Priority visibility", included: true },
-      { text: "Priority support", included: true },
-    ],
-  },
-];
+import { PricingCards } from "../components/pricing-cards";
 
 const PricingPage = () => {
   return (
@@ -102,109 +39,7 @@ const PricingPage = () => {
 
       {/* Pricing Cards */}
       <section className="px-4 pb-20">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 items-stretch">
-          {plans.map((plan) => {
-            const Icon = plan.icon;
-
-            return (
-              <div
-                key={plan.name}
-                className={`relative flex flex-col rounded-2xl bg-white p-7 transition-all duration-300 hover:-translate-y-2 ${
-                  plan.popular
-                    ? "border-2 border-[#087F9F] shadow-xl shadow-[#087F9F]/10 lg:scale-105"
-                    : "border border-slate-200 shadow-lg shadow-slate-200/50"
-                }`}
-              >
-                {/* Popular Badge */}
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#087F9F] px-5 py-2 text-xs font-bold text-white shadow-lg shadow-[#087F9F]/20">
-                    MOST POPULAR
-                  </div>
-                )}
-
-                {/* Plan Icon */}
-                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#087F9F]">
-                  <Icon size={25} />
-                </div>
-
-                {/* Plan Info */}
-                <h2 className="text-xl font-bold text-slate-900">
-                  {plan.name}
-                </h2>
-
-                <p className="mt-1 text-sm text-slate-500">
-                  {plan.subtitle}
-                </p>
-
-                {/* Price */}
-                <div className="mt-6 flex items-end gap-2">
-                  <span className="text-4xl font-extrabold text-slate-900">
-                    {plan.price}
-                  </span>
-
-                  <span className="mb-1 text-sm text-slate-500">
-                    {plan.period}
-                  </span>
-                </div>
-
-                <p className="mt-3 min-h-10 text-sm leading-6 text-slate-500">
-                  {plan.description}
-                </p>
-
-                {/* Button */}
-                <Link
-                  href={plan.buttonLink}
-                  className={`mt-6 flex h-12 items-center justify-center gap-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
-                    plan.popular
-                      ? "bg-[#087F9F] text-white hover:bg-[#066B85] shadow-lg shadow-[#087F9F]/20"
-                      : "border border-[#087F9F]/30 bg-[#087F9F]/5 text-[#087F9F] hover:bg-[#087F9F] hover:text-white"
-                  }`}
-                >
-                  {plan.buttonText}
-                  <ArrowRight size={17} />
-                </Link>
-
-                <div className="my-7 border-t border-slate-100" />
-
-                {/* Features */}
-                <h3 className="mb-5 text-sm font-bold text-slate-800">
-                  What&apos;s included:
-                </h3>
-
-                <ul className="space-y-4">
-                  {plan.features.map((feature) => (
-                    <li
-                      key={feature.text}
-                      className="flex items-start gap-3 text-sm"
-                    >
-                      {feature.included ? (
-                        <Check
-                          size={18}
-                          className="mt-0.5 shrink-0 text-[#087F9F]"
-                        />
-                      ) : (
-                        <X
-                          size={18}
-                          className="mt-0.5 shrink-0 text-slate-300"
-                        />
-                      )}
-
-                      <span
-                        className={
-                          feature.included
-                            ? "text-slate-600"
-                            : "text-slate-400"
-                        }
-                      >
-                        {feature.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
-        </div>
+        <PricingCards />
       </section>
 
       {/* Benefits Section */}
