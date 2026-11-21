@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import {
   Check,
@@ -15,7 +15,6 @@ import {
   ArrowRight,
   Headphones,
 } from "lucide-react";
-import { toast } from "sonner";
 
 const PaymentPage = () => {
   const [selectedPlan, setSelectedPlan] = useState("student");
@@ -130,11 +129,10 @@ const PaymentPage = () => {
                       key={plan.id}
                       type="button"
                       onClick={() => setSelectedPlan(plan.id)}
-                      className={`relative flex flex-col rounded-2xl border-2 p-5 text-left transition-all duration-300 hover:-translate-y-1 ${
-                        isSelected
-                          ? "border-[#087F9F] bg-[#087F9F]/5 shadow-lg shadow-[#087F9F]/10"
-                          : "border-slate-200 bg-white hover:border-[#087F9F]/40"
-                      }`}
+                      className={`relative flex flex-col rounded-2xl border-2 p-5 text-left transition-all duration-300 hover:-translate-y-1 ${isSelected
+                        ? "border-[#087F9F] bg-[#087F9F]/5 shadow-lg shadow-[#087F9F]/10"
+                        : "border-slate-200 bg-white hover:border-[#087F9F]/40"
+                        }`}
                     >
                       {plan.popular && (
                         <span className="absolute -top-3 right-4 rounded-full bg-[#087F9F] px-3 py-1 text-[10px] font-bold tracking-wide text-white shadow-md">
@@ -148,11 +146,10 @@ const PaymentPage = () => {
                         </div>
 
                         <span
-                          className={`flex h-5 w-5 items-center justify-center rounded-full border ${
-                            isSelected
-                              ? "border-[#087F9F] bg-[#087F9F] text-white"
-                              : "border-slate-300"
-                          }`}
+                          className={`flex h-5 w-5 items-center justify-center rounded-full border ${isSelected
+                            ? "border-[#087F9F] bg-[#087F9F] text-white"
+                            : "border-slate-300"
+                            }`}
                         >
                           {isSelected && <Check size={13} />}
                         </span>
@@ -180,11 +177,10 @@ const PaymentPage = () => {
                       </p>
 
                       <div
-                        className={`mt-5 rounded-lg py-2.5 text-center text-xs font-bold transition ${
-                          isSelected
-                            ? "bg-[#087F9F] text-white"
-                            : "bg-[#087F9F]/5 text-[#087F9F]"
-                        }`}
+                        className={`mt-5 rounded-lg py-2.5 text-center text-xs font-bold transition ${isSelected
+                          ? "bg-[#087F9F] text-white"
+                          : "bg-[#087F9F]/5 text-[#087F9F]"
+                          }`}
                       >
                         {isSelected ? "Selected Plan" : "Choose This Plan"}
                       </div>
@@ -342,19 +338,17 @@ const PaymentPage = () => {
                 </div>
 
                 {/* Checkout Button */}
-                <button
-                  type="button"
-                  onClick={() =>
-                    toast.info(
-                      `Payment for ${currentPlan.name} is coming soon!`
-                    )
-                  }
-                  className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-5 py-4 text-sm font-bold text-white shadow-lg shadow-[#087F9F]/20 transition hover:bg-[#066B85] active:scale-[0.98]"
-                >
-                  <Lock size={16} />
-                  Continue to Payment
-                  <ArrowRight size={17} />
-                </button>
+                <form action="/api/checkout_sessions" method="POST" className="mt-7">
+                  <input type="hidden" name="plan" value={currentPlan.id} />
+                  <button
+                    type="submit"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-5 py-4 text-sm font-bold text-white shadow-lg shadow-[#087F9F]/20 transition hover:bg-[#066B85] active:scale-[0.98]"
+                  >
+                    <Lock size={16} />
+                    Continue to Payment — ৳{currentPlan.price}
+                    <ArrowRight size={17} />
+                  </button>
+                </form>
 
                 {/* Security */}
                 <div className="mt-5 flex items-center justify-center gap-2 text-xs text-slate-400">
