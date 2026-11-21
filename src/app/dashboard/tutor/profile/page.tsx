@@ -1,6 +1,6 @@
 import { ProfileView } from "@/components/profile/ProfileView";
 
-export const dynamic = "force-dynamic";
+export const instant = false;
 
 export default function TutorProfilePage() {
   return (

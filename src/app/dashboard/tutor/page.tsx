@@ -19,7 +19,7 @@ import { auth } from "@/lib/auth";
 import { getMyTuitions } from "@/lib/actions/profile";
 import { OverviewStatCard } from "@/components/dashboard/OverviewStatCard";
 
-export const dynamic = "force-dynamic";
+export const instant = false;
 
 const getStatusKey = (status?: string) => {
   const value = (status || "pending").toLowerCase();

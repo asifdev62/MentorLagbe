@@ -17,7 +17,7 @@ import { getTuitions, type TuitionItem } from "@/lib/api/tuitions";
 import { getApplicants, type Applicant } from "@/lib/api/applicants";
 import { OverviewStatCard } from "@/components/dashboard/OverviewStatCard";
 
-export const dynamic = "force-dynamic";
+export const instant = false;
 
 const formatDate = (value?: string) => {
   if (!value) return "Unknown";
