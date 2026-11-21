@@ -7,6 +7,8 @@ export type ActiveStatus = "active" | "closed";
 
 export type TuitionItem = {
   _id: string;
+  /** Some API responses expose the document id as `id` instead of `_id`. */
+  id?: string;
   title: string;
   classLevel: string;
   subject: string;

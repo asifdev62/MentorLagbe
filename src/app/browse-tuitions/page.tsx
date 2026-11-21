@@ -5,6 +5,8 @@ import {
 
 import BrowseTuitions from "./BrowseTuitions";
 
+export const instant = false;
+
 const TuitionsPage = async () => {
   let tuitions: TuitionItem[] = [];
 
