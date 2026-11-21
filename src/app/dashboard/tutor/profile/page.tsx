@@ -1,12 +1,9 @@
-import ProfilePage from '@/app/profile/page';
-import React from 'react';
+import { ProfileView } from "@/components/profile/ProfileView";
 
-const page = () => {
-    return (
-        <div>
-            <ProfilePage />
-        </div>
-    );
-};
-
-export default page;
+export default function TutorProfilePage() {
+  return (
+    <div className="p-4 md:p-6">
+      <ProfileView />
+    </div>
+  );
+}

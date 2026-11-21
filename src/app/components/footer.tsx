@@ -20,14 +20,14 @@ const quickLinks = [
 
 const studentLinks = [
   { label: "Find a Tutor", href: "/browse-tuitions" },
-  { label: "My Applications", href: "/dashboard/student/applications" },
-  { label: "My Profile", href: "/dashboard/student/profile" },
+  { label: "My Applications", href: "/dashboard/student/my-application" },
+  { label: "My Profile", href: "/profile" },
 ];
 
 const tutorLinks = [
   { label: "Post a Tuition", href: "/dashboard/tutor/add-tuition" },
-  { label: "Manage Tuitions", href: "/dashboard/tutor/tuitions" },
-  { label: "My Students", href: "/dashboard/tutor/applications" },
+  { label: "Manage Tuitions", href: "/dashboard/tutor/manage-tuition" },
+  { label: "My Students", href: "/dashboard/tutor/applicants" },
 ];
 
 export default function Footer() {

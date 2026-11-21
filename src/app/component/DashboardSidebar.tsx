@@ -139,6 +139,12 @@ const menuItemsByRole: Record<SidebarRole, MenuItem[]> = {
       url: "/dashboard/admin/settings",
       icon: Settings,
     },
+    {
+      id: "admin-profile",
+      name: "My Profile",
+      url: "/dashboard/admin/profile",
+      icon: UserRound,
+    },
   ],
 };
 

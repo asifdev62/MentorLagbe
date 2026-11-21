@@ -255,7 +255,7 @@ export default function Navbar() {
                   </Link>
 
                   <Link
-                    href="/dashboard/profile"
+                    href="/profile"
                     onClick={() => setIsOpen(false)}
                     className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
                   >
