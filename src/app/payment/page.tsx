@@ -15,6 +15,7 @@ import {
   ArrowRight,
   Headphones,
 } from "lucide-react";
+import { toast } from "sonner";
 
 const PaymentPage = () => {
   const [selectedPlan, setSelectedPlan] = useState("student");
@@ -343,7 +344,11 @@ const PaymentPage = () => {
                 {/* Checkout Button */}
                 <button
                   type="button"
-                  onClick={() => alert("Payment integration coming soon!")}
+                  onClick={() =>
+                    toast.info(
+                      `Payment for ${currentPlan.name} is coming soon!`
+                    )
+                  }
                   className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-5 py-4 text-sm font-bold text-white shadow-lg shadow-[#087F9F]/20 transition hover:bg-[#066B85] active:scale-[0.98]"
                 >
                   <Lock size={16} />

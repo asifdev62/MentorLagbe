@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Loader2, Users } from "lucide-react";
+import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import {
   getTutorApplicants,
@@ -35,11 +36,13 @@ export default function ApplicantsPage() {
         }
       } catch (err) {
         if (!cancelled) {
-          setError(
+          const message =
             err instanceof Error
               ? err.message
-              : "Failed to load applicants"
-          );
+              : "Failed to load applicants";
+
+          setError(message);
+          toast.error(message);
         }
       } finally {
         if (!cancelled) {

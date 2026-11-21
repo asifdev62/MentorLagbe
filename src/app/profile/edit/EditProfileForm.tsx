@@ -15,6 +15,7 @@ import {
   Save,
   UserRound,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import {
   updateMyProfile,
@@ -52,20 +53,44 @@ export default function EditProfileForm({ profile }: Props) {
     setMessage("");
     setIsError(false);
 
+    toast.loading("Saving your profile...", { id: "profile-update" });
+
     startTransition(async () => {
-      const result = await updateMyProfile({
-        name,
-        phone,
-        address,
-        image,
-      });
+      try {
+        const result = await updateMyProfile({
+          name,
+          phone,
+          address,
+          image,
+        });
 
-      setMessage(result.message);
-      setIsError(!result.success);
+        if (result.success) {
+          toast.success(
+            result.message || "Profile updated successfully!",
+            { id: "profile-update" }
+          );
 
-      if (result.success) {
-        router.push("/profile");
-        router.refresh();
+          router.push("/profile");
+          router.refresh();
+          return;
+        }
+
+        setMessage(result.message);
+        setIsError(true);
+
+        toast.error(result.message || "Failed to update profile.", {
+          id: "profile-update",
+        });
+      } catch (error) {
+        const message =
+          error instanceof Error
+            ? error.message
+            : "Failed to update profile. Please try again.";
+
+        setMessage(message);
+        setIsError(true);
+
+        toast.error(message, { id: "profile-update" });
       }
     });
   };

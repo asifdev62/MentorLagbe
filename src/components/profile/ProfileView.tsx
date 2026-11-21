@@ -8,7 +8,6 @@ import {
   CalendarDays,
   CheckCircle2,
   GraduationCap,
-  LogOut,
   Mail,
   MapPin,
   Pencil,
@@ -19,6 +18,7 @@ import {
 
 import { auth } from "@/lib/auth";
 import { getMyProfile } from "@/lib/actions/profile";
+import { LogoutButton } from "@/components/profile/LogoutButton";
 
 const roleInfo: Record<
   string,
@@ -128,17 +128,6 @@ export async function ProfileView() {
     },
   ];
 
-  // Logout Server Action
-  async function logout() {
-    "use server";
-
-    await auth.api.signOut({
-      headers: await headers(),
-    });
-
-    redirect("/auth/sign-in");
-  }
-
   return (
     <div className="mx-auto w-full max-w-5xl">
       <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm shadow-slate-200/60 dark:border-slate-700 dark:bg-[#172A35] dark:shadow-none">
@@ -172,17 +161,7 @@ export async function ProfileView() {
               </span>
             </Link>
 
-            <form action={logout}>
-              <button
-                type="submit"
-                title="Logout"
-                aria-label="Logout"
-                className="inline-flex items-center gap-1.5 rounded-xl border border-white/30 bg-white/10 px-3.5 py-2.5 text-xs font-semibold text-white backdrop-blur-sm transition hover:bg-white/20 sm:gap-2 sm:px-4 sm:text-sm"
-              >
-                <LogOut size={15} />
-                <span className="hidden sm:inline">Logout</span>
-              </button>
-            </form>
+            <LogoutButton />
           </div>
         </div>
 

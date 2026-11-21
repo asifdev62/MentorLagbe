@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 
 import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -52,15 +53,22 @@ export default function Navbar() {
     try {
       setLoggingOut(true);
 
+      toast.loading("Signing you out...", { id: "sign-out" });
+
       await authClient.signOut();
 
       setProfileOpen(false);
       setIsOpen(false);
 
+      toast.success("You have been signed out.", { id: "sign-out" });
+
       router.push("/");
       router.refresh();
     } catch (error) {
       console.error("Sign out failed:", error);
+      toast.error("Failed to sign out. Please try again.", {
+        id: "sign-out",
+      });
     } finally {
       setLoggingOut(false);
     }
