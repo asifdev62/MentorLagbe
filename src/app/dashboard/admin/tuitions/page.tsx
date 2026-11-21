@@ -1,9 +1,14 @@
 import { BookOpen, Clock } from "lucide-react";
+import { connection } from "next/server";
 
 import { getTuitions } from "@/lib/api/tuitions";
 import TuitionsClient from "./TuitionsClient";
 
+export const instant = false;
+
 export default async function AdminTuitionsPage() {
+  await connection();
+
   const tuitions = await getTuitions();
 
   const pending = tuitions.filter(

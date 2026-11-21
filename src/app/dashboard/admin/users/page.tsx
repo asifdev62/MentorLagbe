@@ -7,6 +7,8 @@ import {
 
 import UsersClient from "./UsersClient";
 
+export const instant = false;
+
 export default async function UsersPage() {
   let users: AdminUser[] = [];
   let errorMessage = "";

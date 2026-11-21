@@ -6,6 +6,8 @@ import { getMyProfile } from "@/lib/actions/profile";
 
 import EditProfileForm from "./EditProfileForm";
 
+export const instant = false;
+
 export default async function EditProfilePage() {
   const session = await auth.api.getSession({
     headers: await headers(),

@@ -1,3 +1,5 @@
+import { connection } from "next/server";
+
 import {
   getTuitions,
   type TuitionItem,
@@ -8,6 +10,8 @@ import BrowseTuitions from "./BrowseTuitions";
 export const instant = false;
 
 const TuitionsPage = async () => {
+  await connection();
+
   let tuitions: TuitionItem[] = [];
 
   try {

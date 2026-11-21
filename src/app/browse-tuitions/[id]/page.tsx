@@ -2,6 +2,8 @@
 import { Suspense } from "react";
 import { getTuitionById } from "@/lib/api/tuitions";
 import { notFound } from "next/navigation";
+
+export const instant = false;
 import Navbar from "@/app/components/navbar";
 import {
   MapPin,
