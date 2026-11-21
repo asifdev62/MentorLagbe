@@ -436,7 +436,7 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                                 {filteredTuitions.map((item, index) => {
                                     const cardId =
-                                        item._id || item._id || `${item.title}-${index}`;
+                                        item._id || item.id || `${item.title}-${index}`;
 
                                     const isExpanded = expandedCard === cardId;
                                     const postedDate = formatDate(item.createdAt);
@@ -651,7 +651,7 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                                                     </button>
 
                                                     <Link
-                                                        href={`/browse-tuitions/${item._id || item._id}`}
+                                                        href={`/browse-tuitions/${item._id || item.id}`}
                                                         className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-4 py-2.5 text-xs font-bold text-white shadow-sm shadow-[#087F9F]/20 transition hover:bg-[#066B85] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-[#087F9F]/10"
                                                     >
                                                         View Details

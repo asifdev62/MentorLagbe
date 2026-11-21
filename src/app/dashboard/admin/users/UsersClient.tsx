@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import {
   Search,
@@ -228,9 +229,11 @@ export default function UsersClient({ initialUsers }: Props) {
                     <td className="px-4 py-3.5 sm:px-5">
                       <div className="flex items-center gap-3">
                         {user.image ? (
-                          <img
+                          <Image
                             src={user.image}
                             alt={user.name || "User"}
+                            width={40}
+                            height={40}
                             className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-white shadow-sm"
                           />
                         ) : (
