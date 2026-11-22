@@ -226,14 +226,6 @@ export default function AddTuitionPage() {
                 {/* Page header */}
                 <div className="flex flex-wrap items-end justify-between gap-4">
                     <div>
-                        <Link
-                            href="/dashboard/tutor"
-                            className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-[#087F9F]"
-                        >
-                            <ArrowLeft size={16} />
-                            Back to dashboard
-                        </Link>
-
                         <h1 className="mt-3 text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
                             Post Your Tuition
                         </h1>
