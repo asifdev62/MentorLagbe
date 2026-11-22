@@ -185,7 +185,7 @@ export default function AddTuitionPage() {
 
       // Free tutor accounts can publish up to 2 tuition posts. Once the
       // limit is reached, send the tutor to the Tutor Pro payment page.
-      const isPremium = await hasActiveMembership(session.user.id, "tutor");
+      const isPremium = await hasActiveMembership(session.user.id);
       const allTuitions = await getTuitions();
       const email = session.user.email.toLowerCase();
 

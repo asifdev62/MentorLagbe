@@ -93,7 +93,7 @@ export default function ManageTuitionPage() {
 
     let cancelled = false;
 
-    hasActiveMembership(userId, "tutor")
+    hasActiveMembership(userId)
       .then((value) => {
         if (!cancelled) setIsTutorPremium(value);
       })

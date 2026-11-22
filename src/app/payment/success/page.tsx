@@ -21,7 +21,7 @@ import {
 import type Stripe from "stripe";
 
 import { getStripe } from "@/lib/stripe";
-import { recordPayment } from "@/lib/actions/payments";
+import { verifyCheckout } from "@/lib/actions/payments";
 
 type PaymentSuccessPageProps = {
   searchParams: Promise<{ session_id?: string | string[] }>;
@@ -101,12 +101,12 @@ function DetailRow({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex items-start justify-between gap-4 px-4 py-3.5 sm:px-5">
-      <dt className="flex items-center gap-2.5 text-sm text-slate-500">
-        <Icon size={16} className="shrink-0 text-slate-400" />
+    <div className="flex items-start justify-between gap-3 px-3.5 py-2.5 sm:px-4">
+      <dt className="flex items-center gap-2 text-[13px] text-slate-500">
+        <Icon size={15} className="shrink-0 text-slate-400" />
         {label}
       </dt>
-      <dd className="max-w-[60%] text-right text-sm font-semibold text-slate-800">
+      <dd className="max-w-[60%] text-right text-[13px] font-semibold text-slate-800">
         {children}
       </dd>
     </div>
@@ -122,29 +122,29 @@ function PaymentError({
 }) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#F4F7FC] px-4 py-12">
-      <div className="w-full max-w-lg overflow-hidden rounded-3xl border border-slate-200 bg-white text-center shadow-xl shadow-slate-200/50">
-        <div className="bg-gradient-to-br from-rose-500 to-rose-600 px-6 py-9 text-white">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/30">
-            <XCircle size={34} />
+      <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white text-center shadow-xl shadow-slate-200/50">
+        <div className="bg-gradient-to-br from-rose-500 to-rose-600 px-5 py-7 text-white">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/30">
+            <XCircle size={28} />
           </div>
-          <h1 className="mt-5 text-xl font-extrabold sm:text-2xl">{title}</h1>
+          <h1 className="mt-4 text-lg font-extrabold sm:text-xl">{title}</h1>
         </div>
 
-        <div className="p-6 sm:p-8">
-          <p className="text-sm leading-6 text-slate-500">{message}</p>
+        <div className="p-5 sm:p-6">
+          <p className="text-xs leading-5 text-slate-500">{message}</p>
 
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-center">
             <Link
               href="/payment"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#066B85]"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-4 py-2.5 text-[13px] font-bold text-white transition hover:bg-[#066B85]"
             >
-              <CreditCard size={16} />
+              <CreditCard size={15} />
               Try Payment Again
             </Link>
 
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50"
             >
               Contact Support
             </Link>
@@ -248,58 +248,50 @@ export default async function PaymentSuccessPage({
   const transactionId = paymentIntent?.id ?? session.id;
   const receiptUrl = charge?.receipt_url ?? null;
 
-  // Save the payment so membership checks can unlock unlimited
-  // applications/posts. Refreshing this page is safe (upsert by session id).
-  if (session.status === "complete" && session.metadata?.userId) {
+  // Verify the payment through the backend. It stores the payment record
+  // and sets `premium: true` on the user. Refreshing is safe because
+  // verifyCheckout skips sessions that are already recorded.
+  if (session.status === "complete" && isPaid) {
     try {
-      await recordPayment({
-        userId: session.metadata.userId,
-        email: email ?? null,
-        plan: planKey,
-        stripeSessionId: session.id,
-        paymentIntentId: paymentIntent?.id ?? null,
-        amountTotal: session.amount_total,
-        currency: session.currency,
-        status: isPaid ? "paid" : "processing",
-      });
+      await verifyCheckout(session.id);
     } catch (error) {
-      console.error("Failed to record Stripe payment:", error);
+      console.error("Failed to verify Stripe payment:", error);
     }
   }
 
   return (
-    <main className="min-h-screen bg-[#F4F7FC] px-4 py-10 text-slate-800 sm:py-14">
-      <div className="mx-auto max-w-3xl">
+    <main className="min-h-screen bg-[#F4F7FC] px-4 py-8 text-slate-800 sm:py-10">
+      <div className="mx-auto max-w-2xl">
 
-        <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-200/50">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-200/50">
 
           {/* Header */}
           <div
-            className={`relative overflow-hidden px-6 py-10 text-center text-white sm:px-10 ${
+            className={`relative overflow-hidden px-5 py-7 text-center text-white sm:px-8 ${
               isPaid
                 ? "bg-gradient-to-br from-[#087F9F] via-[#0A8FAF] to-[#066B85]"
                 : "bg-gradient-to-br from-amber-500 via-amber-600 to-orange-600"
             }`}
           >
-            <div className="absolute -top-20 -left-20 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
-            <div className="absolute -right-20 -bottom-20 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+            <div className="absolute -top-20 -left-20 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
+            <div className="absolute -right-20 -bottom-20 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
 
             <div className="relative">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/30">
-                {isPaid ? <CheckCircle2 size={34} /> : <Clock size={34} />}
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/30">
+                {isPaid ? <CheckCircle2 size={28} /> : <Clock size={28} />}
               </div>
 
-              <p className="mt-5 text-[11px] font-bold tracking-[0.22em] text-white/80 uppercase">
+              <p className="mt-4 text-[10px] font-bold tracking-[0.22em] text-white/80 uppercase">
                 {isPaid ? "Payment successful" : "Payment processing"}
               </p>
 
-              <h1 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">
+              <h1 className="mt-2 text-xl font-extrabold tracking-tight sm:text-2xl">
                 {isPaid
                   ? `Thank you${firstName ? `, ${firstName}` : ""}!`
                   : "Almost there!"}
               </h1>
 
-              <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-white/85">
+              <p className="mx-auto mt-2 max-w-sm text-xs leading-5 text-white/85">
                 {isPaid
                   ? `Your ${plan.name} membership is active. ${plan.tagline}`
                   : "Your payment is being confirmed by the bank. This page will show the receipt once Stripe marks the payment as paid."}
@@ -307,11 +299,11 @@ export default async function PaymentSuccessPage({
             </div>
           </div>
 
-          <div className="p-6 sm:p-8">
+          <div className="p-5 sm:p-6">
 
             {/* Amount summary */}
             <div
-              className={`flex flex-col items-start justify-between gap-4 rounded-2xl border px-5 py-5 sm:flex-row sm:items-center ${
+              className={`flex flex-col items-start justify-between gap-3 rounded-xl border px-4 py-4 sm:flex-row sm:items-center ${
                 isPaid
                   ? "border-emerald-100 bg-emerald-50/70"
                   : "border-amber-100 bg-amber-50/70"
@@ -319,16 +311,16 @@ export default async function PaymentSuccessPage({
             >
               <div>
                 <p
-                  className={`text-[11px] font-bold tracking-wider uppercase ${
+                  className={`text-[10px] font-bold tracking-wider uppercase ${
                     isPaid ? "text-emerald-700" : "text-amber-700"
                   }`}
                 >
                   {isPaid ? "Amount paid" : "Amount due"}
                 </p>
-                <p className="mt-1 text-3xl font-extrabold text-slate-900">
+                <p className="mt-0.5 text-2xl font-extrabold text-slate-900">
                   {amount}
                 </p>
-                <p className="mt-1 text-xs text-slate-500">
+                <p className="mt-0.5 text-[11px] text-slate-500">
                   {isSubscription
                     ? "Monthly subscription"
                     : "One-time payment"}{" "}
@@ -336,15 +328,15 @@ export default async function PaymentSuccessPage({
                 </p>
               </div>
 
-              <div className="flex items-center gap-3 rounded-xl bg-white px-4 py-3 shadow-sm">
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#087F9F]/10 text-[#087F9F]">
-                  <PlanIcon size={21} />
+              <div className="flex items-center gap-2.5 rounded-lg bg-white px-3 py-2.5 shadow-sm">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#087F9F]/10 text-[#087F9F]">
+                  <PlanIcon size={18} />
                 </span>
                 <div>
-                  <p className="text-sm font-bold text-slate-900">
+                  <p className="text-xs font-bold text-slate-900">
                     {plan.name}
                   </p>
-                  <p className="text-[11px] font-semibold text-emerald-600">
+                  <p className="text-[10px] font-semibold text-emerald-600">
                     {isPaid ? "Active" : "Pending"}
                   </p>
                 </div>
@@ -352,13 +344,13 @@ export default async function PaymentSuccessPage({
             </div>
 
             {/* Payment details */}
-            <section className="mt-7">
-              <h2 className="flex items-center gap-2 text-sm font-bold text-slate-900">
-                <Receipt size={17} className="text-[#087F9F]" />
+            <section className="mt-5">
+              <h2 className="flex items-center gap-2 text-[13px] font-bold text-slate-900">
+                <Receipt size={16} className="text-[#087F9F]" />
                 Payment details
               </h2>
 
-              <dl className="mt-4 divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200">
+              <dl className="mt-3 divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200">
                 <DetailRow icon={Sparkles} label="Membership">
                   {productName}
                 </DetailRow>
@@ -407,39 +399,39 @@ export default async function PaymentSuccessPage({
 
             {/* Order summary */}
             {lineItems.length > 0 && (
-              <section className="mt-7">
-                <h2 className="flex items-center gap-2 text-sm font-bold text-slate-900">
-                  <Receipt size={17} className="text-[#087F9F]" />
+              <section className="mt-5">
+                <h2 className="flex items-center gap-2 text-[13px] font-bold text-slate-900">
+                  <Receipt size={16} className="text-[#087F9F]" />
                   Order summary
                 </h2>
 
-                <div className="mt-4 overflow-hidden rounded-2xl border border-slate-200">
+                <div className="mt-3 overflow-hidden rounded-xl border border-slate-200">
                   <ul className="divide-y divide-slate-100">
                     {lineItems.map((item) => (
                       <li
                         key={item.id}
-                        className="flex items-center justify-between gap-4 px-4 py-3.5 sm:px-5"
+                        className="flex items-center justify-between gap-4 px-3.5 py-2.5 sm:px-4"
                       >
                         <div className="min-w-0">
-                          <p className="truncate text-sm font-semibold text-slate-800">
+                          <p className="truncate text-[13px] font-semibold text-slate-800">
                             {item.description ?? productName}
                           </p>
-                          <p className="mt-0.5 text-xs text-slate-500">
+                          <p className="mt-0.5 text-[11px] text-slate-500">
                             Quantity {item.quantity ?? 1}
                           </p>
                         </div>
-                        <span className="shrink-0 text-sm font-bold text-slate-800">
+                        <span className="shrink-0 text-[13px] font-bold text-slate-800">
                           {formatMoney(item.amount_total, session.currency)}
                         </span>
                       </li>
                     ))}
                   </ul>
 
-                  <div className="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-4 py-4 sm:px-5">
-                    <span className="text-sm font-bold text-slate-900">
+                  <div className="flex items-center justify-between border-t border-slate-200 bg-slate-50 px-3.5 py-3 sm:px-4">
+                    <span className="text-[13px] font-bold text-slate-900">
                       Total
                     </span>
-                    <span className="text-lg font-extrabold text-[#087F9F]">
+                    <span className="text-base font-extrabold text-[#087F9F]">
                       {amount}
                     </span>
                   </div>
@@ -449,20 +441,20 @@ export default async function PaymentSuccessPage({
 
             {/* What's unlocked */}
             {isPaid && (
-              <section className="mt-7 rounded-2xl border border-[#087F9F]/10 bg-gradient-to-br from-[#087F9F]/5 to-white p-5">
-                <h2 className="flex items-center gap-2 text-sm font-bold text-[#066B85]">
-                  <Sparkles size={17} />
+              <section className="mt-5 rounded-xl border border-[#087F9F]/10 bg-gradient-to-br from-[#087F9F]/5 to-white p-4">
+                <h2 className="flex items-center gap-2 text-[13px] font-bold text-[#066B85]">
+                  <Sparkles size={16} />
                   What&apos;s unlocked
                 </h2>
 
-                <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                <ul className="mt-3 grid gap-2 sm:grid-cols-2">
                   {plan.features.map((feature) => (
                     <li
                       key={feature}
-                      className="flex items-center gap-2.5 text-sm text-slate-600"
+                      className="flex items-center gap-2 text-[13px] text-slate-600"
                     >
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#087F9F] text-white">
-                        <Check size={12} />
+                      <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#087F9F] text-white">
+                        <Check size={11} />
                       </span>
                       {feature}
                     </li>
@@ -472,14 +464,14 @@ export default async function PaymentSuccessPage({
             )}
 
             {/* Actions */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-6 flex flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-between">
               <Link
                 href={plan.dashboardHref}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#087F9F]/20 transition hover:bg-[#066B85]"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-4 py-2.5 text-[13px] font-bold text-white shadow-lg shadow-[#087F9F]/20 transition hover:bg-[#066B85]"
               >
-                <LayoutDashboard size={17} />
+                <LayoutDashboard size={16} />
                 {plan.dashboardLabel}
-                <ArrowRight size={17} />
+                <ArrowRight size={16} />
               </Link>
 
               <div className="flex items-center justify-center gap-2">
@@ -488,24 +480,24 @@ export default async function PaymentSuccessPage({
                     href={receiptUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50"
                   >
-                    <Receipt size={16} />
+                    <Receipt size={15} />
                     View receipt
                   </a>
                 )}
 
                 <Link
                   href="/"
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-[13px] font-semibold text-slate-600 transition hover:bg-slate-50"
                 >
                   Back to Home
                 </Link>
               </div>
             </div>
 
-            <p className="mt-6 flex items-start justify-center gap-2 text-center text-xs leading-5 text-slate-400">
-              <ShieldCheck size={14} className="mt-0.5 shrink-0 text-emerald-600" />
+            <p className="mt-4 flex items-start justify-center gap-2 text-center text-[11px] leading-5 text-slate-400">
+              <ShieldCheck size={13} className="mt-0.5 shrink-0 text-emerald-600" />
               {isPaid
                 ? "A payment confirmation has been sent to your email by Stripe. Keep the transaction ID for your records."
                 : "Stripe will update this payment shortly. You can safely close this page and check your email for confirmation."}
@@ -514,7 +506,7 @@ export default async function PaymentSuccessPage({
         </div>
 
         {/* Support */}
-        <p className="mt-6 text-center text-xs text-slate-400">
+        <p className="mt-4 text-center text-[11px] text-slate-400">
           Need help with this payment?{" "}
           <Link
             href="/contact"

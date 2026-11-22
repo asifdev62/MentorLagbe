@@ -69,10 +69,7 @@ const TuitionApplyButton = ({
 
         try {
             const countResult = await getApplicationCount(user.id);
-            const isPremium = await hasActiveMembership(
-                user.id,
-                'student'
-            );
+            const isPremium = await hasActiveMembership(user.id);
 
             if (!isPremium && countResult >= 2) {
                 toast.error('You have reached your application limit.');

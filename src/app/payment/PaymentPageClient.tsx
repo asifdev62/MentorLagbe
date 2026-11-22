@@ -73,7 +73,7 @@ const PaymentPageClient = ({
 
   return (
     <main className="min-h-screen bg-[#F4F7FC] px-4 py-10 sm:py-14 text-slate-800">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-5xl">
 
         {/* Back Navigation */}
         <Link
@@ -127,10 +127,10 @@ const PaymentPageClient = ({
           </div>
         </div>
 
-        <div className="grid items-start gap-8 lg:grid-cols-5">
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_300px]">
 
           {/* Left Side */}
-          <div className="space-y-7 lg:col-span-3">
+          <div className="space-y-6">
 
             {/* Plan Selection */}
             <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
@@ -248,51 +248,51 @@ const PaymentPageClient = ({
           </div>
 
           {/* Right Side - Order Summary */}
-          <aside className="lg:col-span-2">
+          <aside className="min-w-0">
             <div className="sticky top-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg shadow-slate-200/50">
 
               {/* Summary Header */}
-              <div className="bg-[#087F9F] px-6 py-6 text-white">
+              <div className="bg-[#087F9F] px-5 py-4 text-white">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15">
-                    <CreditCard size={23} />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15">
+                    <CreditCard size={20} />
                   </div>
 
                   <div>
-                    <h2 className="text-lg font-bold">Order Summary</h2>
-                    <p className="text-xs text-white/75">
+                    <h2 className="text-base font-bold">Order Summary</h2>
+                    <p className="text-[11px] text-white/75">
                       Review your membership
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="p-6 sm:p-7">
+              <div className="p-5">
 
                 {/* Selected Plan */}
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#087F9F]">
-                    <PlanIcon size={25} />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#087F9F]/10 text-[#087F9F]">
+                    <PlanIcon size={20} />
                   </div>
 
                   <div className="flex-1">
-                    <h3 className="font-bold text-slate-900">
+                    <h3 className="text-sm font-bold text-slate-900">
                       {currentPlan.name}
                     </h3>
-                    <p className="mt-1 text-xs text-slate-500">
+                    <p className="mt-0.5 text-[11px] text-slate-500">
                       Monthly Membership
                     </p>
                   </div>
 
-                  <span className="rounded-full bg-[#087F9F]/10 px-2.5 py-1 text-[10px] font-bold text-[#087F9F]">
+                  <span className="rounded-full bg-[#087F9F]/10 px-2 py-0.5 text-[9px] font-bold text-[#087F9F]">
                     Active Plan
                   </span>
                 </div>
 
-                <div className="my-6 border-t border-dashed border-slate-200" />
+                <div className="my-4 border-t border-dashed border-slate-200" />
 
                 {/* Price Details */}
-                <div className="space-y-4 text-sm">
+                <div className="space-y-3 text-[13px]">
                   <div className="flex justify-between text-slate-500">
                     <span>Plan Price</span>
                     <span className="font-semibold text-slate-700">
@@ -315,68 +315,68 @@ const PaymentPageClient = ({
                   </div>
                 </div>
 
-                <div className="my-6 border-t border-slate-200" />
+                <div className="my-4 border-t border-slate-200" />
 
                 {/* Total */}
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-slate-900">
+                  <span className="text-sm font-bold text-slate-900">
                     Total Amount
                   </span>
 
-                  <span className="text-3xl font-extrabold text-[#087F9F]">
+                  <span className="text-2xl font-extrabold text-[#087F9F]">
                     ৳{currentPlan.price}
                   </span>
                 </div>
 
                 {/* Payment Method */}
-                <div className="mt-7">
-                  <h3 className="mb-3 text-sm font-bold text-slate-800">
+                <div className="mt-5">
+                  <h3 className="mb-2.5 text-xs font-bold text-slate-800">
                     Payment Method
                   </h3>
 
-                  <div className="flex items-center justify-between rounded-xl border-2 border-[#087F9F] bg-[#087F9F]/5 p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-[#087F9F] shadow-sm">
-                        <CreditCard size={22} />
+                  <div className="flex items-center justify-between rounded-xl border-2 border-[#087F9F] bg-[#087F9F]/5 p-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-[#087F9F] shadow-sm">
+                        <CreditCard size={19} />
                       </div>
 
                       <div>
-                        <p className="text-sm font-bold text-slate-800">
+                        <p className="text-xs font-bold text-slate-800">
                           Stripe Checkout
                         </p>
-                        <p className="mt-0.5 text-[11px] text-slate-500">
+                        <p className="mt-0.5 text-[10px] text-slate-500">
                           Secure online payment
                         </p>
                       </div>
                     </div>
 
-                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#087F9F] text-white">
-                      <Check size={13} />
+                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#087F9F] text-white">
+                      <Check size={11} />
                     </span>
                   </div>
 
-                  <div className="mt-3 flex items-center justify-center gap-2 text-xs text-slate-400">
-                    <Lock size={13} />
+                  <div className="mt-2.5 flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
+                    <Lock size={12} />
                     Secure payment powered by Stripe
                   </div>
                 </div>
 
                 {/* Checkout Button */}
-                <form action="/api/checkout_sessions" method="POST" className="mt-7">
+                <form action="/api/checkout_sessions" method="POST" className="mt-5">
                   <input type="hidden" name="plan" value={currentPlan.id} />
                   <button
                     type="submit"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#087F9F] px-5 py-4 text-sm font-bold text-white shadow-lg shadow-[#087F9F]/20 transition hover:bg-[#066B85] active:scale-[0.98]"
+                    className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-4 py-3 text-[13px] font-bold text-white shadow-lg shadow-[#087F9F]/20 transition hover:bg-[#066B85] active:scale-[0.98]"
                   >
-                    <Lock size={16} />
+                    <Lock size={15} />
                     Continue to Payment — ৳{currentPlan.price}
-                    <ArrowRight size={17} />
+                    <ArrowRight size={15} />
                   </button>
                 </form>
 
                 {/* Security */}
-                <div className="mt-5 flex items-center justify-center gap-2 text-xs text-slate-400">
-                  <ShieldCheck size={16} className="text-green-600" />
+                <div className="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
+                  <ShieldCheck size={14} className="text-green-600" />
                   Your payment information is secure
                 </div>
               </div>
