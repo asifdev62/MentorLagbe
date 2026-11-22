@@ -37,6 +37,7 @@ export type TuitionFormData = {
   userId?: string;
   tutorEmail?: string;
   approvalStatus?: string;
+  status?: string;
   tuitionId?: string;
 };
 
@@ -46,13 +47,21 @@ export type TuitionFormData = {
 export const addTuitions = async (data: TuitionFormData) => {
   let res: Response;
 
+  // New posts should start as pending for admin review, but still be marked
+  // active so they appear in Browse Tuitions once approved.
+  const payload = {
+    ...data,
+    approvalStatus: data.approvalStatus ?? "pending",
+    status: data.status ?? "active",
+  };
+
   try {
     res = await fetch(`${BASE_URL}/tuitions`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
   } catch {
     throw new Error(

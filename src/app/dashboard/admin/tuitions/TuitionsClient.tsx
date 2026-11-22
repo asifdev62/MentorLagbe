@@ -89,7 +89,9 @@ export default function TuitionsClient({ initialTuitions }: Props) {
 
       setTuitions((previous) =>
         previous.map((item) =>
-          item._id === id ? { ...item, approvalStatus } : item
+          (item._id || item.id) === id
+            ? { ...item, approvalStatus }
+            : item
         )
       );
 
@@ -122,7 +124,7 @@ export default function TuitionsClient({ initialTuitions }: Props) {
       }
 
       setTuitions((previous) =>
-        previous.filter((item) => item._id !== id)
+        previous.filter((item) => (item._id || item.id) !== id)
       );
 
       toast.success("Tuition deleted successfully");
@@ -260,14 +262,15 @@ export default function TuitionsClient({ initialTuitions }: Props) {
           {filteredTuitions.map((item) => {
             const status = (item.approvalStatus || "pending") as Status;
             const config = statusConfig[status] ?? statusConfig.pending;
-            const isLoading = loadingId === item._id;
+            const itemId = item._id || item.id || "";
+            const isLoading = loadingId === itemId;
             const location = [item.area, item.district]
               .filter(Boolean)
               .join(", ");
 
             return (
               <article
-                key={item._id}
+                key={itemId}
                 className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-[#087F9F]/30 hover:shadow-md"
               >
                 <span
@@ -336,7 +339,7 @@ export default function TuitionsClient({ initialTuitions }: Props) {
                     {status !== "approved" && (
                       <button
                         disabled={isLoading}
-                        onClick={() => updateStatus(item._id, "approved")}
+                        onClick={() => updateStatus(itemId, "approved")}
                         className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm shadow-emerald-600/20 transition hover:bg-emerald-700 disabled:opacity-50"
                       >
                         {isLoading ? (
@@ -351,7 +354,7 @@ export default function TuitionsClient({ initialTuitions }: Props) {
                     {status !== "rejected" && (
                       <button
                         disabled={isLoading}
-                        onClick={() => updateStatus(item._id, "rejected")}
+                        onClick={() => updateStatus(itemId, "rejected")}
                         className="inline-flex items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-600 transition hover:bg-rose-100 disabled:opacity-50"
                       >
                         <XCircle className="h-4 w-4" />
@@ -362,7 +365,7 @@ export default function TuitionsClient({ initialTuitions }: Props) {
                     {status !== "pending" && (
                       <button
                         disabled={isLoading}
-                        onClick={() => updateStatus(item._id, "pending")}
+                        onClick={() => updateStatus(itemId, "pending")}
                         className="inline-flex items-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-100 disabled:opacity-50"
                       >
                         <Clock className="h-4 w-4" />
@@ -372,7 +375,7 @@ export default function TuitionsClient({ initialTuitions }: Props) {
 
                     <button
                       disabled={isLoading}
-                      onClick={() => deleteTuition(item._id)}
+                      onClick={() => deleteTuition(itemId)}
                       title="Delete tuition"
                       className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-500 transition hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"
                     >
