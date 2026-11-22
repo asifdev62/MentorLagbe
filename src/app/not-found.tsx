@@ -1,14 +1,12 @@
 
 import Link from "next/link";
 import {
-  ArrowLeft,
   ArrowRight,
   BookOpen,
   GraduationCap,
   Home,
   SearchX,
 } from "lucide-react";
-import CurrentYear from "@/components/current-year";
 
 export default function NotFound() {
   return (
@@ -123,7 +121,7 @@ export default function NotFound() {
 
         {/* Footer */}
         <p className="mt-8 text-center text-xs text-gray-400">
-          © <CurrentYear /> MentorLagbe. All rights reserved.
+          © 2026 MentorLagbe. All rights reserved.
         </p>
       </div>
     </main>
