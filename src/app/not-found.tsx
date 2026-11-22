@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -6,6 +5,7 @@ import {
   GraduationCap,
   SearchX,
 } from "lucide-react";
+import CurrentYear from "@/components/current-year";
 
 export default function NotFound() {
   return (
@@ -57,7 +57,7 @@ export default function NotFound() {
         </div>
 
         <p className="mt-10 text-xs text-slate-400">
-          © {new Date().getFullYear()} MentorLagbe. All rights reserved.
+          © <CurrentYear /> MentorLagbe. All rights reserved.
         </p>
       </div>
     </div>
