@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -23,6 +24,7 @@ import {
 } from "lucide-react";
 
 import type { TuitionItem } from "@/lib/api/tuitions";
+import BookmarkButton from "@/components/student/BookmarkButton";
 
 type Props = {
   tuitions: TuitionItem[];
@@ -387,12 +389,13 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
           ) : (
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {filteredTuitions.map((item, index) => {
-                const id = item._id || item.id || `${item.title}-${index}`;
+                const tuitionId = item._id || item.id;
+                const cardKey = tuitionId || `${item.title}-${index}`;
                 const budget = Number(item.budget || 0);
 
                 return (
                   <article
-                    key={id}
+                    key={cardKey}
                     className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-200/50 transition hover:-translate-y-0.5 hover:border-[#087F9F]/20 hover:shadow-lg"
                   >
                     <div className="flex items-start justify-between gap-3">
@@ -483,18 +486,37 @@ export default function StudentBrowseTuitions({ tuitions }: Props) {
                       )}
                     </div>
 
-                    <div className="mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4">
-                      <span className="text-[11px] text-slate-400">
+                    {/* Card Footer */}
+                    <div className="mt-auto border-t border-slate-100 pt-4">
+                      <p className="mb-3 text-[11px] text-slate-400">
                         Posted {formatPostedDate(item.createdAt)}
-                      </span>
+                      </p>
 
-                      <Link
-                        href={`/browse-tuitions/${item._id || item.id}`}
-                        className="inline-flex items-center gap-1.5 rounded-xl bg-[#087F9F] px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#066B85] focus:outline-none focus:ring-4 focus:ring-[#087F9F]/10"
-                      >
-                        View & Apply
-                        <ArrowRight size={14} />
-                      </Link>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        {/* Bookmark Button */}
+                        <div className="min-w-0 [&>button]:!flex [&>button]:!h-11 [&>button]:!w-full [&>button]:!items-center [&>button]:!justify-center [&>button]:!gap-1.5 [&>button]:!rounded-xl [&>button]:!px-2 [&>button]:!text-xs">
+                          {tuitionId ? (
+                            <BookmarkButton tuitionId={String(tuitionId)} />
+                          ) : (
+                            <button
+                              type="button"
+                              disabled
+                              className="flex h-11 w-full items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-xs font-semibold text-slate-400"
+                            >
+                              Bookmark
+                            </button>
+                          )}
+                        </div>
+
+                        {/* View & Apply Button */}
+                        <Link
+                          href={`/browse-tuitions/${tuitionId || ""}`}
+                          className="inline-flex h-11 min-w-0 items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-2 text-xs font-bold text-white shadow-sm shadow-[#087F9F]/15 transition hover:bg-[#066B85] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-[#087F9F]/10"
+                        >
+                          <span className="truncate">View & Apply</span>
+                          <ArrowRight size={14} className="shrink-0" />
+                        </Link>
+                      </div>
                     </div>
                   </article>
                 );
