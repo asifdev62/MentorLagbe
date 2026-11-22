@@ -2,6 +2,7 @@
 'use client';
 
 import { applyToATuition } from '@/lib/actions/applicants';
+import { hasActiveMembership } from '@/lib/actions/payments';
 import { getApplicationCount } from '@/lib/api/tuitions';
 import { useSession } from '@/lib/auth-client';
 import {
@@ -68,10 +69,14 @@ const TuitionApplyButton = ({
 
         try {
             const countResult = await getApplicationCount(user.id);
+            const isPremium = await hasActiveMembership(
+                user.id,
+                'student'
+            );
 
-            if (countResult >= 2) {
+            if (!isPremium && countResult >= 2) {
                 toast.error('You have reached your application limit.');
-                router.push('/payment');
+                router.push('/payment?plan=student');
                 return;
             }
 

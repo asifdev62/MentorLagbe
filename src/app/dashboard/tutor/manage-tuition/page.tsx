@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { getTuitions, type TuitionItem } from "@/lib/api/tuitions";
 import { deleteTuition, updateTuition } from "@/lib/actions/tuitions";
+import { hasActiveMembership } from "@/lib/actions/payments";
 import { useSession } from "@/lib/auth-client";
 import { TuitionCard } from "./components/TuitionCard";
 import { TuitionDetailsModal } from "./components/TuitionDetailsModal";
@@ -40,6 +41,7 @@ export default function ManageTuitionPage() {
   const [selectedTuition, setSelectedTuition] = useState<TuitionItem | null>(null);
   const [editingTuition, setEditingTuition] = useState<TuitionItem | null>(null);
   const [isDeleting, setIsDeleting] = useState<string | null>(null);
+  const [isTutorPremium, setIsTutorPremium] = useState(false);
 
   // Refresh tuitions from the database API (used by the refresh button)
   const fetchTuitions = async (showToast = false) => {
@@ -82,6 +84,27 @@ export default function ManageTuitionPage() {
       cancelled = true;
     };
   }, []);
+
+  // Check whether this tutor already has Tutor Pro so the post limit
+  // can be lifted after a successful payment.
+  useEffect(() => {
+    const userId = session?.user?.id;
+    if (!userId) return;
+
+    let cancelled = false;
+
+    hasActiveMembership(userId, "tutor")
+      .then((value) => {
+        if (!cancelled) setIsTutorPremium(value);
+      })
+      .catch(() => {
+        // Ignore: the UI simply keeps the free-plan limit.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [session?.user?.id]);
 
   const tutorId = session?.user?.id;
   const tutorEmail = session?.user?.email?.toLowerCase();
@@ -228,6 +251,12 @@ export default function ManageTuitionPage() {
 
   const isPageLoading = isLoading || isSessionPending;
 
+  // Free tutor accounts can publish up to 2 tuition posts.
+  const hasReachedFreeLimit = !isTutorPremium && myTuitions.length >= 2;
+  const postTuitionHref = hasReachedFreeLimit
+    ? "/payment?plan=tutor"
+    : "/dashboard/tutor/add-tuition";
+
   return (
     <div className="min-h-svh bg-[#F4F7FC] px-3.5 py-5 sm:px-6 sm:py-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
@@ -263,11 +292,11 @@ export default function ManageTuitionPage() {
             </button>
 
             <Link
-              href="/dashboard/tutor/add-tuition"
+              href={postTuitionHref}
               className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-[#087F9F]/20 transition hover:bg-[#066B85] sm:flex-initial sm:px-4 sm:py-2.5 sm:text-sm"
             >
               <PlusCircle size={16} className="sm:size-[18px]" />
-              Post Tuition
+              {hasReachedFreeLimit ? "Upgrade to Post More" : "Post Tuition"}
             </Link>
           </div>
         </div>

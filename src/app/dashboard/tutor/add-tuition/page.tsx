@@ -28,6 +28,8 @@ import {
     Wallet,
 } from "lucide-react";
 import { addTuitions, type TuitionFormData } from "@/lib/actions/tuitions";
+import { hasActiveMembership } from "@/lib/actions/payments";
+import { getTuitions } from "@/lib/api/tuitions";
 import { useSession } from "@/lib/auth-client";
 
 const inputClass =
@@ -180,6 +182,26 @@ export default function AddTuitionPage() {
 
     try {
       setIsSubmitting(true);
+
+      // Free tutor accounts can publish up to 2 tuition posts. Once the
+      // limit is reached, send the tutor to the Tutor Pro payment page.
+      const isPremium = await hasActiveMembership(session.user.id, "tutor");
+      const allTuitions = await getTuitions();
+      const email = session.user.email.toLowerCase();
+
+      const myPostCount = allTuitions.filter(
+        (item) =>
+          item.userId === session.user.id ||
+          (item.tutorEmail ? item.tutorEmail.toLowerCase() === email : false)
+      ).length;
+
+      if (!isPremium && myPostCount >= 2) {
+        toast.error(
+          "Your free plan allows 2 tuition posts. Upgrade to Tutor Pro to post more."
+        );
+        router.push("/payment?plan=tutor");
+        return;
+      }
 
       await addTuitions(tuitionData);
 

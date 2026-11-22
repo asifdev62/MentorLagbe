@@ -51,7 +51,7 @@ export const plans: Plan[] = [
     icon: Sparkles,
     popular: true,
     buttonText: "Choose Premium",
-    buttonLink: "/payment",
+    buttonLink: "/payment?plan=student",
     features: [
       { text: "Browse available tuitions", included: true },
       { text: "Unlimited tuition applications", included: true },
@@ -70,7 +70,7 @@ export const plans: Plan[] = [
     icon: BookOpen,
     popular: false,
     buttonText: "Become Pro",
-    buttonLink: "/payment",
+    buttonLink: "/payment?plan=tutor",
     features: [
       { text: "Create tutoring profile", included: true },
       { text: "Post tuition opportunities", included: true },
