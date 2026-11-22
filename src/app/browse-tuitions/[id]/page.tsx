@@ -4,7 +4,10 @@ import { getTuitionById } from "@/lib/api/tuitions";
 import { notFound } from "next/navigation";
 
 export const instant = false;
+
 import Navbar from "@/app/components/navbar";
+import BookmarkButton from "@/components/student/BookmarkButton";
+
 import {
   MapPin,
   BookOpen,
@@ -25,6 +28,7 @@ import {
   Sparkles,
   ChevronRight,
 } from "lucide-react";
+
 import Link from "next/link";
 import TuitionApplyButton from "../TuitionApplyButton";
 
@@ -107,6 +111,7 @@ const TuitionDetailsContent = async ({ params }: Props) => {
   if (!tuition) notFound();
 
   const budget = Number(tuition.budget || 0);
+  const tuitionId = String(tuition._id ?? id);
 
   const postedDate = tuition.createdAt
     ? new Date(tuition.createdAt).toLocaleDateString("en-BD", {
@@ -493,12 +498,18 @@ const TuitionDetailsContent = async ({ params }: Props) => {
                   </p>
                 </div>
 
+                {/* Apply Button */}
                 <TuitionApplyButton
                   tuitionId={tuition._id ?? id}
                   tuitionTitle={tuition.title}
                   classLevel={tuition.classLevel}
                   tutorEmail={tuition.tutorEmail || ""}
                 />
+
+                {/* Bookmark Button */}
+                <div className="mt-3">
+                  <BookmarkButton tuitionId={tuitionId} />
+                </div>
 
                 <p className="mt-3 text-center text-xs text-slate-400">
                   Your application will be sent to the tuition poster.

@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -6,6 +7,7 @@ import { usePathname } from "next/navigation";
 import type { LucideIcon } from "lucide-react";
 import {
   BookOpen,
+  Bookmark,
   CreditCard,
   FileText,
   GraduationCap,
@@ -37,7 +39,6 @@ type MenuItem = {
   name: string;
   url: string;
   icon: LucideIcon;
-  /** Only highlight when the path matches exactly (used for overview pages). */
   exact?: boolean;
 };
 
@@ -55,6 +56,12 @@ const menuItemsByRole: Record<SidebarRole, MenuItem[]> = {
       name: "Browse Tuitions",
       url: "/dashboard/student/browse-tuitions",
       icon: GraduationCap,
+    },
+    {
+      id: "student-bookmarks",
+      name: "My Bookmarks",
+      url: "/dashboard/student/bookmarks",
+      icon: Bookmark,
     },
     {
       id: "student-applications",
@@ -118,21 +125,18 @@ const menuItemsByRole: Record<SidebarRole, MenuItem[]> = {
       url: "/dashboard/admin/users",
       icon: Users,
     },
-
     {
       id: "admin-tuitions",
       name: "Tuitions",
       url: "/dashboard/admin/tuitions",
       icon: BookOpen,
     },
-
     {
       id: "admin-payments",
       name: "Payments",
       url: "/dashboard/admin/payments",
       icon: CreditCard,
     },
-
     {
       id: "admin-profile",
       name: "My Profile",
@@ -185,6 +189,7 @@ export function DashboardSidebar() {
             <span className="flex size-9 items-center justify-center rounded-xl bg-[#087F9F] text-white shadow-md shadow-[#087F9F]/20">
               <GraduationCap size={20} />
             </span>
+
             <span>
               Mentor<span className="text-[#087F9F]">Lagbe</span>
             </span>
@@ -192,7 +197,6 @@ export function DashboardSidebar() {
 
           {user && (
             <div className="mb-1 flex items-center gap-3 rounded-xl border border-sidebar-border bg-sidebar-accent/60 p-2.5">
-              {/* Avatar */}
               <div className="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#087F9F]/10 text-sm font-bold text-[#066B85]">
                 {user.image ? (
                   <Image
@@ -207,7 +211,6 @@ export function DashboardSidebar() {
                 )}
               </div>
 
-              {/* Name, email, role */}
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">
                   <p className="truncate text-sm font-semibold text-sidebar-foreground">
@@ -229,7 +232,9 @@ export function DashboardSidebar() {
 
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>{roleLabels[role]} Panel</SidebarGroupLabel>
+            <SidebarGroupLabel>
+              {roleLabels[role]} Panel
+            </SidebarGroupLabel>
 
             <SidebarMenu>
               {menuItems.map((item) => {

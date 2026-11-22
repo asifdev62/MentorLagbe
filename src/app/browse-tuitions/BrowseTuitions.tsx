@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 
 import Navbar from "@/app/components/navbar";
+import BookmarkButton from "@/components/student/BookmarkButton";
 import type { TuitionItem } from "@/lib/api/tuitions";
 
 type Props = {
@@ -611,7 +612,7 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                                                                     <strong className="text-slate-700">
                                                                         Students:
                                                                     </strong>{" "}
-                                                                    {item.studentCount}
+                                                                        {item.studentCount}
                                                                 </p>
                                                             ) : null}
 
@@ -628,7 +629,7 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                                                 )}
 
                                                 {/* Footer */}
-                                                <div className="mt-auto flex items-center justify-between gap-2 border-t border-slate-100 pt-3.5">
+                                                <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3.5">
                                                     <button
                                                         type="button"
                                                         onClick={() =>
@@ -650,16 +651,22 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                                                             : "Quick view"}
                                                     </button>
 
-                                                    <Link
-                                                        href={`/browse-tuitions/${item._id || item.id}`}
-                                                        className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-4 py-2.5 text-xs font-bold text-white shadow-sm shadow-[#087F9F]/20 transition hover:bg-[#066B85] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-[#087F9F]/10"
-                                                    >
-                                                        View Details
-                                                        <ArrowRight
-                                                            size={14}
-                                                            className="transition-transform duration-200 group-hover:translate-x-0.5"
+                                                    <div className="flex items-center gap-2">
+                                                        <BookmarkButton
+                                                            tuitionId={String(item._id || item.id)}
                                                         />
-                                                    </Link>
+
+                                                        <Link
+                                                            href={`/browse-tuitions/${item._id || item.id}`}
+                                                            className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-4 py-2.5 text-xs font-bold text-white shadow-sm shadow-[#087F9F]/20 transition hover:bg-[#066B85] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-[#087F9F]/10"
+                                                        >
+                                                            View Details
+                                                            <ArrowRight
+                                                                size={14}
+                                                                className="transition-transform duration-200 group-hover:translate-x-0.5"
+                                                            />
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </article>
