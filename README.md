@@ -1,7 +1,6 @@
 # 🎓 MentorLagbe – Online Tuition Management Platform
 
 MentorLagbe is a full-stack online tuition management platform that connects students, tutors, and guardians. Students can explore available tuition opportunities, apply for suitable jobs, and bookmark their favorite listings. Tutors can manage their applications and tuition activities, while administrators manage users and platform operations.
-# 🎓 MentorLagbe — Online Tuition Management Platform
 
 <div align="center">
 
