@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -11,18 +12,29 @@ import {
   Mail,
   CalendarDays,
   X,
+  Loader2,
 } from "lucide-react";
-import type { AdminUser } from "@/lib/actions/admin-users";
+import {
+  updateUserRole,
+  type AdminUser,
+  type UserRole,
+} from "@/lib/actions/admin-users";
 
 type Props = {
   initialUsers: AdminUser[];
 };
 
-type RoleKey = "all" | "student" | "tutor" | "admin";
+type RoleKey = "all" | UserRole;
 
 const roleStyles: Record<
   Exclude<RoleKey, "all">,
-  { label: string; icon: typeof Users; badge: string; avatar: string; dot: string }
+  {
+    label: string;
+    icon: typeof Users;
+    badge: string;
+    avatar: string;
+    dot: string;
+  }
 > = {
   student: {
     label: "Student",
@@ -58,13 +70,75 @@ const filterTabs: { key: RoleKey; label: string }[] = [
 ];
 
 function getRole(user: AdminUser): Exclude<RoleKey, "all"> {
-  return user.role === "tutor" || user.role === "admin" ? user.role : "student";
+  return user.role === "tutor" || user.role === "admin"
+    ? user.role
+    : "student";
 }
 
 export default function UsersClient({ initialUsers }: Props) {
-  const [users] = useState(initialUsers);
+  const [users, setUsers] = useState(initialUsers);
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState<RoleKey>("all");
+
+  const [updatingUserId, setUpdatingUserId] = useState<string | null>(
+    null
+  );
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+
+  // Update User Role
+  const handleRoleChange = async (
+    userId: string,
+    newRole: UserRole
+  ) => {
+    const previousUser = users.find((user) => user._id === userId);
+
+    if (!previousUser || getRole(previousUser) === newRole) {
+      return;
+    }
+
+    setUpdatingUserId(userId);
+    setMessage(null);
+
+    try {
+      const result = await updateUserRole(userId, newRole);
+
+      if (!result.success) {
+        setMessage({
+          type: "error",
+          text: result.message || "Failed to update user role.",
+        });
+        return;
+      }
+
+      setUsers((previousUsers) =>
+        previousUsers.map((user) =>
+          user._id === userId
+            ? { ...user, role: newRole }
+            : user
+        )
+      );
+
+      setMessage({
+        type: "success",
+        text: `${previousUser.name || "User"}'s role updated to ${newRole}.`,
+      });
+    } catch (error) {
+      console.error("Role update error:", error);
+
+      setMessage({
+        type: "error",
+        text:
+          error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again.",
+      });
+    } finally {
+      setUpdatingUserId(null);
+    }
+  };
 
   const filteredUsers = useMemo(() => {
     return users.filter((user) => {
@@ -79,9 +153,17 @@ export default function UsersClient({ initialUsers }: Props) {
     });
   }, [users, search, roleFilter]);
 
-  const students = users.filter((user) => getRole(user) === "student").length;
-  const tutors = users.filter((user) => getRole(user) === "tutor").length;
-  const admins = users.filter((user) => getRole(user) === "admin").length;
+  const students = users.filter(
+    (user) => getRole(user) === "student"
+  ).length;
+
+  const tutors = users.filter(
+    (user) => getRole(user) === "tutor"
+  ).length;
+
+  const admins = users.filter(
+    (user) => getRole(user) === "admin"
+  ).length;
 
   const countFor = (key: RoleKey) => {
     if (key === "all") return users.length;
@@ -102,6 +184,7 @@ export default function UsersClient({ initialUsers }: Props) {
           tone="teal"
           caption="Registered"
         />
+
         <StatCard
           title="Students"
           value={students}
@@ -110,6 +193,7 @@ export default function UsersClient({ initialUsers }: Props) {
           tone="violet"
           caption="Learning"
         />
+
         <StatCard
           title="Tutors"
           value={tutors}
@@ -118,6 +202,7 @@ export default function UsersClient({ initialUsers }: Props) {
           tone="emerald"
           caption="Teaching"
         />
+
         <StatCard
           title="Admins"
           value={admins}
@@ -136,6 +221,7 @@ export default function UsersClient({ initialUsers }: Props) {
               size={17}
               className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
             />
+
             <input
               type="text"
               placeholder="Search by name or email..."
@@ -143,6 +229,7 @@ export default function UsersClient({ initialUsers }: Props) {
               onChange={(e) => setSearch(e.target.value)}
               className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50/70 pr-10 pl-10 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10"
             />
+
             {search && (
               <button
                 type="button"
@@ -168,6 +255,7 @@ export default function UsersClient({ initialUsers }: Props) {
                 }`}
               >
                 {tab.label}
+
                 <span
                   className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
                     roleFilter === tab.key
@@ -188,10 +276,25 @@ export default function UsersClient({ initialUsers }: Props) {
             {filteredUsers.length}
           </span>{" "}
           of{" "}
-          <span className="font-semibold text-slate-700">{users.length}</span>{" "}
+          <span className="font-semibold text-slate-700">
+            {users.length}
+          </span>{" "}
           users
         </p>
       </div>
+
+      {/* Update Message */}
+      {message && (
+        <div
+          className={`rounded-xl border px-4 py-3 text-sm font-medium ${
+            message.type === "success"
+              ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+              : "border-red-200 bg-red-50 text-red-700"
+          }`}
+        >
+          {message.text}
+        </div>
+      )}
 
       {/* User Table */}
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
@@ -199,19 +302,29 @@ export default function UsersClient({ initialUsers }: Props) {
           <h2 className="text-sm font-bold tracking-tight text-slate-900 sm:text-base">
             User Directory
           </h2>
+
           <span className="rounded-full bg-[#087F9F]/10 px-3 py-1 text-xs font-semibold text-[#087F9F]">
-            {filteredUsers.length} {filteredUsers.length === 1 ? "user" : "users"}
+            {filteredUsers.length}{" "}
+            {filteredUsers.length === 1 ? "user" : "users"}
           </span>
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[680px] text-left text-sm">
+          <table className="w-full min-w-[720px] text-left text-sm">
             <thead className="bg-slate-50/80 text-[11px] tracking-wider text-slate-500 uppercase">
               <tr>
-                <th className="px-4 py-3 font-semibold sm:px-5">User</th>
-                <th className="px-4 py-3 font-semibold">Email</th>
-                <th className="px-4 py-3 font-semibold">Role</th>
-                <th className="px-4 py-3 font-semibold">Joined</th>
+                <th className="px-4 py-3 font-semibold sm:px-5">
+                  User
+                </th>
+                <th className="px-4 py-3 font-semibold">
+                  Email
+                </th>
+                <th className="px-4 py-3 font-semibold">
+                  Role
+                </th>
+                <th className="px-4 py-3 font-semibold">
+                  Joined
+                </th>
               </tr>
             </thead>
 
@@ -220,12 +333,14 @@ export default function UsersClient({ initialUsers }: Props) {
                 const role = getRole(user);
                 const style = roleStyles[role];
                 const RoleIcon = style.icon;
+                const isUpdating = updatingUserId === user._id;
 
                 return (
                   <tr
                     key={user._id}
                     className="group transition hover:bg-[#087F9F]/5"
                   >
+                    {/* User */}
                     <td className="px-4 py-3.5 sm:px-5">
                       <div className="flex items-center gap-3">
                         {user.image ? (
@@ -248,6 +363,7 @@ export default function UsersClient({ initialUsers }: Props) {
                           <p className="truncate font-semibold text-slate-900">
                             {user.name || "Unknown User"}
                           </p>
+
                           <p className="text-xs text-slate-400 capitalize">
                             {style.label}
                           </p>
@@ -255,38 +371,67 @@ export default function UsersClient({ initialUsers }: Props) {
                       </div>
                     </td>
 
+                    {/* Email */}
                     <td className="px-4 py-3.5 text-slate-500">
                       <span className="inline-flex items-center gap-1.5">
-                        <Mail size={14} className="shrink-0 text-slate-400" />
+                        <Mail
+                          size={14}
+                          className="shrink-0 text-slate-400"
+                        />
                         {user.email}
                       </span>
                     </td>
 
+                    {/* Role Dropdown */}
                     <td className="px-4 py-3.5">
-                      <span
-                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${style.badge}`}
-                      >
-                        <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
-                        <RoleIcon size={12} />
-                        {style.label}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <RoleIcon
+                          size={15}
+                          className="shrink-0 text-slate-500"
+                        />
+
+                        <select
+                          value={role}
+                          disabled={isUpdating}
+                          onChange={(e) =>
+                            handleRoleChange(
+                              user._id,
+                              e.target.value as UserRole
+                            )
+                          }
+                          aria-label={`Change role for ${user.name}`}
+                          className={`rounded-lg border-0 px-3 py-2 text-xs font-semibold outline-none transition focus:ring-2 focus:ring-[#087F9F]/30 disabled:cursor-not-allowed disabled:opacity-60 ${style.badge}`}
+                        >
+                          <option value="student">Student</option>
+                          <option value="tutor">Tutor</option>
+                          <option value="admin">Admin</option>
+                        </select>
+
+                        {isUpdating && (
+                          <Loader2
+                            size={15}
+                            className="animate-spin text-[#087F9F]"
+                          />
+                        )}
+                      </div>
                     </td>
 
+                    {/* Joined */}
                     <td className="px-4 py-3.5 text-slate-500">
                       <span className="inline-flex items-center gap-1.5">
                         <CalendarDays
                           size={14}
                           className="shrink-0 text-slate-400"
                         />
+
                         {user.createdAt
-                          ? new Date(user.createdAt).toLocaleDateString(
-                              "en-GB",
-                              {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                              }
-                            )
+                          ? new Date(
+                              user.createdAt
+                            ).toLocaleDateString("en-GB", {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            })
                           : "N/A"}
                       </span>
                     </td>
@@ -302,7 +447,11 @@ export default function UsersClient({ initialUsers }: Props) {
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#087F9F]/10 text-[#087F9F]">
               <Users size={22} />
             </div>
-            <h3 className="font-semibold text-slate-900">No users found</h3>
+
+            <h3 className="font-semibold text-slate-900">
+              No users found
+            </h3>
+
             <p className="mt-1 text-sm text-slate-500">
               Try a different search term or role filter.
             </p>
@@ -317,7 +466,14 @@ type Tone = "teal" | "violet" | "emerald" | "amber";
 
 const tones: Record<
   Tone,
-  { card: string; label: string; chip: string; value: string; track: string; bar: string }
+  {
+    card: string;
+    label: string;
+    chip: string;
+    value: string;
+    track: string;
+    bar: string;
+  }
 > = {
   teal: {
     card: "border-[#087F9F]/15 bg-gradient-to-br from-[#087F9F]/10 via-white to-white",
@@ -369,7 +525,8 @@ function StatCard({
   caption: string;
 }) {
   const style = tones[tone];
-  const percent = total > 0 ? Math.round((value / total) * 100) : 0;
+  const percent =
+    total > 0 ? Math.round((value / total) * 100) : 0;
 
   return (
     <div
@@ -390,15 +547,22 @@ function StatCard({
       </div>
 
       <div className="mt-2 flex items-end justify-between gap-2 sm:mt-3">
-        <h2 className={`text-2xl font-extrabold tracking-tight ${style.value}`}>
+        <h2
+          className={`text-2xl font-extrabold tracking-tight ${style.value}`}
+        >
           {value}
         </h2>
-        <span className={`text-[10px] font-semibold sm:text-[11px] ${style.label}`}>
+
+        <span
+          className={`text-[10px] font-semibold sm:text-[11px] ${style.label}`}
+        >
           {percent}% · {caption}
         </span>
       </div>
 
-      <div className={`mt-3 h-1.5 w-full overflow-hidden rounded-full ${style.track}`}>
+      <div
+        className={`mt-3 h-1.5 w-full overflow-hidden rounded-full ${style.track}`}
+      >
         <div
           className={`h-full rounded-full transition-all duration-500 ${style.bar}`}
           style={{ width: `${percent}%` }}
