@@ -9,7 +9,7 @@ const BASE_URL = (
 );
 
 const payments = () => db.collection("payments");
-const users = () => db.collection("users");
+const users = () => db.collection("user");
 
 /**
  * Ask the backend to verify a Stripe checkout session. The backend inserts
@@ -38,8 +38,10 @@ export const checkoutVerify = async (sessionId: string) => {
 export async function verifyCheckout(sessionId: string) {
   try {
     const existing = await payments().findOne({
-      sessionId,
-      payment_status: "paid",
+      $or: [
+        { sessionId, payment_status: "paid" },
+        { stripeSessionId: sessionId, status: "paid" },
+      ],
     });
 
     if (existing) {
@@ -68,12 +70,47 @@ export async function hasActiveMembership(userId: string): Promise<boolean> {
     if (user?.premium === true) return true;
 
     const payment = await payments().findOne({
-      userid: userId,
-      payment_status: "paid",
+      $or: [
+        { userid: userId, payment_status: "paid" },
+        { userId: userId, status: "paid" },
+      ],
     });
 
     return Boolean(payment);
   } catch {
     return false;
   }
+}
+
+export type AdminPayment = {
+  _id: string;
+  sessionId: string | null;
+  userId: string;
+  userName: string;
+  email: string | null;
+  role: string;
+  plan: string;
+  planName: string;
+  amount: number | null;
+  currency: string | null;
+  status: string | null;
+  transactionId: string | null;
+  paymentDate: string | null;
+};
+
+/**
+ * Load every payment record for the admin payments page.
+ */
+export async function getPayments(): Promise<AdminPayment[]> {
+  const response = await fetch(`${BASE_URL}/payments`, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch payments");
+  }
+
+  const data = await response.json();
+
+  return Array.isArray(data) ? data : [];
 }
