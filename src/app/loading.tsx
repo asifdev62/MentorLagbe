@@ -1,5 +1,6 @@
 
 import { GraduationCap, BookOpen, Sparkles } from "lucide-react";
+import CurrentYear from "@/components/current-year";
 
 export default function Loading() {
   return (
@@ -59,7 +60,7 @@ export default function Loading() {
 
         {/* Footer */}
         <p className="mt-9 text-xs text-gray-400">
-          © {new Date().getFullYear()} MentorLagbe. All rights reserved.
+          © <CurrentYear /> MentorLagbe. All rights reserved.
         </p>
       </div>
     </main>
