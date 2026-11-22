@@ -115,10 +115,10 @@ const TuitionDetailsContent = async ({ params }: Props) => {
 
   const postedDate = tuition.createdAt
     ? new Date(tuition.createdAt).toLocaleDateString("en-BD", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
     : "Recently";
 
   const isActive =
@@ -153,16 +153,14 @@ const TuitionDetailsContent = async ({ params }: Props) => {
 
             <div className="flex flex-wrap items-center gap-2">
               <span
-                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${
-                  isActive
+                className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${isActive
                     ? "bg-emerald-50 text-emerald-700"
                     : "bg-slate-100 text-slate-600"
-                }`}
+                  }`}
               >
                 <span
-                  className={`h-1.5 w-1.5 rounded-full ${
-                    isActive ? "bg-emerald-500" : "bg-slate-400"
-                  }`}
+                  className={`h-1.5 w-1.5 rounded-full ${isActive ? "bg-emerald-500" : "bg-slate-400"
+                    }`}
                 />
                 {formatValue(tuition.status, "Active")}
               </span>
@@ -247,11 +245,9 @@ const TuitionDetailsContent = async ({ params }: Props) => {
             ].map((item, index) => (
               <div
                 key={item.label}
-                className={`flex items-center gap-3 p-4 sm:p-5 ${
-                  index % 2 === 0 ? "bg-slate-50/70" : "bg-white"
-                } ${index < 2 ? "border-b sm:border-b-0" : ""} ${
-                  index !== 3 ? "sm:border-r sm:border-slate-100" : ""
-                }`}
+                className={`flex items-center gap-3 p-4 sm:p-5 ${index % 2 === 0 ? "bg-slate-50/70" : "bg-white"
+                  } ${index < 2 ? "border-b sm:border-b-0" : ""} ${index !== 3 ? "sm:border-r sm:border-slate-100" : ""
+                  }`}
               >
                 <item.icon
                   size={20}
@@ -498,17 +494,22 @@ const TuitionDetailsContent = async ({ params }: Props) => {
                   </p>
                 </div>
 
-                {/* Apply Button */}
-                <TuitionApplyButton
-                  tuitionId={tuition._id ?? id}
-                  tuitionTitle={tuition.title}
-                  classLevel={tuition.classLevel}
-                  tutorEmail={tuition.tutorEmail || ""}
-                />
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-3">
+                  {/* Apply Button */}
+                  <div className="w-full [&>button]:!flex [&>button]:!h-12 [&>button]:!w-full [&>button]:!items-center [&>button]:!justify-center [&>button]:!rounded-xl">
+                    <TuitionApplyButton
+                      tuitionId={tuition._id ?? id}
+                      tuitionTitle={tuition.title}
+                      classLevel={tuition.classLevel}
+                      tutorEmail={tuition.tutorEmail || ""}
+                    />
+                  </div>
 
-                {/* Bookmark Button */}
-                <div className="mt-3">
-                  <BookmarkButton tuitionId={tuitionId} />
+                  {/* Bookmark Button */}
+                  <div className="w-full [&>button]:!flex [&>button]:!h-12 [&>button]:!w-full [&>button]:!items-center [&>button]:!justify-center [&>button]:!rounded-xl">
+                    <BookmarkButton tuitionId={tuitionId} />
+                  </div>
                 </div>
 
                 <p className="mt-3 text-center text-xs text-slate-400">

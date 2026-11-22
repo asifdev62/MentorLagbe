@@ -33,10 +33,10 @@ type Props = {
 const formatDate = (value?: string) =>
     value
         ? new Date(value).toLocaleDateString("en-GB", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-          })
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+        })
         : "Date unavailable";
 
 const BrowseTuitions = ({ tuitions }: Props) => {
@@ -183,8 +183,8 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                 typeFilter === "home"
                     ? "Home Tutoring"
                     : typeFilter === "online"
-                      ? "Online"
-                      : "Batch",
+                        ? "Online"
+                        : "Batch",
             clear: () => setTypeFilter("all"),
         });
     }
@@ -447,8 +447,8 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                                         item.tuitionType === "home"
                                             ? "Home Tutoring"
                                             : item.tuitionType === "online"
-                                              ? "Online Tutoring"
-                                              : "Batch Tutoring";
+                                                ? "Online Tutoring"
+                                                : "Batch Tutoring";
 
                                     const details = [
                                         {
@@ -612,7 +612,7 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                                                                     <strong className="text-slate-700">
                                                                         Students:
                                                                     </strong>{" "}
-                                                                        {item.studentCount}
+                                                                    {item.studentCount}
                                                                 </p>
                                                             ) : null}
 
@@ -629,45 +629,27 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                                                 )}
 
                                                 {/* Footer */}
-                                                <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 pt-3.5">
-                                                    <button
-                                                        type="button"
-                                                        onClick={() =>
-                                                            setExpandedCard(
-                                                                isExpanded ? null : cardId
-                                                            )
-                                                        }
-                                                        aria-expanded={isExpanded}
-                                                        className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-semibold text-slate-500 transition hover:bg-slate-50 hover:text-[#087F9F]"
-                                                    >
-                                                        <ChevronDown
-                                                            size={14}
-                                                            className={`transition-transform duration-200 ${
-                                                                isExpanded ? "rotate-180" : ""
-                                                            }`}
-                                                        />
-                                                        {isExpanded
-                                                            ? "Hide details"
-                                                            : "Quick view"}
-                                                    </button>
 
-                                                    <div className="flex items-center gap-2">
+                                                {/* Footer */}
+                                                <div className="mt-auto flex items-center gap-2 border-t border-slate-100 pt-4">
+
+                                                    {/* Bookmark Button */}
+                                                    <div className="flex-1 [&>button]:flex [&>button]:h-10 [&>button]:w-full [&>button]:items-center [&>button]:justify-center [&>button]:gap-1.5 [&>button]:rounded-xl [&>button]:px-2 [&>button]:py-2 [&>button]:text-xs">
                                                         <BookmarkButton
                                                             tuitionId={String(item._id || item.id)}
                                                         />
-
-                                                        <Link
-                                                            href={`/browse-tuitions/${item._id || item.id}`}
-                                                            className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-4 py-2.5 text-xs font-bold text-white shadow-sm shadow-[#087F9F]/20 transition hover:bg-[#066B85] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-[#087F9F]/10"
-                                                        >
-                                                            View Details
-                                                            <ArrowRight
-                                                                size={14}
-                                                                className="transition-transform duration-200 group-hover:translate-x-0.5"
-                                                            />
-                                                        </Link>
                                                     </div>
+
+                                                    {/* View Details Button */}
+                                                    <Link
+                                                        href={`/browse-tuitions/${item._id || item.id}`}
+                                                        className="inline-flex h-10 flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#087F9F] px-2 text-xs font-bold text-white shadow-sm shadow-[#087F9F]/20 transition hover:bg-[#066B85] hover:shadow-md focus:outline-none focus:ring-4 focus:ring-[#087F9F]/10"
+                                                    >
+                                                        View Details
+                                                        <ArrowRight size={14} />
+                                                    </Link>
                                                 </div>
+
                                             </div>
                                         </article>
                                     );
