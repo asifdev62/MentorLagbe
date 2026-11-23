@@ -1,6 +1,7 @@
+
 "use client";
 
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   BookOpen,
   CalendarDays,
@@ -31,22 +32,19 @@ const roleStyles: Record<
   student: {
     label: "Student",
     icon: GraduationCap,
-    badge:
-      "bg-violet-50 text-violet-700 ring-1 ring-violet-200",
+    badge: "bg-violet-50 text-violet-700 ring-1 ring-violet-200",
     avatar: "bg-violet-100 text-violet-700",
   },
   tutor: {
     label: "Tutor",
     icon: BookOpen,
-    badge:
-      "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200",
+    badge: "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200",
     avatar: "bg-emerald-100 text-emerald-700",
   },
   admin: {
     label: "Admin",
     icon: ShieldCheck,
-    badge:
-      "bg-amber-50 text-amber-700 ring-1 ring-amber-200",
+    badge: "bg-amber-50 text-amber-700 ring-1 ring-amber-200",
     avatar: "bg-amber-100 text-amber-700",
   },
 };
@@ -82,7 +80,9 @@ function formatAmount(amount: number | null, currency: string | null) {
     maximumFractionDigits: 2,
   });
 
-  return symbol ? `${symbol}${formatted}` : `${code.toUpperCase()} ${formatted}`;
+  return symbol
+    ? `${symbol}${formatted}`
+    : `${code.toUpperCase()} ${formatted}`;
 }
 
 function formatDate(value: string | null) {
@@ -171,6 +171,7 @@ export default function PaymentsClient({ initialPayments }: Props) {
           tone="teal"
           caption="Collected"
         />
+
         <StatCard
           title="Total Payments"
           value={String(payments.length)}
@@ -178,6 +179,7 @@ export default function PaymentsClient({ initialPayments }: Props) {
           tone="violet"
           caption="Transactions"
         />
+
         <StatCard
           title="Premium Students"
           value={String(stats.students)}
@@ -185,6 +187,7 @@ export default function PaymentsClient({ initialPayments }: Props) {
           tone="emerald"
           caption="Student plans"
         />
+
         <StatCard
           title="Premium Tutors"
           value={String(stats.tutors)}
@@ -202,6 +205,7 @@ export default function PaymentsClient({ initialPayments }: Props) {
               size={17}
               className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400"
             />
+
             <input
               type="text"
               placeholder="Search by name, email or transaction ID..."
@@ -209,6 +213,7 @@ export default function PaymentsClient({ initialPayments }: Props) {
               onChange={(event) => setSearch(event.target.value)}
               className="h-10 w-full rounded-xl border border-slate-200 bg-slate-50/70 pr-10 pl-10 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#087F9F] focus:bg-white focus:ring-4 focus:ring-[#087F9F]/10"
             />
+
             {search && (
               <button
                 type="button"
@@ -234,6 +239,7 @@ export default function PaymentsClient({ initialPayments }: Props) {
                 }`}
               >
                 {tab.label}
+
                 <span
                   className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
                     roleFilter === tab.key
@@ -272,6 +278,7 @@ export default function PaymentsClient({ initialPayments }: Props) {
             <CreditCard size={17} className="text-[#087F9F]" />
             Payment Records
           </h2>
+
           <span className="rounded-full bg-[#087F9F]/10 px-3 py-1 text-xs font-semibold text-[#087F9F]">
             {filteredPayments.length}{" "}
             {filteredPayments.length === 1 ? "payment" : "payments"}
@@ -279,15 +286,25 @@ export default function PaymentsClient({ initialPayments }: Props) {
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[960px] text-left text-sm">
+          <table className="w-full min-w-[1100px] table-auto text-left text-sm">
             <thead className="bg-slate-50/80 text-[11px] tracking-wider text-slate-500 uppercase">
               <tr>
-                <th className="px-4 py-3 font-semibold sm:px-5">User Name</th>
+                <th className="px-4 py-3 font-semibold sm:px-5">
+                  User Name
+                </th>
+
                 <th className="px-4 py-3 font-semibold">Email</th>
+
                 <th className="px-4 py-3 font-semibold">Role</th>
-                <th className="px-4 py-3 font-semibold">Plan Name</th>
+
+                <th className="w-[230px] whitespace-nowrap px-4 py-3 font-semibold">
+                  Plan Name
+                </th>
+
                 <th className="px-4 py-3 font-semibold">Amount</th>
+
                 <th className="px-4 py-3 font-semibold">Transaction ID</th>
+
                 <th className="px-4 py-3 font-semibold">Payment Date</th>
               </tr>
             </thead>
@@ -316,6 +333,7 @@ export default function PaymentsClient({ initialPayments }: Props) {
                           <p className="truncate font-semibold text-slate-900">
                             {payment.userName || "Unknown user"}
                           </p>
+
                           <p className="text-[11px] text-slate-400">
                             Premium member
                           </p>
@@ -324,7 +342,7 @@ export default function PaymentsClient({ initialPayments }: Props) {
                     </td>
 
                     <td className="px-4 py-3.5 text-slate-500">
-                      <span className="inline-flex items-center gap-1.5">
+                      <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
                         <Mail size={14} className="shrink-0 text-slate-400" />
                         {payment.email || "—"}
                       </span>
@@ -332,31 +350,42 @@ export default function PaymentsClient({ initialPayments }: Props) {
 
                     <td className="px-4 py-3.5">
                       <span
-                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${style.badge}`}
+                        className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${style.badge}`}
                       >
                         <RoleIcon size={12} />
                         {style.label}
                       </span>
                     </td>
 
-                    <td className="px-4 py-3.5">
+                    {/* Plan Name - Fixed */}
+                    <td className="whitespace-nowrap px-4 py-3.5">
                       <span
-                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
+                        className={`inline-flex w-fit items-center gap-2 whitespace-nowrap rounded-full px-3 py-2 text-xs font-semibold ${
                           isTutorPlan
                             ? "bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200"
                             : "bg-violet-50 text-violet-700 ring-1 ring-violet-200"
                         }`}
                       >
                         {isTutorPlan ? (
-                          <BookOpen size={12} />
+                          <BookOpen
+                            size={15}
+                            className="shrink-0"
+                          />
                         ) : (
-                          <GraduationCap size={12} />
+                          <GraduationCap
+                            size={15}
+                            className="shrink-0"
+                          />
                         )}
-                        {payment.planName || (isTutorPlan ? "Tutor Pro" : "Student Premium")}
+
+                        <span className="whitespace-nowrap">
+                          {payment.planName ||
+                            (isTutorPlan ? "Tutor Pro" : "Student Premium")}
+                        </span>
                       </span>
                     </td>
 
-                    <td className="px-4 py-3.5">
+                    <td className="whitespace-nowrap px-4 py-3.5">
                       <span className="font-bold text-slate-900">
                         {formatAmount(payment.amount, payment.currency)}
                       </span>
@@ -368,13 +397,14 @@ export default function PaymentsClient({ initialPayments }: Props) {
                         title={payment.transactionId || undefined}
                       >
                         <Hash size={13} className="shrink-0 text-slate-400" />
+
                         <span className="truncate">
                           {payment.transactionId || "—"}
                         </span>
                       </span>
                     </td>
 
-                    <td className="px-4 py-3.5 text-slate-500">
+                    <td className="whitespace-nowrap px-4 py-3.5 text-slate-500">
                       <span className="inline-flex items-center gap-1.5">
                         <CalendarDays
                           size={14}
@@ -395,9 +425,13 @@ export default function PaymentsClient({ initialPayments }: Props) {
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#087F9F]/10 text-[#087F9F]">
               <CreditCard size={22} />
             </div>
+
             <h3 className="font-semibold text-slate-900">
-              {payments.length === 0 ? "No payments yet" : "No matching payments"}
+              {payments.length === 0
+                ? "No payments yet"
+                : "No matching payments"}
             </h3>
+
             <p className="mt-1 text-sm text-slate-500">
               {payments.length === 0
                 ? "Completed student and tutor Stripe payments will appear here."
@@ -466,10 +500,16 @@ function StatCard({
           >
             {title}
           </p>
-          <p className={`mt-2 text-xl font-extrabold sm:text-2xl ${style.value}`}>
+
+          <p
+            className={`mt-2 text-xl font-extrabold sm:text-2xl ${style.value}`}
+          >
             {value}
           </p>
-          <p className="mt-0.5 text-[11px] text-slate-500">{caption}</p>
+
+          <p className="mt-0.5 text-[11px] text-slate-500">
+            {caption}
+          </p>
         </div>
 
         <span
