@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -53,7 +54,9 @@ export default function EditProfileForm({ profile }: Props) {
     setMessage("");
     setIsError(false);
 
-    toast.loading("Saving your profile...", { id: "profile-update" });
+    toast.loading("Saving your profile...", {
+      id: "profile-update",
+    });
 
     startTransition(async () => {
       try {
@@ -82,15 +85,17 @@ export default function EditProfileForm({ profile }: Props) {
           id: "profile-update",
         });
       } catch (error) {
-        const message =
+        const errorMessage =
           error instanceof Error
             ? error.message
             : "Failed to update profile. Please try again.";
 
-        setMessage(message);
+        setMessage(errorMessage);
         setIsError(true);
 
-        toast.error(message, { id: "profile-update" });
+        toast.error(errorMessage, {
+          id: "profile-update",
+        });
       }
     });
   };
@@ -98,6 +103,7 @@ export default function EditProfileForm({ profile }: Props) {
   return (
     <div className="min-h-screen bg-[#F5F7FA] px-4 py-8 dark:bg-[#0B141A] md:px-8 md:py-12">
       <div className="mx-auto max-w-3xl space-y-7">
+
         {/* Top Navigation */}
         <div className="flex flex-wrap items-center justify-between gap-4">
           <Link
@@ -119,6 +125,7 @@ export default function EditProfileForm({ profile }: Props) {
           <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white md:text-3xl">
             Update your information
           </h1>
+
           <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
             Change your name, phone number, address and profile picture.
           </p>
@@ -128,24 +135,29 @@ export default function EditProfileForm({ profile }: Props) {
           onSubmit={handleSubmit}
           className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm shadow-gray-200/60 dark:border-gray-700 dark:bg-[#172A35] dark:shadow-none"
         >
-          {/* Cover */}
-          <div className="relative h-32 overflow-hidden bg-gradient-to-br from-[#087F9F] via-[#078CAE] to-[#066B85] md:h-36">
+          {/* Cover Banner */}
+          <div className="relative h-36 overflow-hidden bg-gradient-to-br from-[#087F9F] via-[#078CAE] to-[#066B85] md:h-40">
             <div className="absolute -right-10 -top-16 h-48 w-48 rounded-full border-[24px] border-white/10" />
+
             <div className="absolute -bottom-24 right-20 h-52 w-52 rounded-full border-[20px] border-white/10" />
           </div>
 
           <div className="px-5 pb-7 md:px-8">
-            {/* Avatar preview */}
-            <div className="-mt-12 mb-7 flex flex-wrap items-end gap-4">
+
+            {/* Avatar Preview */}
+            <div className="relative z-10 -mt-14 mb-7 flex flex-wrap items-end gap-4">
               {image ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={image}
                   alt="Profile preview"
-                  className="h-24 w-24 rounded-3xl border-4 border-white object-cover shadow-lg shadow-[#087F9F]/20 dark:border-[#172A35]"
+                  onError={(event) => {
+                    event.currentTarget.style.display = "none";
+                  }}
+                  className="relative z-10 h-28 w-28 shrink-0 rounded-3xl border-4 border-white bg-white object-cover shadow-xl shadow-[#087F9F]/20 dark:border-[#172A35] dark:bg-[#172A35]"
                 />
               ) : (
-                <div className="flex h-24 w-24 items-center justify-center rounded-3xl border-4 border-white bg-gradient-to-br from-[#0A93B8] to-[#066B85] text-2xl font-bold text-white shadow-lg shadow-[#087F9F]/20 dark:border-[#172A35]">
+                <div className="relative z-10 flex h-28 w-28 shrink-0 items-center justify-center rounded-3xl border-4 border-white bg-gradient-to-br from-[#0A93B8] to-[#066B85] text-2xl font-bold text-white shadow-xl shadow-[#087F9F]/20 dark:border-[#172A35]">
                   {initials}
                 </div>
               )}
@@ -154,12 +166,14 @@ export default function EditProfileForm({ profile }: Props) {
                 <p className="text-sm font-semibold text-gray-900 dark:text-white">
                   Profile picture
                 </p>
+
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Paste a public image URL to update your photo.
                 </p>
               </div>
             </div>
 
+            {/* Message */}
             {message && (
               <div
                 className={`mb-6 flex items-start gap-2.5 rounded-xl border px-4 py-3 text-sm ${
@@ -173,17 +187,21 @@ export default function EditProfileForm({ profile }: Props) {
                 ) : (
                   <CheckCircle2 size={17} className="mt-0.5 shrink-0" />
                 )}
+
                 {message}
               </div>
             )}
 
+            {/* Form Fields */}
             <div className="grid gap-5 sm:grid-cols-2">
+
               {/* Name */}
               <label className="sm:col-span-2">
                 <span className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-gray-700 dark:text-gray-200">
                   <UserRound size={15} className="text-[#087F9F]" />
                   Full Name
                 </span>
+
                 <input
                   type="text"
                   value={name}
@@ -196,12 +214,13 @@ export default function EditProfileForm({ profile }: Props) {
                 />
               </label>
 
-              {/* Email (read only) */}
+              {/* Email */}
               <label>
                 <span className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-gray-700 dark:text-gray-200">
                   <Mail size={15} className="text-[#087F9F]" />
                   Email Address
                 </span>
+
                 <input
                   type="email"
                   value={profile.email || ""}
@@ -209,6 +228,7 @@ export default function EditProfileForm({ profile }: Props) {
                   disabled
                   className="h-11 w-full cursor-not-allowed rounded-xl border border-gray-200 bg-gray-100 px-3.5 text-sm text-gray-500 outline-none dark:border-gray-700 dark:bg-[#0F1F28] dark:text-gray-400"
                 />
+
                 <span className="mt-1 block text-xs text-gray-400">
                   Email cannot be changed here.
                 </span>
@@ -220,6 +240,7 @@ export default function EditProfileForm({ profile }: Props) {
                   <Phone size={15} className="text-[#087F9F]" />
                   Phone Number
                 </span>
+
                 <input
                   type="tel"
                   value={phone}
@@ -236,6 +257,7 @@ export default function EditProfileForm({ profile }: Props) {
                   <MapPin size={15} className="text-[#087F9F]" />
                   Address
                 </span>
+
                 <textarea
                   value={address}
                   onChange={(event) => setAddress(event.target.value)}
@@ -252,6 +274,7 @@ export default function EditProfileForm({ profile }: Props) {
                   <Camera size={15} className="text-[#087F9F]" />
                   Profile Image URL
                 </span>
+
                 <input
                   type="url"
                   value={image}
@@ -274,6 +297,7 @@ export default function EditProfileForm({ profile }: Props) {
                 ) : (
                   <Save size={16} />
                 )}
+
                 {isPending ? "Saving..." : "Save Changes"}
               </button>
 
