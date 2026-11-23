@@ -13,6 +13,7 @@ import {
   Check,
   CheckCircle2,
   Clock,
+  Grid2x2,
   Loader2,
   Mail,
   MessageSquareQuote,
@@ -20,6 +21,7 @@ import {
   RefreshCw,
   RotateCcw,
   Search,
+  Table as TableIcon,
   Users,
   UserRound,
   X,
@@ -148,6 +150,41 @@ const InfoRow = ({
   </div>
 );
 
+const ViewToggle = ({
+  view,
+  onChange,
+}: {
+  view: "grid" | "table";
+  onChange: (view: "grid" | "table") => void;
+}) => {
+  const options = [
+    { value: "grid", label: "Grid view", icon: Grid2x2 },
+    { value: "table", label: "Table view", icon: TableIcon },
+  ] as const;
+
+  return (
+    <div className="inline-flex shrink-0 items-center gap-1 rounded-2xl border border-slate-200 bg-slate-50/80 p-1">
+      {options.map(({ value, label, icon: Icon }) => (
+        <button
+          key={value}
+          type="button"
+          onClick={() => onChange(value)}
+          aria-label={label}
+          aria-pressed={view === value}
+          title={label}
+          className={`flex size-8 items-center justify-center rounded-xl transition sm:size-9 ${
+            view === value
+              ? "border border-slate-200 bg-white text-[#087F9F] shadow-sm"
+              : "text-slate-400 hover:text-slate-600"
+          }`}
+        >
+          <Icon size={16} />
+        </button>
+      ))}
+    </div>
+  );
+};
+
 export default function ApplicantsClient({
   initialApplicants,
   tutorEmail,
@@ -165,6 +202,8 @@ export default function ApplicantsClient({
   } | null>(null);
 
   const [search, setSearch] = useState("");
+
+  const [view, setView] = useState<"grid" | "table">("grid");
 
   const [statusFilter, setStatusFilter] =
     useState<"all" | StatusKey>("all");
@@ -393,7 +432,7 @@ export default function ApplicantsClient({
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex max-w-full overflow-x-auto rounded-xl border border-slate-200 bg-slate-50/80 p-1 text-xs font-medium text-slate-600">
+            <div className="flex min-w-0 flex-1 overflow-x-auto rounded-xl border border-slate-200 bg-slate-50/80 p-1 text-xs font-medium text-slate-600">
               {(
                 [
                   ["all", `All (${stats.total})`],
@@ -430,6 +469,8 @@ export default function ApplicantsClient({
                 Reset
               </button>
             )}
+
+            <ViewToggle view={view} onChange={setView} />
           </div>
         </div>
 
@@ -510,7 +551,7 @@ export default function ApplicantsClient({
               Reset Filters
             </button>
           </div>
-        ) : (
+        ) : view === "grid" ? (
           <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {filteredApplicants.map((applicant) => {
               const statusKey = getStatusKey(applicant.status);
@@ -711,6 +752,246 @@ export default function ApplicantsClient({
                 </article>
               );
             })}
+          </div>
+        ) : (
+          <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[920px] border-collapse text-left">
+                <thead>
+                  <tr className="border-b border-slate-200 bg-slate-50/80 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-3">Student</th>
+                    <th className="px-4 py-3">Applied to</th>
+                    <th className="px-4 py-3">Phone</th>
+                    <th className="px-4 py-3">Preferred Schedule</th>
+                    <th className="px-4 py-3">Applied On</th>
+                    <th className="px-4 py-3">Status</th>
+                    <th className="px-4 py-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody className="divide-y divide-slate-100">
+                  {filteredApplicants.map((applicant) => {
+                    const statusKey = getStatusKey(applicant.status);
+
+                    const acceptedLoading = isUpdating(
+                      applicant._id,
+                      "Accepted"
+                    );
+
+                    const rejectedLoading = isUpdating(
+                      applicant._id,
+                      "Rejected"
+                    );
+
+                    const pendingLoading = isUpdating(
+                      applicant._id,
+                      "Pending"
+                    );
+
+                    const isBusy = updating?.id === applicant._id;
+
+                    return (
+                      <tr
+                        key={applicant._id}
+                        className="align-top transition hover:bg-slate-50/60"
+                      >
+                        <td className="px-4 py-3.5">
+                          <div className="flex items-center gap-2.5">
+                            <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#087F9F] to-[#066B85] text-xs font-bold text-white">
+                              {getInitial(applicant.studentName)}
+                            </div>
+
+                            <div className="min-w-0">
+                              <p className="max-w-[180px] truncate text-sm font-bold text-slate-900">
+                                {applicant.studentName ||
+                                  "Unknown Student"}
+                              </p>
+
+                              {applicant.email ? (
+                                <a
+                                  href={`mailto:${applicant.email}`}
+                                  className="block max-w-[180px] truncate text-xs text-[#087F9F] hover:underline"
+                                >
+                                  {applicant.email}
+                                </a>
+                              ) : (
+                                <span className="text-xs text-slate-400">
+                                  Email not provided
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-4 py-3.5">
+                          <p className="max-w-[190px] truncate text-sm font-semibold text-slate-800">
+                            {applicant.tuitionTitle || "Tuition"}
+                          </p>
+
+                          {applicant.classLevel && (
+                            <span className="mt-1 inline-flex rounded-full bg-[#087F9F]/10 px-2 py-0.5 text-[10px] font-semibold text-[#066B85]">
+                              {applicant.classLevel}
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="px-4 py-3.5">
+                          {applicant.phone ? (
+                            <a
+                              href={`tel:${applicant.phone}`}
+                              className="whitespace-nowrap text-xs font-semibold text-[#087F9F] hover:underline"
+                            >
+                              {applicant.phone}
+                            </a>
+                          ) : (
+                            <span className="text-xs text-slate-400">
+                              Not provided
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="px-4 py-3.5">
+                          <span className="flex max-w-[170px] items-start gap-1.5 text-xs text-slate-600">
+                            <CalendarClock
+                              size={13}
+                              className="mt-0.5 shrink-0 text-slate-400"
+                            />
+
+                            <span className="line-clamp-2">
+                              {applicant.preferredSchedule || "Flexible"}
+                            </span>
+                          </span>
+                        </td>
+
+                        <td className="whitespace-nowrap px-4 py-3.5 text-xs text-slate-600">
+                          {formatDate(applicant.appliedDate)}
+                        </td>
+
+                        <td className="px-4 py-3.5">
+                          <StatusBadge status={applicant.status} />
+                        </td>
+
+                        <td className="px-4 py-3.5">
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleStatusChange(
+                                  applicant._id,
+                                  "Accepted"
+                                )
+                              }
+                              disabled={
+                                isBusy || statusKey === "accepted"
+                              }
+                              aria-label="Accept application"
+                              title={
+                                statusKey === "accepted"
+                                  ? "Accepted"
+                                  : "Accept"
+                              }
+                              className={`inline-flex size-8 items-center justify-center rounded-lg transition ${
+                                statusKey === "accepted"
+                                  ? "cursor-default border border-emerald-200 bg-emerald-50 text-emerald-700"
+                                  : "bg-emerald-600 text-white hover:bg-emerald-700"
+                              } disabled:cursor-not-allowed disabled:opacity-70`}
+                            >
+                              {acceptedLoading ? (
+                                <Loader2
+                                  size={14}
+                                  className="animate-spin"
+                                />
+                              ) : (
+                                <Check size={14} />
+                              )}
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() =>
+                                handleStatusChange(
+                                  applicant._id,
+                                  "Rejected"
+                                )
+                              }
+                              disabled={
+                                isBusy || statusKey === "rejected"
+                              }
+                              aria-label="Reject application"
+                              title={
+                                statusKey === "rejected"
+                                  ? "Rejected"
+                                  : "Reject"
+                              }
+                              className={`inline-flex size-8 items-center justify-center rounded-lg transition ${
+                                statusKey === "rejected"
+                                  ? "cursor-default border border-rose-200 bg-rose-50 text-rose-700"
+                                  : "border border-rose-200 bg-white text-rose-600 hover:bg-rose-50"
+                              } disabled:cursor-not-allowed disabled:opacity-70`}
+                            >
+                              {rejectedLoading ? (
+                                <Loader2
+                                  size={14}
+                                  className="animate-spin"
+                                />
+                              ) : (
+                                <X size={14} />
+                              )}
+                            </button>
+
+                            {statusKey !== "pending" && (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleStatusChange(
+                                    applicant._id,
+                                    "Pending"
+                                  )
+                                }
+                                disabled={isBusy}
+                                aria-label="Move back to pending"
+                                title="Move back to Pending"
+                                className="inline-flex size-8 items-center justify-center rounded-lg border border-amber-200 bg-amber-50 text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-70"
+                              >
+                                {pendingLoading ? (
+                                  <Loader2
+                                    size={14}
+                                    className="animate-spin"
+                                  />
+                                ) : (
+                                  <RotateCcw size={14} />
+                                )}
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 bg-slate-50/60 px-4 py-2.5 text-[11px] font-medium text-slate-500">
+              <span>
+                Showing {filteredApplicants.length} of{" "}
+                {applicants.length} applicants
+              </span>
+
+              {hasFilters && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearch("");
+                    setStatusFilter("all");
+                  }}
+                  className="inline-flex items-center gap-1 font-semibold text-[#087F9F] hover:underline"
+                >
+                  <RotateCcw size={12} />
+                  Clear filters
+                </button>
+              )}
+            </div>
           </div>
         )}
       </div>
