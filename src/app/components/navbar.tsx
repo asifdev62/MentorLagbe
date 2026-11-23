@@ -3,8 +3,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Menu,
   X,
@@ -27,12 +27,14 @@ const navLinks = [
 
 export default function Navbar() {
   const router = useRouter();
+  const pathname = usePathname();
 
   const { data: session, isPending } = authClient.useSession();
 
   const [isOpen, setIsOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const user = session?.user;
 
@@ -48,6 +50,28 @@ export default function Navbar() {
         : "/dashboard/student";
 
   const initial = user?.name?.charAt(0).toUpperCase() || "U";
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setProfileOpen(false);
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -75,31 +99,58 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/95 backdrop-blur-md">
-      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:px-8">
-
+    <header
+      className={`sticky top-0 z-50 border-b backdrop-blur-md transition-all duration-300 ${
+        scrolled
+          ? "border-slate-200/70 bg-white/95 shadow-[0_10px_30px_-18px_rgba(15,23,42,0.35)]"
+          : "border-transparent bg-white/85"
+      }`}
+    >
+      <nav
+        className={`mx-auto flex max-w-7xl items-center justify-between px-5 transition-all duration-300 lg:px-8 ${
+          scrolled ? "h-16" : "h-20"
+        }`}
+      >
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#087F9F] text-white shadow-md shadow-[#087F9F]/20">
+        <Link href="/" className="group flex items-center gap-2.5">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand text-white shadow-md shadow-brand/20 transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105">
             <GraduationCap size={26} />
           </div>
 
           <span className="text-2xl font-extrabold tracking-tight text-slate-900">
-            Mentor<span className="text-[#087F9F]">Lagbe</span>
+            Mentor<span className="text-brand">Lagbe</span>
           </span>
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-semibold text-slate-600 transition hover:text-[#087F9F]"
-            >
-              {link.name}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive =
+              link.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(link.href);
+
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "page" : undefined}
+                className={`group relative py-1 text-sm font-semibold transition hover:text-brand ${
+                  isActive ? "text-brand" : "text-slate-600"
+                }`}
+              >
+                {link.name}
+
+                <span
+                  className={`absolute inset-x-0 -bottom-0.5 h-0.5 origin-left rounded-full bg-brand transition-transform duration-300 ${
+                    isActive
+                      ? "scale-x-100"
+                      : "scale-x-0 group-hover:scale-x-100"
+                  }`}
+                />
+              </Link>
+            );
+          })}
         </div>
 
         {/* Authentication */}
@@ -110,9 +161,9 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
-                className="flex items-center gap-2 rounded-xl border border-slate-200 p-2 transition hover:bg-slate-50"
+                className="flex items-center gap-2 rounded-xl border border-slate-200 p-2 transition hover:border-brand/30 hover:bg-slate-50"
               >
-                <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-[#087F9F]/10 font-bold text-[#087F9F]">
+                <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-brand/10 font-bold text-brand">
                   {user.image ? (
                     <Image
                       src={user.image}
@@ -131,17 +182,22 @@ export default function Navbar() {
                     {user.name}
                   </p>
 
-                  <p className="text-xs font-semibold capitalize text-[#087F9F]">
+                  <p className="text-xs font-semibold text-brand capitalize">
                     {role || "User"}
                   </p>
                 </div>
 
-                <ChevronDown size={16} className="text-slate-500" />
+                <ChevronDown
+                  size={16}
+                  className={`text-slate-500 transition-transform duration-300 ${
+                    profileOpen ? "rotate-180" : ""
+                  }`}
+                />
               </button>
 
               {/* Profile Dropdown */}
               {profileOpen && (
-                <div className="absolute right-0 top-14 z-50 w-60 rounded-xl border border-slate-100 bg-white p-2 shadow-xl">
+                <div className="absolute top-14 right-0 z-50 w-60 origin-top-right animate-in rounded-xl border border-slate-100 bg-white p-2 shadow-xl fade-in zoom-in-95 slide-in-from-top-1">
                   <div className="border-b border-slate-100 px-3 py-3">
                     <p className="truncate text-sm font-bold text-slate-800">
                       {user.name}
@@ -154,7 +210,7 @@ export default function Navbar() {
                   <Link
                     href={dashboardUrl}
                     onClick={() => setProfileOpen(false)}
-                    className="mt-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
+                    className="mt-2 flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-brand/10 hover:text-brand"
                   >
                     <LayoutDashboard size={18} />
                     Dashboard
@@ -163,7 +219,7 @@ export default function Navbar() {
                   <Link
                     href="/profile"
                     onClick={() => setProfileOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
+                    className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-brand/10 hover:text-brand"
                   >
                     <UserRound size={18} />
                     My Profile
@@ -191,7 +247,7 @@ export default function Navbar() {
 
               <Link
                 href="/auth/sign-up"
-                className="rounded-xl bg-[#087F9F] px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-[#087F9F]/20 transition hover:bg-[#066B85]"
+                className="group rounded-xl bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-xl hover:shadow-brand/30"
               >
                 Get Started
               </Link>
@@ -202,7 +258,7 @@ export default function Navbar() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="rounded-lg p-2 text-slate-700 hover:bg-slate-100 md:hidden"
+          className="rounded-lg p-2 text-slate-700 transition hover:bg-slate-100 md:hidden"
           aria-label="Toggle navigation"
           aria-expanded={isOpen}
         >
@@ -212,18 +268,29 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="border-t border-slate-100 bg-white px-5 py-5 shadow-lg md:hidden">
+        <div className="animate-in border-t border-slate-100 bg-white px-5 py-5 shadow-lg fade-in slide-in-from-top-2 duration-200 md:hidden">
           <div className="flex flex-col gap-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive =
+                link.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(link.href);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`rounded-lg px-4 py-3 text-sm font-semibold transition ${
+                    isActive
+                      ? "bg-brand/10 text-brand"
+                      : "text-slate-700 hover:bg-brand/10 hover:text-brand"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
 
             <div className="mt-3 border-t border-slate-100 pt-4">
               {isPending ? (
@@ -231,7 +298,7 @@ export default function Navbar() {
               ) : user ? (
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 px-2">
-                    <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-[#087F9F]/10 font-bold text-[#087F9F]">
+                    <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-brand/10 font-bold text-brand">
                       {user.image ? (
                         <Image
                           src={user.image}
@@ -240,14 +307,16 @@ export default function Navbar() {
                           height={44}
                           className="h-full w-full object-cover"
                         />
-                      ) : initial}
+                      ) : (
+                        initial
+                      )}
                     </div>
 
                     <div className="min-w-0">
                       <p className="truncate text-sm font-bold text-slate-800">
                         {user.name}
                       </p>
-                      <p className="text-xs font-semibold capitalize text-[#087F9F]">
+                      <p className="text-xs font-semibold text-brand capitalize">
                         {role || "User"}
                       </p>
                     </div>
@@ -256,7 +325,7 @@ export default function Navbar() {
                   <Link
                     href={dashboardUrl}
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
+                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-brand/10 hover:text-brand"
                   >
                     <LayoutDashboard size={18} />
                     Dashboard
@@ -265,7 +334,7 @@ export default function Navbar() {
                   <Link
                     href="/profile"
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-[#087F9F]/10 hover:text-[#087F9F]"
+                    className="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-brand/10 hover:text-brand"
                   >
                     <UserRound size={18} />
                     Update Profile
@@ -285,7 +354,7 @@ export default function Navbar() {
                   <Link
                     href="/auth/sign-in"
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 rounded-xl border border-slate-200 py-3 text-center text-sm font-semibold text-slate-700"
+                    className="flex-1 rounded-xl border border-slate-200 py-3 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                   >
                     Sign In
                   </Link>
@@ -293,7 +362,7 @@ export default function Navbar() {
                   <Link
                     href="/auth/sign-up"
                     onClick={() => setIsOpen(false)}
-                    className="flex-1 rounded-xl bg-[#087F9F] py-3 text-center text-sm font-semibold text-white"
+                    className="flex-1 rounded-xl bg-brand py-3 text-center text-sm font-semibold text-white transition hover:bg-brand-dark"
                   >
                     Get Started
                   </Link>

@@ -3,6 +3,8 @@ import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 import { House, MonitorPlay, BookOpenCheck, Users, Plus } from "lucide-react";
 
+import { Reveal } from "@/components/reveal";
+
 const methods = [
   {
     icon: House,
@@ -42,15 +44,19 @@ function Feature({
 }) {
   return (
     <div
-      className={`flex w-full max-w-[300px] flex-col ${
+      className={`group flex w-full max-w-[300px] flex-col ${
         align === "right" ? "items-end text-right" : "items-start text-left"
       }`}
     >
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#087F9F] text-white shadow-[0_8px_18px_-6px_rgba(8,127,159,0.55)] sm:h-11 sm:w-11 xl:h-12 xl:w-12">
-        <Icon size={20} strokeWidth={2} className="xl:size-[22px]" />
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-white shadow-[0_8px_18px_-6px_rgba(8,127,159,0.55)] transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_14px_26px_-8px_rgba(8,127,159,0.65)] sm:h-11 sm:w-11 xl:h-12 xl:w-12">
+        <Icon
+          size={20}
+          strokeWidth={2}
+          className="transition-transform duration-300 group-hover:scale-110 xl:size-[22px]"
+        />
       </div>
 
-      <h3 className="mt-4 text-lg font-semibold text-[#20242C] sm:text-xl xl:mt-5 xl:text-2xl">
+      <h3 className="mt-4 text-lg font-semibold text-[#20242C] transition-colors duration-300 group-hover:text-brand sm:text-xl xl:mt-5 xl:text-2xl">
         {title}
       </h3>
 
@@ -65,19 +71,22 @@ function MethodCircle() {
   return (
     <div className="relative mx-auto aspect-square w-[78vw] max-w-[300px] sm:w-[340px] sm:max-w-[340px] lg:w-[380px] lg:max-w-[380px] xl:w-[430px] xl:max-w-[430px]">
       {/* Pale outer ring */}
-      <div className="absolute inset-0 rounded-full border-[10px] border-[#087F9F]/15 sm:border-[12px] xl:border-[14px]" />
+      <div className="absolute inset-0 rounded-full border-[10px] border-brand/15 sm:border-[12px] xl:border-[14px]" />
 
-      {/* Dashed circle */}
-      <div className="absolute inset-[4.5%] rounded-full border-2 border-dashed border-[#4B5563]/75" />
+      {/* Dashed circle - slowly rotates */}
+      <div className="absolute inset-[4.5%] animate-spin-slow rounded-full border-2 border-dashed border-[#4B5563]/75" />
 
       {/* Plus badges */}
-      {[45, 135, 225, 315].map((deg) => (
+      {[45, 135, 225, 315].map((deg, index) => (
         <div
           key={deg}
           className="absolute inset-[4.5%]"
           style={{ transform: `rotate(${deg}deg)` }}
         >
-          <span className="absolute left-1/2 top-0 flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#087F9F] text-white shadow-[0_4px_10px_rgba(8,127,159,0.4)] sm:h-6 sm:w-6">
+          <span
+            className="animate-pulse-soft absolute top-0 left-1/2 flex h-5 w-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand text-white shadow-[0_4px_10px_rgba(8,127,159,0.4)] sm:h-6 sm:w-6"
+            style={{ animationDelay: `${index * 600}ms` }}
+          >
             <span
               className="flex items-center justify-center"
               style={{
@@ -96,7 +105,7 @@ function MethodCircle() {
       ))}
 
       {/* Photo */}
-      <div className="absolute left-1/2 top-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-[#087F9F]/5 ring-4 ring-white shadow-[0_24px_60px_-24px_rgba(17,27,53,0.45)]">
+      <div className="absolute top-1/2 left-1/2 h-[80%] w-[80%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-brand/5 shadow-[0_24px_60px_-24px_rgba(17,27,53,0.45)] ring-4 ring-white">
         <Image
           src="/images/photo.png"
           alt="A student using MentorLagbe on the go"
@@ -117,7 +126,7 @@ function Backdrop() {
     >
       {/* Faint dashed grid */}
       <svg
-        className="absolute inset-x-0 bottom-0 top-32 w-full"
+        className="absolute inset-x-0 top-32 bottom-0 w-full"
         focusable="false"
       >
         <defs>
@@ -142,15 +151,15 @@ function Backdrop() {
 
       {/* Diagonal hatch accents */}
       <div
-        className="absolute right-0 top-0 hidden h-44 w-[24%] md:block"
+        className="absolute top-0 right-0 hidden h-44 w-[24%] md:block"
         style={{ backgroundImage: HATCH }}
       />
       <div
-        className="absolute left-0 top-[42%] hidden h-64 w-[13%] md:block"
+        className="absolute top-[42%] left-0 hidden h-64 w-[13%] md:block"
         style={{ backgroundImage: HATCH }}
       />
       <div
-        className="absolute right-0 top-[42%] hidden h-64 w-[13%] md:block"
+        className="absolute top-[42%] right-0 hidden h-64 w-[13%] md:block"
         style={{ backgroundImage: HATCH }}
       />
     </div>
@@ -163,32 +172,50 @@ export default function TutoringMethod() {
       <Backdrop />
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8">
-        <h2 className="text-balance text-2xl font-bold leading-snug tracking-tight text-[#20242C] sm:text-3xl lg:text-[40px]">
-          Tutoring <span className="text-[#087F9F]">Method</span>
-        </h2>
+        <Reveal>
+          <h2 className="text-balance text-2xl leading-snug font-bold tracking-tight text-[#20242C] sm:text-3xl lg:text-[40px]">
+            Tutoring <span className="text-brand">Method</span>
+          </h2>
+        </Reveal>
 
         {/* Desktop: features around the circle */}
         <div className="mt-12 hidden lg:grid lg:grid-cols-[1fr_auto_1fr] lg:gap-x-10 xl:mt-14 xl:gap-x-24">
           <div className="flex flex-col items-end justify-between gap-12 py-2 xl:gap-16">
-            <Feature {...methods[0]} align="right" />
-            <Feature {...methods[2]} align="right" />
+            <Reveal delay={80} className="flex w-full justify-end">
+              <Feature {...methods[0]} align="right" />
+            </Reveal>
+
+            <Reveal delay={240} className="flex w-full justify-end">
+              <Feature {...methods[2]} align="right" />
+            </Reveal>
           </div>
 
-          <MethodCircle />
+          <Reveal y={28}>
+            <MethodCircle />
+          </Reveal>
 
           <div className="flex flex-col items-start justify-between gap-12 py-2 xl:gap-16">
-            <Feature {...methods[1]} align="left" />
-            <Feature {...methods[3]} align="left" />
+            <Reveal delay={160} className="flex w-full justify-start">
+              <Feature {...methods[1]} align="left" />
+            </Reveal>
+
+            <Reveal delay={320} className="flex w-full justify-start">
+              <Feature {...methods[3]} align="left" />
+            </Reveal>
           </div>
         </div>
 
         {/* Mobile & tablet */}
         <div className="mt-10 lg:hidden">
-          <MethodCircle />
+          <Reveal y={28}>
+            <MethodCircle />
+          </Reveal>
 
           <div className="mt-10 grid gap-8 sm:mt-12 sm:grid-cols-2 sm:gap-x-8 sm:gap-y-10">
-            {methods.map((method) => (
-              <Feature key={method.title} {...method} align="left" />
+            {methods.map((method, index) => (
+              <Reveal key={method.title} delay={index * 90}>
+                <Feature {...method} align="left" />
+              </Reveal>
             ))}
           </div>
         </div>

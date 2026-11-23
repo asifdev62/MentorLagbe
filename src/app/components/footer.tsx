@@ -3,7 +3,7 @@ import Link from "next/link";
 import {
   GraduationCap,
   Mail,
-  Phone,
+  Clock,
   MapPin,
   BookOpen,
 } from "lucide-react";
@@ -60,7 +60,7 @@ export default function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 aria-label="Facebook"
-                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087F9F] flex items-center justify-center transition"
+                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-brand hover:-translate-y-1 flex items-center justify-center transition-all duration-300"
               >
                 <span className="font-bold text-lg">f</span>
               </Link>
@@ -69,7 +69,7 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 aria-label="Instagram"
-                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087F9F] flex items-center justify-center transition"
+                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-brand hover:-translate-y-1 flex items-center justify-center transition-all duration-300"
               >
                 <span className="font-bold text-xl">◎</span>
               </Link>
@@ -78,7 +78,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 aria-label="LinkedIn"
-                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#087F9F] flex items-center justify-center transition"
+                className="w-10 h-10 rounded-xl bg-white/10 hover:bg-brand hover:-translate-y-1 flex items-center justify-center transition-all duration-300"
               >
                 <span className="font-bold text-sm">in</span>
               </Link>
@@ -96,7 +96,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-[#087F9F] transition"
+                    className="text-sm text-slate-400 hover:text-brand transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -116,7 +116,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-[#087F9F] transition"
+                    className="text-sm text-slate-400 hover:text-brand transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -136,7 +136,7 @@ export default function Footer() {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-[#087F9F] transition"
+                    className="text-sm text-slate-400 hover:text-brand transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -154,20 +154,23 @@ export default function Footer() {
             </div>
             <div>
               <p className="text-xs text-slate-400">Email Us</p>
-              <p className="text-sm font-medium mt-1">
+              <a
+                href="mailto:support@mentorlagbe.com"
+                className="text-sm font-medium mt-1 block transition-colors hover:text-brand"
+              >
                 support@mentorlagbe.com
-              </p>
+              </a>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-[#087F9F]/20 text-[#087F9F] flex items-center justify-center">
-              <Phone size={19} />
+              <Clock size={19} />
             </div>
             <div>
-              <p className="text-xs text-slate-400">Call Us</p>
+              <p className="text-xs text-slate-400">Support Hours</p>
               <p className="text-sm font-medium mt-1">
-                +880 1XXX-XXXXXX
+                Sat – Thu, 10am – 6pm
               </p>
             </div>
           </div>
