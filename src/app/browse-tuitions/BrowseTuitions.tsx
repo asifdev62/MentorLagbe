@@ -199,17 +199,19 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                 <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
 
 
-                    {/* Header / Hero */}
-                    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#087F9F] via-[#087F9F] to-[#066B85] p-5 text-white shadow-lg shadow-[#087F9F]/15 sm:p-7">
-                        {/* Background Decorations */}
-                        <div className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full border-[24px] border-white/10" />
-                        <div className="pointer-events-none absolute -bottom-20 right-20 h-44 w-44 rounded-full border-[20px] border-white/10" />
-                        <div className="pointer-events-none absolute -left-10 bottom-0 hidden h-32 w-32 rounded-full bg-white/5 blur-xl sm:block" />
 
-                        <div className="relative flex flex-wrap items-center justify-between gap-5">
+                    {/* Header / Hero */}
+                    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#087F9F] to-[#066B85] p-5 text-white shadow-lg shadow-[#087F9F]/15 sm:p-6">
+
+                        {/* Background Decorations */}
+                        <div className="pointer-events-none absolute -right-12 -top-16 h-40 w-40 rounded-full border-[20px] border-white/10" />
+                        <div className="pointer-events-none absolute -bottom-16 right-20 h-36 w-36 rounded-full border-[18px] border-white/10" />
+
+                        <div className="relative flex flex-wrap items-center justify-between gap-4">
                             <div className="max-w-2xl">
+
                                 <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold backdrop-blur-sm">
-                                    <Sparkles size={14} />
+                                    <Sparkles size={13} />
                                     Explore Opportunities
                                 </span>
 
@@ -223,31 +225,32 @@ const BrowseTuitions = ({ tuitions }: Props) => {
                                 </p>
 
                                 <div className="mt-4 flex flex-wrap items-center gap-2">
-                                    <span className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-xs font-semibold backdrop-blur-sm">
-                                        <GraduationCap size={15} />
+                                    <span className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold backdrop-blur-sm">
+                                        <GraduationCap size={14} />
                                         {tuitions.length} tuition
                                         {tuitions.length === 1 ? "" : "s"} available
                                     </span>
 
-                                    <span className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-xs font-semibold backdrop-blur-sm">
-                                        <MapPin size={15} />
+                                    <span className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold backdrop-blur-sm">
+                                        <MapPin size={14} />
                                         {locations.length} location
                                         {locations.length === 1 ? "" : "s"}
                                     </span>
 
-                                    <span className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-xs font-semibold backdrop-blur-sm">
-                                        <BookOpen size={15} />
+                                    <span className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold backdrop-blur-sm">
+                                        <BookOpen size={14} />
                                         {subjects.length} subject
                                         {subjects.length === 1 ? "" : "s"}
                                     </span>
                                 </div>
                             </div>
 
-                            <div className="hidden h-28 w-28 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white/90 backdrop-blur-sm lg:flex">
-                                <GraduationCap size={56} strokeWidth={1.4} />
+                            <div className="hidden h-24 w-24 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-white/90 backdrop-blur-sm lg:flex">
+                                <GraduationCap size={48} strokeWidth={1.4} />
                             </div>
                         </div>
                     </section>
+
 
 
                     {/* Search & Filters */}
