@@ -1,8 +1,9 @@
 
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { toast } from "sonner";
 
@@ -205,12 +206,106 @@ export default function ApplicantsClient({
   } | null>(null);
 
   const [search, setSearch] = useState("");
+
   const [view, setView] = useState<"grid" | "table">("grid");
 
   const [statusFilter, setStatusFilter] =
     useState<"all" | StatusKey>("all");
 
+  // Dropdown state
   const [openActionId, setOpenActionId] = useState<string | null>(null);
+
+  const [menuAnchor, setMenuAnchor] = useState<{
+    top: number;
+    bottom: number;
+    right: number;
+  } | null>(null);
+
+  const [menuPosition, setMenuPosition] = useState({
+    top: 0,
+    left: 0,
+    ready: false,
+  });
+
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Dropdown positioning
+  useEffect(() => {
+    if (!openActionId || !menuAnchor || !menuRef.current) return;
+
+    const updatePosition = () => {
+      const menu = menuRef.current;
+
+      if (!menu) return;
+
+      const menuRect = menu.getBoundingClientRect();
+
+      const menuHeight = menuRect.height;
+      const menuWidth = menuRect.width;
+
+      const gap = 8;
+      const screenPadding = 12;
+
+      const spaceBelow = window.innerHeight - menuAnchor.bottom;
+      const spaceAbove = menuAnchor.top;
+
+      const openAbove =
+        spaceBelow < menuHeight + gap &&
+        spaceAbove >= menuHeight + gap;
+
+      const top = openAbove
+        ? menuAnchor.top - menuHeight - gap
+        : Math.max(
+            screenPadding,
+            Math.min(
+              menuAnchor.bottom + gap,
+              window.innerHeight - menuHeight - screenPadding
+            )
+          );
+
+      const left = Math.max(
+        screenPadding,
+        Math.min(
+          menuAnchor.right - menuWidth,
+          window.innerWidth - menuWidth - screenPadding
+        )
+      );
+
+      setMenuPosition({
+        top,
+        left,
+        ready: true,
+      });
+    };
+
+    updatePosition();
+
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [openActionId, menuAnchor]);
+
+  // Close dropdown when pressing Escape
+  useEffect(() => {
+    if (!openActionId) return;
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpenActionId(null);
+        setMenuAnchor(null);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [openActionId]);
 
   // Statistics
   const stats = useMemo(
@@ -283,7 +378,7 @@ export default function ApplicantsClient({
     }
   };
 
-  // Update application status
+  // Accept, reject or move an application back to pending
   const handleStatusChange = async (
     id: string,
     status: ApplicationStatus
@@ -293,7 +388,9 @@ export default function ApplicantsClient({
     const previous = applicants;
 
     setUpdating({ id, status });
+
     setOpenActionId(null);
+    setMenuAnchor(null);
 
     // Optimistic update
     setApplicants((current) =>
@@ -325,10 +422,18 @@ export default function ApplicantsClient({
     }
   };
 
-  const isUpdating = (
-    id: string,
-    status: ApplicationStatus
-  ) => updating?.id === id && updating.status === status;
+  const isUpdating = (id: string, status: ApplicationStatus) =>
+    updating?.id === id && updating.status === status;
+
+  const closeActionMenu = () => {
+    setOpenActionId(null);
+    setMenuAnchor(null);
+    setMenuPosition({
+      top: 0,
+      left: 0,
+      ready: false,
+    });
+  };
 
   return (
     <div className="min-h-svh px-3.5 py-5 sm:px-6 sm:py-6 lg:px-8">
@@ -691,7 +796,10 @@ export default function ApplicantsClient({
                         <button
                           type="button"
                           onClick={() =>
-                            handleStatusChange(applicant._id, "Accepted")
+                            handleStatusChange(
+                              applicant._id,
+                              "Accepted"
+                            )
                           }
                           disabled={isBusy || statusKey === "accepted"}
                           className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition ${
@@ -701,18 +809,26 @@ export default function ApplicantsClient({
                           } disabled:cursor-not-allowed disabled:opacity-70`}
                         >
                           {acceptedLoading ? (
-                            <Loader2 size={14} className="animate-spin" />
+                            <Loader2
+                              size={14}
+                              className="animate-spin"
+                            />
                           ) : (
                             <Check size={14} />
                           )}
 
-                          {statusKey === "accepted" ? "Accepted" : "Accept"}
+                          {statusKey === "accepted"
+                            ? "Accepted"
+                            : "Accept"}
                         </button>
 
                         <button
                           type="button"
                           onClick={() =>
-                            handleStatusChange(applicant._id, "Rejected")
+                            handleStatusChange(
+                              applicant._id,
+                              "Rejected"
+                            )
                           }
                           disabled={isBusy || statusKey === "rejected"}
                           className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition ${
@@ -722,12 +838,17 @@ export default function ApplicantsClient({
                           } disabled:cursor-not-allowed disabled:opacity-70`}
                         >
                           {rejectedLoading ? (
-                            <Loader2 size={14} className="animate-spin" />
+                            <Loader2
+                              size={14}
+                              className="animate-spin"
+                            />
                           ) : (
                             <X size={14} />
                           )}
 
-                          {statusKey === "rejected" ? "Rejected" : "Reject"}
+                          {statusKey === "rejected"
+                            ? "Rejected"
+                            : "Reject"}
                         </button>
                       </div>
 
@@ -740,16 +861,23 @@ export default function ApplicantsClient({
                         <button
                           type="button"
                           onClick={() =>
-                            handleStatusChange(applicant._id, "Pending")
+                            handleStatusChange(
+                              applicant._id,
+                              "Pending"
+                            )
                           }
                           disabled={isBusy}
                           className="mt-2 inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-bold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-70"
                         >
                           {pendingLoading ? (
-                            <Loader2 size={14} className="animate-spin" />
+                            <Loader2
+                              size={14}
+                              className="animate-spin"
+                            />
                           ) : (
                             <Clock size={14} />
                           )}
+
                           Move back to Pending
                         </button>
                       )}
@@ -779,8 +907,11 @@ export default function ApplicantsClient({
                 <tbody className="divide-y divide-slate-100">
                   {filteredApplicants.map((applicant) => {
                     const statusKey = getStatusKey(applicant.status);
+
                     const isBusy = updating?.id === applicant._id;
-                    const isMenuOpen = openActionId === applicant._id;
+
+                    const isMenuOpen =
+                      openActionId === applicant._id;
 
                     const acceptedLoading = isUpdating(
                       applicant._id,
@@ -802,6 +933,7 @@ export default function ApplicantsClient({
                         key={applicant._id}
                         className="align-top transition hover:bg-slate-50/60"
                       >
+                        {/* Student */}
                         <td className="px-4 py-3.5">
                           <div className="flex items-center gap-2.5">
                             <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#087F9F] to-[#066B85] text-xs font-bold text-white">
@@ -810,7 +942,8 @@ export default function ApplicantsClient({
 
                             <div className="min-w-0">
                               <p className="max-w-[180px] truncate text-sm font-bold text-slate-900">
-                                {applicant.studentName || "Unknown Student"}
+                                {applicant.studentName ||
+                                  "Unknown Student"}
                               </p>
 
                               {applicant.email ? (
@@ -829,6 +962,7 @@ export default function ApplicantsClient({
                           </div>
                         </td>
 
+                        {/* Tuition */}
                         <td className="px-4 py-3.5">
                           <p className="max-w-[190px] truncate text-sm font-semibold text-slate-800">
                             {applicant.tuitionTitle || "Tuition"}
@@ -841,6 +975,7 @@ export default function ApplicantsClient({
                           )}
                         </td>
 
+                        {/* Phone */}
                         <td className="px-4 py-3.5">
                           {applicant.phone ? (
                             <a
@@ -856,6 +991,7 @@ export default function ApplicantsClient({
                           )}
                         </td>
 
+                        {/* Preferred Schedule */}
                         <td className="px-4 py-3.5">
                           <span className="flex max-w-[170px] items-start gap-1.5 text-xs text-slate-600">
                             <CalendarClock
@@ -869,24 +1005,44 @@ export default function ApplicantsClient({
                           </span>
                         </td>
 
+                        {/* Applied Date */}
                         <td className="whitespace-nowrap px-4 py-3.5 text-xs text-slate-600">
                           {formatDate(applicant.appliedDate)}
                         </td>
 
+                        {/* Status */}
                         <td className="px-4 py-3.5">
                           <StatusBadge status={applicant.status} />
                         </td>
 
-                        {/* Dropdown Actions */}
+                        {/* Actions */}
                         <td className="px-4 py-3.5">
-                          <div className="relative flex justify-end">
+                          <div className="flex justify-end">
                             <button
                               type="button"
-                              onClick={() =>
-                                setOpenActionId(
-                                  isMenuOpen ? null : applicant._id
-                                )
-                              }
+                              onClick={(event) => {
+                                if (isMenuOpen) {
+                                  closeActionMenu();
+                                  return;
+                                }
+
+                                const rect =
+                                  event.currentTarget.getBoundingClientRect();
+
+                                setMenuPosition({
+                                  top: 0,
+                                  left: 0,
+                                  ready: false,
+                                });
+
+                                setMenuAnchor({
+                                  top: rect.top,
+                                  bottom: rect.bottom,
+                                  right: rect.right,
+                                });
+
+                                setOpenActionId(applicant._id);
+                              }}
                               disabled={isBusy}
                               aria-label="Open application actions"
                               aria-expanded={isMenuOpen}
@@ -906,20 +1062,35 @@ export default function ApplicantsClient({
                                 <MoreHorizontal size={19} />
                               )}
                             </button>
+                          </div>
 
-                            {isMenuOpen && (
+                          {/* Portal Dropdown */}
+                          {isMenuOpen &&
+                            typeof document !== "undefined" &&
+                            createPortal(
                               <>
-                                {/* Outside click close */}
+                                {/* Outside click overlay */}
                                 <button
                                   type="button"
                                   aria-label="Close actions menu"
-                                  className="fixed inset-0 z-10 cursor-default"
-                                  onClick={() => setOpenActionId(null)}
+                                  onClick={closeActionMenu}
+                                  className="fixed inset-0 z-[9998] cursor-default"
                                 />
 
-                                {/* Menu opens ABOVE the button */}
-                                <div className="absolute bottom-full right-0 z-20 mb-2 w-52 origin-bottom-right overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-900/10 animate-in fade-in slide-in-from-bottom-2 duration-150">
-                                  <p className="px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                                {/* Dropdown */}
+                                <div
+                                  ref={menuRef}
+                                  style={{
+                                    position: "fixed",
+                                    top: menuPosition.top,
+                                    left: menuPosition.left,
+                                    visibility: menuPosition.ready
+                                      ? "visible"
+                                      : "hidden",
+                                  }}
+                                  className="z-[9999] w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl shadow-slate-900/15"
+                                >
+                                  <p className="px-2.5 py-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                                     Update application
                                   </p>
 
@@ -933,18 +1104,19 @@ export default function ApplicantsClient({
                                         )
                                       }
                                       disabled={isBusy}
-                                      className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs font-semibold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700 disabled:opacity-50"
+                                      className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-left text-xs font-semibold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700 disabled:opacity-50"
                                     >
-                                      <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+                                      <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
                                         {acceptedLoading ? (
                                           <Loader2
-                                            size={15}
+                                            size={16}
                                             className="animate-spin"
                                           />
                                         ) : (
-                                          <Check size={15} />
+                                          <Check size={16} />
                                         )}
                                       </span>
+
                                       Accept Application
                                     </button>
                                   )}
@@ -959,25 +1131,26 @@ export default function ApplicantsClient({
                                         )
                                       }
                                       disabled={isBusy}
-                                      className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs font-semibold text-slate-700 transition hover:bg-rose-50 hover:text-rose-700 disabled:opacity-50"
+                                      className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-left text-xs font-semibold text-slate-700 transition hover:bg-rose-50 hover:text-rose-700 disabled:opacity-50"
                                     >
-                                      <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
+                                      <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-rose-50 text-rose-600">
                                         {rejectedLoading ? (
                                           <Loader2
-                                            size={15}
+                                            size={16}
                                             className="animate-spin"
                                           />
                                         ) : (
-                                          <X size={15} />
+                                          <X size={16} />
                                         )}
                                       </span>
+
                                       Reject Application
                                     </button>
                                   )}
 
                                   {statusKey !== "pending" && (
                                     <>
-                                      <div className="my-1 border-t border-slate-100" />
+                                      <div className="my-1.5 border-t border-slate-100" />
 
                                       <button
                                         type="button"
@@ -988,26 +1161,27 @@ export default function ApplicantsClient({
                                           )
                                         }
                                         disabled={isBusy}
-                                        className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs font-semibold text-slate-700 transition hover:bg-amber-50 hover:text-amber-700 disabled:opacity-50"
+                                        className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-left text-xs font-semibold text-slate-700 transition hover:bg-amber-50 hover:text-amber-700 disabled:opacity-50"
                                       >
-                                        <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+                                        <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600">
                                           {pendingLoading ? (
                                             <Loader2
-                                              size={15}
+                                              size={16}
                                               className="animate-spin"
                                             />
                                           ) : (
-                                            <RotateCcw size={14} />
+                                            <RotateCcw size={16} />
                                           )}
                                         </span>
+
                                         Move to Pending
                                       </button>
                                     </>
                                   )}
                                 </div>
-                              </>
+                              </>,
+                              document.body
                             )}
-                          </div>
                         </td>
                       </tr>
                     );
