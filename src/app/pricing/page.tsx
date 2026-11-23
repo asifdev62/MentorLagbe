@@ -42,31 +42,39 @@ const PricingPage = () => {
         <PricingCards />
       </section>
 
-      {/* Benefits Section */}
-      <section className="px-4 pb-20">
-        <div className="max-w-5xl mx-auto rounded-2xl bg-[#087F9F] px-6 py-10 sm:p-12 text-center text-white">
-          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
-            <ShieldCheck size={30} />
-          </div>
+    {/*benifit section */}
+<section className="px-4 pb-20">
+  <div className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl bg-gradient-to-br from-[#087F9F] to-[#066B85] px-6 py-10 text-center text-white shadow-lg sm:p-12">
 
-          <h2 className="text-2xl sm:text-3xl font-bold">
-            Your Learning Journey Matters
-          </h2>
+    {/* Background Decorations */}
+    <div className="pointer-events-none absolute -right-12 -top-16 h-40 w-40 rounded-full border-[20px] border-white/10" />
+    <div className="pointer-events-none absolute -bottom-20 -left-12 h-44 w-44 rounded-full border-[22px] border-white/10" />
 
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/80">
-            Find the right tutor, explore teaching opportunities, and
-            build meaningful learning connections with MentorLagbe.
-          </p>
+    <div className="relative z-10">
+      <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15">
+        <ShieldCheck size={30} />
+      </div>
 
-          <Link
-            href="/auth/sign-up"
-            className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-[#087F9F] transition hover:bg-slate-100"
-          >
-            Join MentorLagbe
-            <ArrowRight size={17} />
-          </Link>
-        </div>
-      </section>
+      <h2 className="text-2xl font-bold sm:text-3xl">
+        Your Learning Journey Matters
+      </h2>
+
+      <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-white/80">
+        Find the right tutor, explore teaching opportunities, and
+        build meaningful learning connections with MentorLagbe.
+      </p>
+
+      <Link
+        href="/auth/sign-up"
+        className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-sm font-bold text-[#087F9F] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 hover:shadow-lg active:scale-95"
+      >
+        Join MentorLagbe
+        <ArrowRight size={17} />
+      </Link>
+    </div>
+  </div>
+</section>
+
 
       {/* Support Section */}
       <section className="px-4 pb-16">
