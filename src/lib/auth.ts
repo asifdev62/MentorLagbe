@@ -1,7 +1,6 @@
 import { betterAuth } from "better-auth";
 import { MongoClient, type Db } from "mongodb";
 import { mongodbAdapter } from "@better-auth/mongo-adapter";
-
 const mongoUrl = process.env.MONGODB_URL;
 
 if (!mongoUrl) {
