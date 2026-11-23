@@ -285,68 +285,58 @@ const HowitWorksPage = () => {
         </div>
       </section>
       
+
 {/* CTA Section */}
-<section className="px-4 pb-20 pt-4">
-  <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-gradient-to-br from-[#087F9F] via-[#087F9F] to-[#066B85] px-6 py-16 text-center text-white shadow-xl shadow-[#087F9F]/15 md:px-12 md:py-20">
+<section className="px-4 pb-16 pt-2">
+  <div className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl bg-gradient-to-br from-[#087F9F] to-[#066B85] px-5 py-9 text-center text-white shadow-lg md:px-10 md:py-12">
 
-    {/* Background Decorations */}
-    <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full border-[35px] border-white/10" />
+    {/* Decorations */}
+    <div className="pointer-events-none absolute -right-12 -top-16 h-40 w-40 rounded-full border-[20px] border-white/10" />
+    <div className="pointer-events-none absolute -bottom-20 -left-12 h-44 w-44 rounded-full border-[22px] border-white/10" />
 
-    <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full border-[40px] border-white/10" />
+    <div className="relative z-10 mx-auto max-w-2xl">
 
-    <div className="relative z-10 mx-auto max-w-3xl">
-
-      {/* Badge */}
-      <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur-sm">
-        <GraduationCap size={17} />
+      <span className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold">
+        <GraduationCap size={15} />
         Start Your Journey Today
       </span>
 
-      {/* Heading */}
-      <h2 className="text-3xl font-extrabold leading-tight tracking-tight md:text-5xl">
+      <h2 className="text-2xl font-extrabold tracking-tight md:text-3xl">
         Ready to Get Started?
       </h2>
 
-      {/* Description */}
-      <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/85 md:text-base md:leading-8">
-        Whether you want to find the perfect tutor or explore new teaching
-        opportunities, MentorLagbe is here to help you take the next step.
-        Join our community and make learning easier.
+      <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-white/85">
+        Find the right tutor or discover new teaching opportunities.
+        Join MentorLagbe and make learning easier.
       </p>
 
-      {/* Buttons */}
-      <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
 
         <Link
           href="/register"
-          className="group inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-8 py-3 text-sm font-bold text-[#087F9F] shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-gray-100 hover:shadow-xl active:scale-95"
+          className="group inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-white px-6 py-2.5 text-sm font-bold text-[#087F9F] shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-100 active:scale-95"
         >
-          <UserPlus size={18} />
-          Create Your Account
+          <UserPlus size={16} />
+          Create Account
           <ArrowRight
-            size={18}
-            className="transition-transform duration-300 group-hover:translate-x-1"
+            size={16}
+            className="transition-transform group-hover:translate-x-1"
           />
         </Link>
 
         <Link
           href="/browse-tuitions"
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/50 bg-white/10 px-8 py-3 text-sm font-bold text-white backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:text-[#087F9F] active:scale-95"
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-white/50 bg-white/10 px-6 py-2.5 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-white hover:text-[#087F9F] active:scale-95"
         >
-          <Search size={18} />
-          Explore Tuitions
+          <Search size={16} />
+          Browse Tuitions
         </Link>
 
       </div>
-
-      {/* Bottom Text */}
-      <p className="mt-8 text-xs font-medium tracking-wide text-white/70">
-        Your learning journey starts with MentorLagbe.
-      </p>
-
     </div>
   </div>
 </section>
+
 
     </main>
   );
