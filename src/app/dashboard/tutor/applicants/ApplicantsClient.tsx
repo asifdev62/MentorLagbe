@@ -17,6 +17,7 @@ import {
   Loader2,
   Mail,
   MessageSquareQuote,
+  MoreHorizontal,
   Phone,
   RefreshCw,
   RotateCcw,
@@ -202,11 +203,13 @@ export default function ApplicantsClient({
   } | null>(null);
 
   const [search, setSearch] = useState("");
-
   const [view, setView] = useState<"grid" | "table">("grid");
 
   const [statusFilter, setStatusFilter] =
     useState<"all" | StatusKey>("all");
+
+  // Dropdown menu state
+  const [openActionId, setOpenActionId] = useState<string | null>(null);
 
   // Statistics
   const stats = useMemo(
@@ -289,6 +292,7 @@ export default function ApplicantsClient({
     const previous = applicants;
 
     setUpdating({ id, status });
+    setOpenActionId(null);
 
     // Optimistic update
     setApplicants((current) =>
@@ -328,7 +332,6 @@ export default function ApplicantsClient({
   return (
     <div className="min-h-svh px-3.5 py-5 sm:px-6 sm:py-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-
         {/* Header */}
         <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -480,10 +483,7 @@ export default function ApplicantsClient({
             <AlertCircle size={18} className="mt-0.5 shrink-0" />
 
             <div className="min-w-0 flex-1">
-              <p className="font-semibold">
-                Could not load applicants
-              </p>
-
+              <p className="font-semibold">Could not load applicants</p>
               <p className="mt-1 text-rose-600">{error}</p>
             </div>
 
@@ -654,9 +654,7 @@ export default function ApplicantsClient({
                         label="Preferred Schedule"
                       >
                         {applicant.preferredSchedule || (
-                          <span className="text-slate-400">
-                            Flexible
-                          </span>
+                          <span className="text-slate-400">Flexible</span>
                         )}
                       </InfoRow>
 
@@ -679,7 +677,7 @@ export default function ApplicantsClient({
                       </div>
                     )}
 
-                    {/* Actions */}
+                    {/* Grid Actions */}
                     <div className="mt-auto border-t border-slate-100 pt-4">
                       <div className="flex items-center gap-2">
                         <button
@@ -699,7 +697,6 @@ export default function ApplicantsClient({
                           ) : (
                             <Check size={14} />
                           )}
-
                           {statusKey === "accepted" ? "Accepted" : "Accept"}
                         </button>
 
@@ -720,7 +717,6 @@ export default function ApplicantsClient({
                           ) : (
                             <X size={14} />
                           )}
-
                           {statusKey === "rejected" ? "Rejected" : "Reject"}
                         </button>
                       </div>
@@ -754,6 +750,7 @@ export default function ApplicantsClient({
             })}
           </div>
         ) : (
+          /* Table View */
           <div className="mt-5 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[920px] border-collapse text-left">
@@ -772,6 +769,8 @@ export default function ApplicantsClient({
                 <tbody className="divide-y divide-slate-100">
                   {filteredApplicants.map((applicant) => {
                     const statusKey = getStatusKey(applicant.status);
+                    const isBusy = updating?.id === applicant._id;
+                    const isMenuOpen = openActionId === applicant._id;
 
                     const acceptedLoading = isUpdating(
                       applicant._id,
@@ -788,8 +787,6 @@ export default function ApplicantsClient({
                       "Pending"
                     );
 
-                    const isBusy = updating?.id === applicant._id;
-
                     return (
                       <tr
                         key={applicant._id}
@@ -803,8 +800,7 @@ export default function ApplicantsClient({
 
                             <div className="min-w-0">
                               <p className="max-w-[180px] truncate text-sm font-bold text-slate-900">
-                                {applicant.studentName ||
-                                  "Unknown Student"}
+                                {applicant.studentName || "Unknown Student"}
                               </p>
 
                               {applicant.email ? (
@@ -856,7 +852,6 @@ export default function ApplicantsClient({
                               size={13}
                               className="mt-0.5 shrink-0 text-slate-400"
                             />
-
                             <span className="line-clamp-2">
                               {applicant.preferredSchedule || "Flexible"}
                             </span>
@@ -871,97 +866,133 @@ export default function ApplicantsClient({
                           <StatusBadge status={applicant.status} />
                         </td>
 
+                        {/* Dropdown Actions */}
                         <td className="px-4 py-3.5">
-                          <div className="flex items-center justify-end gap-1.5">
+                          <div className="relative flex justify-end">
                             <button
                               type="button"
                               onClick={() =>
-                                handleStatusChange(
-                                  applicant._id,
-                                  "Accepted"
+                                setOpenActionId(
+                                  isMenuOpen ? null : applicant._id
                                 )
                               }
-                              disabled={
-                                isBusy || statusKey === "accepted"
-                              }
-                              aria-label="Accept application"
-                              title={
-                                statusKey === "accepted"
-                                  ? "Accepted"
-                                  : "Accept"
-                              }
-                              className={`inline-flex size-8 items-center justify-center rounded-lg transition ${
-                                statusKey === "accepted"
-                                  ? "cursor-default border border-emerald-200 bg-emerald-50 text-emerald-700"
-                                  : "bg-emerald-600 text-white hover:bg-emerald-700"
-                              } disabled:cursor-not-allowed disabled:opacity-70`}
+                              disabled={isBusy}
+                              aria-label="Open application actions"
+                              aria-expanded={isMenuOpen}
+                              title="Actions"
+                              className={`inline-flex size-9 items-center justify-center rounded-xl border transition ${
+                                isMenuOpen
+                                  ? "border-[#087F9F]/30 bg-[#087F9F]/10 text-[#087F9F]"
+                                  : "border-slate-200 bg-white text-slate-500 hover:border-[#087F9F]/30 hover:bg-[#087F9F]/5 hover:text-[#087F9F]"
+                              } disabled:cursor-not-allowed disabled:opacity-50`}
                             >
-                              {acceptedLoading ? (
+                              {isBusy ? (
                                 <Loader2
-                                  size={14}
+                                  size={17}
                                   className="animate-spin"
                                 />
                               ) : (
-                                <Check size={14} />
+                                <MoreHorizontal size={19} />
                               )}
                             </button>
 
-                            <button
-                              type="button"
-                              onClick={() =>
-                                handleStatusChange(
-                                  applicant._id,
-                                  "Rejected"
-                                )
-                              }
-                              disabled={
-                                isBusy || statusKey === "rejected"
-                              }
-                              aria-label="Reject application"
-                              title={
-                                statusKey === "rejected"
-                                  ? "Rejected"
-                                  : "Reject"
-                              }
-                              className={`inline-flex size-8 items-center justify-center rounded-lg transition ${
-                                statusKey === "rejected"
-                                  ? "cursor-default border border-rose-200 bg-rose-50 text-rose-700"
-                                  : "border border-rose-200 bg-white text-rose-600 hover:bg-rose-50"
-                              } disabled:cursor-not-allowed disabled:opacity-70`}
-                            >
-                              {rejectedLoading ? (
-                                <Loader2
-                                  size={14}
-                                  className="animate-spin"
+                            {isMenuOpen && (
+                              <>
+                                <button
+                                  type="button"
+                                  aria-label="Close actions menu"
+                                  className="fixed inset-0 z-10 cursor-default"
+                                  onClick={() => setOpenActionId(null)}
                                 />
-                              ) : (
-                                <X size={14} />
-                              )}
-                            </button>
 
-                            {statusKey !== "pending" && (
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  handleStatusChange(
-                                    applicant._id,
-                                    "Pending"
-                                  )
-                                }
-                                disabled={isBusy}
-                                aria-label="Move back to pending"
-                                title="Move back to Pending"
-                                className="inline-flex size-8 items-center justify-center rounded-lg border border-amber-200 bg-amber-50 text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-70"
-                              >
-                                {pendingLoading ? (
-                                  <Loader2
-                                    size={14}
-                                    className="animate-spin"
-                                  />
-                                ) : (
-                                  <RotateCcw size={14} />
-                                )}
-                              </button>
+                                <div className="absolute top-11 right-0 z-20 w-48 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-900/10">
+                                  <p className="px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                                    Update application
+                                  </p>
+
+                                  {statusKey !== "accepted" && (
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        handleStatusChange(
+                                          applicant._id,
+                                          "Accepted"
+                                        )
+                                      }
+                                      disabled={isBusy}
+                                      className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs font-semibold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700 disabled:opacity-50"
+                                    >
+                                      {acceptedLoading ? (
+                                        <Loader2
+                                          size={15}
+                                          className="animate-spin"
+                                        />
+                                      ) : (
+                                        <span className="flex size-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+                                          <Check size={15} />
+                                        </span>
+                                      )}
+                                      Accept Application
+                                    </button>
+                                  )}
+
+                                  {statusKey !== "rejected" && (
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        handleStatusChange(
+                                          applicant._id,
+                                          "Rejected"
+                                        )
+                                      }
+                                      disabled={isBusy}
+                                      className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs font-semibold text-slate-700 transition hover:bg-rose-50 hover:text-rose-700 disabled:opacity-50"
+                                    >
+                                      {rejectedLoading ? (
+                                        <Loader2
+                                          size={15}
+                                          className="animate-spin"
+                                        />
+                                      ) : (
+                                        <span className="flex size-7 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
+                                          <X size={15} />
+                                        </span>
+                                      )}
+                                      Reject Application
+                                    </button>
+                                  )}
+
+                                  {statusKey !== "pending" && (
+                                    <>
+                                      <div className="my-1 border-t border-slate-100" />
+
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          handleStatusChange(
+                                            applicant._id,
+                                            "Pending"
+                                          )
+                                        }
+                                        disabled={isBusy}
+                                        className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs font-semibold text-slate-700 transition hover:bg-amber-50 hover:text-amber-700 disabled:opacity-50"
+                                      >
+                                        {pendingLoading ? (
+                                          <Loader2
+                                            size={15}
+                                            className="animate-spin"
+                                          />
+                                        ) : (
+                                          <span className="flex size-7 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+                                            <RotateCcw size={14} />
+                                          </span>
+                                        )}
+                                        Move to Pending
+                                      </button>
+                                    </>
+                                  )}
+                                </div>
+                              </>
                             )}
                           </div>
                         </td>
