@@ -83,24 +83,50 @@ export interface TutorApplicant {
 
 
 // Apply for Tuition
+
 export const applyToATuition = async (data: ApplicationData) => {
-  const res = await fetch(`${BASE_URL}/applications`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({
-      ...data,
-      status: "Pending",
-      appliedDate: new Date().toISOString(),
-    }),
-  });
+  try {
+    const user = await getCurrentUser();
 
-  if (!res.ok) {
-    throw new Error("Failed to submit application");
+    // Admin API secret must remain server-side
+    const adminSecret = process.env.ADMIN_API_SECRET;
+
+    if (!adminSecret) {
+      throw new Error("Server configuration error.");
+    }
+
+    const res = await fetch(`${BASE_URL}/applications`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-admin-api-secret": adminSecret,
+      },
+      body: JSON.stringify({
+        tuitionId: data.tuitionId,
+        studentEmail: user.email,
+        phone: data.phone || "",
+        preferredSchedule: data.preferredSchedule || "",
+        note: data.note || "",
+      }),
+      cache: "no-store",
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(
+        result.message || "Failed to submit application"
+      );
+    }
+
+    return result;
+  } catch (error) {
+    console.error("Apply to tuition error:", error);
+
+    throw error instanceof Error
+      ? error
+      : new Error("Failed to submit application");
   }
-
-  return res.json();
 };
 
 
