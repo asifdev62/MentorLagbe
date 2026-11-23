@@ -43,6 +43,8 @@ type Props = {
 
 type StatusKey = "pending" | "accepted" | "rejected";
 
+type ApplicationStatus = "Pending" | "Accepted" | "Rejected";
+
 const statusStyles: Record<StatusKey, string> = {
   pending: "border-amber-200 bg-amber-50 text-amber-700",
   accepted: "border-emerald-200 bg-emerald-50 text-emerald-700",
@@ -199,7 +201,7 @@ export default function ApplicantsClient({
 
   const [updating, setUpdating] = useState<{
     id: string;
-    status: "Pending" | "Accepted" | "Rejected";
+    status: ApplicationStatus;
   } | null>(null);
 
   const [search, setSearch] = useState("");
@@ -208,7 +210,6 @@ export default function ApplicantsClient({
   const [statusFilter, setStatusFilter] =
     useState<"all" | StatusKey>("all");
 
-  // Dropdown menu state
   const [openActionId, setOpenActionId] = useState<string | null>(null);
 
   // Statistics
@@ -282,10 +283,10 @@ export default function ApplicantsClient({
     }
   };
 
-  // Accept, reject or move an application back to pending
+  // Update application status
   const handleStatusChange = async (
     id: string,
-    status: "Pending" | "Accepted" | "Rejected"
+    status: ApplicationStatus
   ) => {
     if (updating) return;
 
@@ -326,12 +327,13 @@ export default function ApplicantsClient({
 
   const isUpdating = (
     id: string,
-    status: "Pending" | "Accepted" | "Rejected"
+    status: ApplicationStatus
   ) => updating?.id === id && updating.status === status;
 
   return (
     <div className="min-h-svh px-3.5 py-5 sm:px-6 sm:py-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
+
         {/* Header */}
         <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
@@ -483,7 +485,10 @@ export default function ApplicantsClient({
             <AlertCircle size={18} className="mt-0.5 shrink-0" />
 
             <div className="min-w-0 flex-1">
-              <p className="font-semibold">Could not load applicants</p>
+              <p className="font-semibold">
+                Could not load applicants
+              </p>
+
               <p className="mt-1 text-rose-600">{error}</p>
             </div>
 
@@ -552,6 +557,7 @@ export default function ApplicantsClient({
             </button>
           </div>
         ) : view === "grid" ? (
+          /* Grid View */
           <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             {filteredApplicants.map((applicant) => {
               const statusKey = getStatusKey(applicant.status);
@@ -654,7 +660,9 @@ export default function ApplicantsClient({
                         label="Preferred Schedule"
                       >
                         {applicant.preferredSchedule || (
-                          <span className="text-slate-400">Flexible</span>
+                          <span className="text-slate-400">
+                            Flexible
+                          </span>
                         )}
                       </InfoRow>
 
@@ -697,6 +705,7 @@ export default function ApplicantsClient({
                           ) : (
                             <Check size={14} />
                           )}
+
                           {statusKey === "accepted" ? "Accepted" : "Accept"}
                         </button>
 
@@ -717,6 +726,7 @@ export default function ApplicantsClient({
                           ) : (
                             <X size={14} />
                           )}
+
                           {statusKey === "rejected" ? "Rejected" : "Reject"}
                         </button>
                       </div>
@@ -852,6 +862,7 @@ export default function ApplicantsClient({
                               size={13}
                               className="mt-0.5 shrink-0 text-slate-400"
                             />
+
                             <span className="line-clamp-2">
                               {applicant.preferredSchedule || "Flexible"}
                             </span>
@@ -898,6 +909,7 @@ export default function ApplicantsClient({
 
                             {isMenuOpen && (
                               <>
+                                {/* Outside click close */}
                                 <button
                                   type="button"
                                   aria-label="Close actions menu"
@@ -905,7 +917,8 @@ export default function ApplicantsClient({
                                   onClick={() => setOpenActionId(null)}
                                 />
 
-                                <div className="absolute top-11 right-0 z-20 w-48 overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-900/10">
+                                {/* Menu opens ABOVE the button */}
+                                <div className="absolute bottom-full right-0 z-20 mb-2 w-52 origin-bottom-right overflow-hidden rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl shadow-slate-900/10 animate-in fade-in slide-in-from-bottom-2 duration-150">
                                   <p className="px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
                                     Update application
                                   </p>
@@ -922,16 +935,16 @@ export default function ApplicantsClient({
                                       disabled={isBusy}
                                       className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs font-semibold text-slate-700 transition hover:bg-emerald-50 hover:text-emerald-700 disabled:opacity-50"
                                     >
-                                      {acceptedLoading ? (
-                                        <Loader2
-                                          size={15}
-                                          className="animate-spin"
-                                        />
-                                      ) : (
-                                        <span className="flex size-7 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+                                      <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
+                                        {acceptedLoading ? (
+                                          <Loader2
+                                            size={15}
+                                            className="animate-spin"
+                                          />
+                                        ) : (
                                           <Check size={15} />
-                                        </span>
-                                      )}
+                                        )}
+                                      </span>
                                       Accept Application
                                     </button>
                                   )}
@@ -948,16 +961,16 @@ export default function ApplicantsClient({
                                       disabled={isBusy}
                                       className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs font-semibold text-slate-700 transition hover:bg-rose-50 hover:text-rose-700 disabled:opacity-50"
                                     >
-                                      {rejectedLoading ? (
-                                        <Loader2
-                                          size={15}
-                                          className="animate-spin"
-                                        />
-                                      ) : (
-                                        <span className="flex size-7 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
+                                      <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-rose-50 text-rose-600">
+                                        {rejectedLoading ? (
+                                          <Loader2
+                                            size={15}
+                                            className="animate-spin"
+                                          />
+                                        ) : (
                                           <X size={15} />
-                                        </span>
-                                      )}
+                                        )}
+                                      </span>
                                       Reject Application
                                     </button>
                                   )}
@@ -977,16 +990,16 @@ export default function ApplicantsClient({
                                         disabled={isBusy}
                                         className="flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 text-left text-xs font-semibold text-slate-700 transition hover:bg-amber-50 hover:text-amber-700 disabled:opacity-50"
                                       >
-                                        {pendingLoading ? (
-                                          <Loader2
-                                            size={15}
-                                            className="animate-spin"
-                                          />
-                                        ) : (
-                                          <span className="flex size-7 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+                                        <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
+                                          {pendingLoading ? (
+                                            <Loader2
+                                              size={15}
+                                              className="animate-spin"
+                                            />
+                                          ) : (
                                             <RotateCcw size={14} />
-                                          </span>
-                                        )}
+                                          )}
+                                        </span>
                                         Move to Pending
                                       </button>
                                     </>
@@ -1003,6 +1016,7 @@ export default function ApplicantsClient({
               </table>
             </div>
 
+            {/* Table Footer */}
             <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 bg-slate-50/60 px-4 py-2.5 text-[11px] font-medium text-slate-500">
               <span>
                 Showing {filteredApplicants.length} of{" "}
